@@ -1,0 +1,42 @@
+package hr.fer.zemris.java.hw01;
+
+import java.util.Scanner;
+
+public class Factorial {
+	
+	public static long calculateFactorial(int n) {
+		long factorial=1;
+		
+		while(n>=1) {
+			factorial *= n;
+			n--;
+		}
+		
+		return factorial;
+	}
+
+	public static void main(String[] args) {
+		System.out.println("kapa");
+		Scanner sc = new Scanner(System.in);
+		
+		while(true) {
+			System.out.println("Unesite broj >");
+			String next = sc.next();
+			
+			if (next.equals("kraj")) break;
+			try {
+				int number = Integer.parseInt(next);
+				long factorial = calculateFactorial(number);
+				
+				System.out.println(number+"!" +" = " + factorial );
+			} catch(NumberFormatException ex) {
+				System.out.println("'"+next+"'"+" nije cijeli broj.");
+			}
+			
+		}
+		
+		sc.close();
+		
+	}
+
+}

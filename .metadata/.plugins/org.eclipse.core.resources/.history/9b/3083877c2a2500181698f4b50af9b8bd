@@ -1,0 +1,80 @@
+package hr.fer.zemris.java.hw01;
+
+import java.lang.Runtime;
+import java.util.Scanner;
+
+public class Rectangle {
+
+	public static double getArea(double x, double y) {
+		return x * y;
+	}
+
+	public static double getCircumference(double x, double y) {
+		return 2 * (x + y);
+	}
+
+	public static void print(double width, double height, double area, double circumference) {
+		System.out.format("Pravokutnik sirine %.1f i visine %.1f ima povrsinu %.1f te opseg %.1f", width, height, area,
+				circumference);
+	}
+	
+	public static double entry(double value) {
+		Scanner sc = new Scanner(System.in);
+		String next=null;
+		
+		if(sc.hasNext()) {
+			next = sc.nextLine();
+		}
+		
+		try {
+			value = Double.parseDouble(next);
+			
+			if(value< 0) {
+				System.out.println("Unijeli ste negativnu vrijednost");
+			} else {
+				sc.close();
+				return value;
+			}
+			
+		} catch(NumberFormatException ex) {
+			System.out.println("'"+next+"'"+" se ne može protumačiti kao broj.");
+		}
+		sc.close();
+		return -1.0;
+		
+	}
+
+	public static void main(String[] args) {
+		if (args.length == 2) {
+			try {
+				double width = Double.parseDouble(args[0]);
+				double height = Double.parseDouble(args[1]);
+
+				print(width, height, getArea(width, height), getCircumference(width, height));
+
+			} catch (NumberFormatException ex) {
+				System.out.println("Argumenti se ne mogu protumačiti kao brojevi.");
+			}
+
+		} else if (args.length == 0) {
+			double width=-1;
+			double height=-1;
+			
+			while(width <0) {
+				System.out.println("Unesite sirinu >");
+				width=entry(width);
+			}
+			while(height <0) {
+				System.out.println("Unesite visinu >");
+				height=entry(height);
+			}
+			
+			print(width, height, getArea(width, height), getCircumference(width, height));
+		} else {
+			System.out.println("Neispravan broj argumenata.");
+			Runtime.getRuntime().exit(0);
+		}
+
+	}
+
+}

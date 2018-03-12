@@ -1,0 +1,53 @@
+package hr.fer.zemris.java.hw01;
+
+import java.util.Scanner;
+
+public class Factorial {
+	/**
+	 * Metoda računa n faktorijela cijelog broja
+	 * @param n argument funkcije n!
+	 * @return
+	 */
+	public static long calculateFactorial(int n) {
+		long factorial=1;
+		
+		while(n>=1) {
+			factorial *= n;
+			n--;
+		}
+		
+		return factorial;
+	}
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		while(true) {
+			System.out.println("Unesite broj >");
+			String next = sc.next();
+			
+			if (next.equals("kraj")) {
+				break;
+			}
+			try {
+				int number = Integer.parseInt(next);
+				
+				if(number >=1 && number <=20) {
+					long factorial = calculateFactorial(number);
+					
+					System.out.println(number+"!" +" = " + factorial );
+				} else {
+					System.out.println("'"+next+"'"+" nije broj u dozvoljenom rasponu.");
+				}
+
+			} catch(NumberFormatException ex) {
+				System.out.println("'"+next+"'"+" nije cijeli broj.");
+			}
+			
+		}
+		
+		System.out.println("Doviđenja");
+		sc.close();
+	}
+
+}
