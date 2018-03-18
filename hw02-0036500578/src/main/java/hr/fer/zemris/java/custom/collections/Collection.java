@@ -32,16 +32,26 @@ public class Collection {
 	}
 
 	public void forEach(Processor processor) {
-		
 	}
 	
 	public void addAll(Collection other) {
-		class Processor {
-			public void process() {
-				
-				
+		
+		class ProcessorAdd extends Processor{
+			private Collection collection;
+			
+			public ProcessorAdd(Collection collection) {
+				this.collection = collection; 
+			}
+			
+			@Override
+			public void process(Object value) {
+				if (value ==  null) throw new NullPointerException("Predani argument se ne može obraditi");
+				collection.add(value);
 			}
 		}
+		
+		ProcessorAdd pr =  new ProcessorAdd(this);
+		other.forEach(pr);
 	}
 	
 	public void clear() {
