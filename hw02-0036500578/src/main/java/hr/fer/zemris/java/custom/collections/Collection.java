@@ -37,20 +37,15 @@ public class Collection {
 	public void addAll(Collection other) {
 		
 		class AddingProcessor extends Processor{
-			private Collection collection;
-			
-			public AddingProcessor(Collection collection) {
-				this.collection = collection; 
-			}
 			
 			@Override
 			public void process(Object value) {
 				if (value ==  null) throw new NullPointerException("Null cannot be processed");
-				collection.add(value);
+				Collection.this.add(value);
 			}
 		}
 		
-		AddingProcessor pr =  new AddingProcessor(this);
+		AddingProcessor pr =  new AddingProcessor();
 		other.forEach(pr);
 	}
 	

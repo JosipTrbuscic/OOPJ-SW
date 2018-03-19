@@ -2,7 +2,9 @@ package hr.fer.zemris.java.custom.collections;
 
 import java.util.Arrays;
 /**
- * Collection of objects implemented as doubly linked list
+ * Collection  implemented as doubly linked list. The {@code add}, {@code size} and {@code clear} 
+ * operations perform in constant time. The {@code get}, {@code insert} and {@code remove} operations run in n/2 +1 complexity.
+ * The {@code indexOf}, {@code contains}, {@code toArray} and {@code forEach} operations run in complexity O(n).
  * @author Josip Trbuscic
  */
 public class LinkedListIndexedCollection extends Collection {
@@ -16,32 +18,29 @@ public class LinkedListIndexedCollection extends Collection {
 		Object value;
 		ListNode next;
 		ListNode previous;
-		/**
-		 * Compares value of list node to the
-		 * specified value and returns {@code true}
-		 * if they are equal
-		 * @return true if objects are equal
-		 */
-		@Override
-		public boolean equals(Object obj) {
-			if(obj == null) return false;
-			//if(!(obj instanceof ListNode)) return false;
-			
-			//ListNode other = (ListNode) obj;
-			return this.value.equals(obj); //other.value
-		}
 	}
-	
+	/**
+	 * Constructs an empty list
+	 */
 	public LinkedListIndexedCollection() {
 		first = null;
 		last = null;
 	}
-	
+	/**
+	 * Constructs a list containing the elements of the specified collection
+	 * @param other - the collection whose elements will be copied
+	 */
 	public LinkedListIndexedCollection(Collection other) {
 		if (other == null)
 			throw new NullPointerException("Other Collection should not be null");
 		
 		this.addAll(other);
+	}
+	/**
+	 * Returns the number of elements in this collection.
+	 */
+	public int size() {
+		return size;
 	}
 	/**
 	 * Appends specified element to the end of this collection
@@ -82,7 +81,7 @@ public class LinkedListIndexedCollection extends Collection {
 		return iterateToIndex(index).value;
 	}
 	/**
-	 * Removes all elements from the collection.
+	 * Removes all elements from the collection
 	 */
 	@Override
 	public void clear() {
@@ -180,7 +179,7 @@ public class LinkedListIndexedCollection extends Collection {
 	public boolean contains(Object value) {
 		ListNode temp = first;
 		for(int i = 0;i<size;++i) {
-			if(temp.equals(value)) {
+			if(temp.value.equals(value)) {
 				return true;
 			}
 			temp=temp.next;
@@ -225,22 +224,16 @@ public class LinkedListIndexedCollection extends Collection {
 	 */
 	private ListNode iterateToIndex(int index) {
 		ListNode node;
-		int counter=0;
-		boolean reverse=false;
-		
+
 		if(index <= size/2) {
 			node = first;
+			for(int counter = 0;counter<index;counter++) {
+				node = node.next;
+			}
 		} else {
 			node = last;
-			counter = size - index;
-			reverse = true;
-		}
-		
-		for(;counter<index;counter++) {
-			if(reverse) {
+			for(int counter = size - index;counter<index;counter++) {
 				node = node.previous;
-			} else {
-				node = node.next;
 			}
 		}
 		

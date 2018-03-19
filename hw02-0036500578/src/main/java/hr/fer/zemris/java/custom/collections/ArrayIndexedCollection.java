@@ -1,15 +1,27 @@
 package hr.fer.zemris.java.custom.collections;
-
+/**
+ * Collection which elements are stored in resizeable array. The {@code add}, {@code size} and {@code get} 
+ * operations perform in constant time. The {@code clear}, {@code insert}, {@code remove}, {@code indexOf},
+ *  {@code contains}, {@code toArray} and {@code forEach} operations require O(n) time. Each {@code ArrayIndexedCollection}
+ *  has {@code capacity} which is always at least as large as size of the collection
+ * @author Josip Trbuscic
+ *
+ */
 public class ArrayIndexedCollection extends Collection {
 	private final static int DEFAULT_ARRAY_CAPPACITY = 16;
 	private int size = 0;
 	private int capacity; // = DEFAULT_ARRAY_CAPPACITY
 	private Object[] elements; // = DEFAULT_ARRAY_CAPPACITY
-
+	/**
+	 * Constructs new {@code ArrayIndexedCollection} with initial capacity of 16
+	 */
 	public ArrayIndexedCollection() {
 		this(DEFAULT_ARRAY_CAPPACITY);
 	}
-
+	/**
+	 * Constructs new {@code ArrayIndexedCollection} with specified initial capacity
+	 * @param initialCapacity - initial capacity of collection
+	 */
 	public ArrayIndexedCollection(int initialCapacity) {
 		if (initialCapacity < 1)
 			throw new IllegalArgumentException("Inital array size should be greater than 0");
@@ -17,11 +29,22 @@ public class ArrayIndexedCollection extends Collection {
 		this.capacity = initialCapacity;
 		elements = new Object[initialCapacity];
 	}
-	
+	/**
+	 * Constructs new {@code ArrayIndexedCollection} containing the elements
+	 * of specified collection
+	 * @param other collection whose elements will be added to this collection
+	 */
 	public ArrayIndexedCollection(Collection other) {
 		this(other, other.size());	
 	}
-
+	/**
+	 * Constructs new {@code ArrayIndexedCollection} with specified initial capacity
+	 * containing the elements of specified collection. If specified initial capacity
+	 *  is not large enough to store elements of other collection capacity will be set 
+	 *  to match the size of other collection.
+	 * @param other collection whose elements will be added to this collection
+	 * @param initialCapacity of collection
+	 */
 	public ArrayIndexedCollection(Collection other, int initialCapacity) {
 		this(initialCapacity);
 		if (other == null)
@@ -91,7 +114,7 @@ public class ArrayIndexedCollection extends Collection {
 	public void insert(Object value, int position) {
 		if(position<0 || position>this.size) {
 			throw new IndexOutOfBoundsException(
-					"Valid range of index: 0-" +this.size+". You entered: "+position); 
+				"Valid range of index: 0-" +this.size+". You entered: "+position); 
 		}
 		this.assureCapacity();
 		
