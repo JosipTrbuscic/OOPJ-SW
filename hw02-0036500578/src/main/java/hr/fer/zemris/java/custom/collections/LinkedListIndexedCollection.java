@@ -1,31 +1,43 @@
 package hr.fer.zemris.java.custom.collections;
 
-public class LinkedListIndexCollection extends Collection {
+import java.util.Arrays;
+/**
+ * Collection of objects implemented as doubly linked list
+ * @author Josip Trbuscic
+ */
+public class LinkedListIndexedCollection extends Collection {
 	private int size = 0;
 	private ListNode first;
 	private ListNode last;
-	
+	/**
+	 * Structure of the list node
+	 */
 	private static class ListNode{
 		Object value;
 		ListNode next;
 		ListNode previous;
-		
+		/**
+		 * Compares value of list node to the
+		 * specified value and returns {@code true}
+		 * if they are equal
+		 * @return true if objects are equal
+		 */
 		@Override
 		public boolean equals(Object obj) {
 			if(obj == null) return false;
-			if(!(obj instanceof ListNode)) return false;
+			//if(!(obj instanceof ListNode)) return false;
 			
-			ListNode other = (ListNode) obj;
-			return this.value.equals(other.value);
+			//ListNode other = (ListNode) obj;
+			return this.value.equals(obj); //other.value
 		}
 	}
 	
-	public LinkedListIndexCollection() {
+	public LinkedListIndexedCollection() {
 		first = null;
 		last = null;
 	}
 	
-	public LinkedListIndexCollection(Collection other) {
+	public LinkedListIndexedCollection(Collection other) {
 		if (other == null)
 			throw new NullPointerException("Other Collection should not be null");
 		
@@ -38,6 +50,7 @@ public class LinkedListIndexCollection extends Collection {
 	 * @param value - element to be added to this collection
 	 * @throws NullPointerException if specified object is {@code null}
 	 */
+	@Override
 	public void add(Object value) {
 		if(value == null ) throw new NullPointerException("Null cannot be added to collection");
 		
@@ -52,7 +65,14 @@ public class LinkedListIndexCollection extends Collection {
 		}
 		size++;
 	}
-	
+	/**
+	 * Returns the element at the specified position in 
+	 * the list if position is valid. Complexity O(n).
+	 * @param index of the element to return
+	 * @return element at the position {@code index}
+	 * @throws 	IndexOutOfBoundsException if specified index
+	 * 			is not in valid range
+	 */
 	public Object get(int index) {
 		if(index<0 || index>this.size-1) {
 			throw new IndexOutOfBoundsException(
@@ -61,13 +81,21 @@ public class LinkedListIndexCollection extends Collection {
 		
 		return iterateToIndex(index).value;
 	}
-	
+	/**
+	 * Removes all elements from the collection.
+	 */
+	@Override
 	public void clear() {
 		first = null;
 		last = null;
 		size = 0;
 	}
-	
+	/**
+	 * Inserts element at the specified position in collection. Shifts 
+	 * element currently at that position and all remaining elements.
+	 * @param value - element to be added 
+	 * @param position - position at which element will be added
+	 */
 	public void insert(Object value, int position) {
 		if(position<0 || position>this.size) {
 			throw new IndexOutOfBoundsException(
@@ -93,7 +121,13 @@ public class LinkedListIndexCollection extends Collection {
 		}
 		size++;
 	}
-	
+	/**
+	 * Searches the collection for specified element
+	 * and returns index of the first occurrence if found
+	 * @param value - element to search for
+	 * @return  the index of the first occurrence of the specified element,
+	 *  		or -1 if this collection does not contain the element
+	 */
 	public int indexOf(Object value) {
 		ListNode temp = first;
 		for(int i = 0;i<size;++i) {
@@ -106,7 +140,12 @@ public class LinkedListIndexCollection extends Collection {
 		return -1;
 		
 	}
-	
+	/**
+	 * Removes the element at the specified index
+	 * @param 	index of the element to be removed
+	 * @throws 	IndexOutOfBoundsException if specified index
+	 * 			is not in valid range
+	 */
 	public void remove(int index) {
 		if(index<0 || index>this.size-1) {
 			throw new IndexOutOfBoundsException(
@@ -128,10 +167,62 @@ public class LinkedListIndexCollection extends Collection {
 			temp.previous.next = temp.next;
 		}
 		
-		
+		size--;
 	}
-	
-	
+	/**
+	 * Returns true if collection contains
+	 * specified element.
+	 * @param 	value of the element to search for
+	 * @return 	{@code true} if element is present
+	 * 			in the collection
+	 */
+	@Override
+	public boolean contains(Object value) {
+		ListNode temp = first;
+		for(int i = 0;i<size;++i) {
+			if(temp.equals(value)) {
+				return true;
+			}
+			temp=temp.next;
+		}
+		return false;
+	}
+	/**
+	 * Returns new array which contains
+	 * all elements from collection. Order
+	 * of element will not be changed.
+	 * @return Array with all elements from collection
+	 */
+	@Override
+	public Object[] toArray() {
+		Object[] array = new Object[size];
+		ListNode temp = first;
+		for(int i = 0;i<size;++i) {
+			array[i]=temp.value;
+			temp=temp.next;
+		}
+		return array;
+	}
+	/**
+	 * Processes every collection element individually
+	 * in a way specified by Processor argument.
+	 * @param 	processor which will process every
+	 * 			collection argument
+	 */
+	@Override
+	public void forEach(Processor processor) {
+		ListNode temp = first;
+		for(int i = 0;i<size;++i) {
+			processor.process(temp.value);
+			temp = temp.next;
+		}
+	}
+	/**
+	 * Iterates through the list to the position specified
+	 * by {@code index} and returns node at that index
+	 * @param 	index of the required element
+	 * @return	element of the list at specified index
+	 */
 	private ListNode iterateToIndex(int index) {
 		ListNode node;
 		int counter=0;
@@ -158,7 +249,7 @@ public class LinkedListIndexCollection extends Collection {
 	
 	public static void main(String[] args) {
 		ArrayIndexedCollection col = new ArrayIndexedCollection(2);
-		col.add(new Integer(20));
+		col.add(Integer.valueOf(20));
 		col.add("New York");
 		col.add("San Francisco"); // here the internal array is reallocated to 4
 		System.out.println(col.contains("New York")); // writes: true
@@ -169,9 +260,9 @@ public class LinkedListIndexCollection extends Collection {
 		LinkedListIndexedCollection col2 = new LinkedListIndexedCollection(col);
 		// This is local class representing a Processor which writes objects to System.out
 		class P extends Processor {
-		public void process(Object o) {
-		System.out.println(o);
-		}
+			public void process(Object o) {
+				System.out.println(o);
+			}
 		};
 		System.out.println("col elements:");
 		col.forEach(new P());
@@ -181,9 +272,10 @@ public class LinkedListIndexCollection extends Collection {
 		col2.forEach(new P());
 		System.out.println("col2 elements again:");
 		System.out.println(Arrays.toString(col2.toArray()));
-		System.out.println(col.contains(col2.get(1))); // true
+		System.out.println(col.contains(col2.get(1)));// true
+		System.out.println(col.get(1));
 		System.out.println(col2.contains(col.get(1))); // true
-		col.remove(new Integer(20)); // removes 20 from collection (at position 0).
+		col.remove(Integer.valueOf(20)); // removes 20 from collection (at position 0).
 		
 	}
 }

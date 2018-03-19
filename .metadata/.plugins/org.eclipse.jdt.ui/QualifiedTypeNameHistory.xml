@@ -10,7 +10,18 @@
     <fullyQualifiedTypeName name="org.junit.Assert"/>
     <fullyQualifiedTypeName name="hr.fer.zemris.java.hw01.UniqueNumbers.TreeNode"/>
     <fullyQualifiedTypeName name="hr.fer.zemris.java.hw01.UniqueNumbers"/>
-    <fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
     <fullyQualifiedTypeName name="java.text.NumberFormat"/>
     <fullyQualifiedTypeName name="java.text.ParseException"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.collections.Collection"/>
+    <fullyQualifiedTypeName name="java.lang.UnsupportedClassVersionError"/>
+    <fullyQualifiedTypeName name="java.lang.UnsupportedOperationException"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="NewProcessor"/>
+    <fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
+    <fullyQualifiedTypeName name="java.lang.Object"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.custom.collections.ArrayIndexCollection"/>
+    <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
+    <fullyQualifiedTypeName name="java.lang.IndexOutOfBoundsException"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.custom.collections.LinkedListIndexCollection"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.custom.collections.LinkedListIndexCollection.ListNode"/>
 </qualifiedTypeNameHistroy>

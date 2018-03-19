@@ -1,16 +1,16 @@
 package hr.fer.zemris.java.custom.collections;
 
-public class ArrayIndexCollection extends Collection {
+public class ArrayIndexedCollection extends Collection {
 	private final static int DEFAULT_ARRAY_CAPPACITY = 16;
 	private int size = 0;
 	private int capacity; // = DEFAULT_ARRAY_CAPPACITY
 	private Object[] elements; // = DEFAULT_ARRAY_CAPPACITY
 
-	public ArrayIndexCollection() {
+	public ArrayIndexedCollection() {
 		this(DEFAULT_ARRAY_CAPPACITY);
 	}
 
-	public ArrayIndexCollection(int initialCapacity) {
+	public ArrayIndexedCollection(int initialCapacity) {
 		if (initialCapacity < 1)
 			throw new IllegalArgumentException("Inital array size should be greater than 0");
 		
@@ -18,11 +18,11 @@ public class ArrayIndexCollection extends Collection {
 		elements = new Object[initialCapacity];
 	}
 	
-	public ArrayIndexCollection(Collection other) {
+	public ArrayIndexedCollection(Collection other) {
 		this(other, other.size());	
 	}
 
-	public ArrayIndexCollection(Collection other, int initialCapacity) {
+	public ArrayIndexedCollection(Collection other, int initialCapacity) {
 		this(initialCapacity);
 		if (other == null)
 			throw new NullPointerException("Other Collection should not be null");
@@ -75,6 +75,7 @@ public class ArrayIndexCollection extends Collection {
 	/**
 	 * Removes all elements from the collection.
 	 */
+	@Override
 	public void clear() {
 		for(int i=0;i<size;++i) {
 			elements[i]=null;
@@ -100,6 +101,23 @@ public class ArrayIndexCollection extends Collection {
 		elements[position] = value;
 		size++;
 		
+	}
+	/**
+	 * Returns true if collection contains
+	 * specified element
+	 * @param value of the element to search for
+	 * @return {@code true} if element is present
+	 * 			in the collection
+	 */
+	@Override
+	public boolean contains(Object value) {
+		for(int i = 0;i<size;++i) {
+			if(elements[i].equals(value)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	/**
 	 * Searches the collection for specified element
@@ -130,10 +148,37 @@ public class ArrayIndexCollection extends Collection {
 					"Valid range of index: 0-" +(this.size-1)+". You entered: "+index); 
 		}
 		
-		for(int i=index;i<size-1;--i) {
+		for(int i=index;i<size-1;i++) {
 			elements[i]=elements[i+1];
 		}
 		size--;
+	}
+	/**
+	 * Returns new array which contains
+	 * all elements from collection. Order
+	 * of element will not be changed.
+	 * @return Array with all elements from collection
+	 */
+	@Override
+	public Object[] toArray() {
+		Object[] array = new Object[size];
+		for(int i = 0;i<size;++i) {
+			array[i]=elements[i];
+		}
+		return array;
+	} 
+	/**
+	 * Processes every collection element individually
+	 * in a way specified by Processor argument.
+	 * @param 	processor which will process every
+	 * 			collection argument
+	 */
+	@Override
+	public void forEach(Processor processor) {
+		for(int i = 0;i<size;++i) {
+			processor.process(elements[i]);
+		}
+		
 	}
 	/**
 	 *This method will assure there is space for 
@@ -151,13 +196,4 @@ public class ArrayIndexCollection extends Collection {
 			capacity*=2;
 		}
 	}
-
-	public int getCapacity() {
-		return capacity;
-	}
-
-	public Object[] getElements() {
-		return elements;
-	}
-
 }
