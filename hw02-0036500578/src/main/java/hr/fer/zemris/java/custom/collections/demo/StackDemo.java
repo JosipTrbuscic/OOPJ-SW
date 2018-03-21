@@ -2,9 +2,18 @@ package hr.fer.zemris.java.custom.collections.demo;
 
 import hr.fer.zemris.java.custom.collections.EmptyStackException;
 import hr.fer.zemris.java.custom.collections.ObjectStack;
-
+/**
+ * Demo program for calculation of postfix expression. Program
+ * stack implementation of collection. Program expects postfix
+ * expression as command line argument
+ * @author Josip Trbuscic
+ *
+ */
 public class StackDemo {
-	
+	/*
+	 * Main method of postfix expression calculator.
+	 * @param args - postfix expression 
+	 */
 	public static void main(String[] args) {
 		
 		if(args.length != 1) {
@@ -45,8 +54,12 @@ public class StackDemo {
 		}
 		
 	}
-	
-	public static boolean isInteger(String str) {
+	/**
+	 * Returns true if specified string can be parsed as integer
+	 * @param str - string to be parsed
+	 * @return {@code true} if string can be parsed as integer, {@code false} otherwise
+	 */
+	private static boolean isInteger(String str) {
 		try {
 			Integer.parseInt(str);
 			return true;
@@ -56,7 +69,14 @@ public class StackDemo {
 		
 		
 	}
-	
+	/**
+	 * Calculates operation specified by two operands and valid operator.
+	 * @param first Integer operand
+	 * @param second Integer operand
+	 * @param operator that specifies operation between operands.
+	 * @return result of valid operation
+	 * @throws IllegalArgumentException if divisor is zero or operator is invalid.
+	 */
 	public static Integer calculate(Integer first, Integer second, String operator) {
 		if(operator.equals("+")) {
 			return Integer.valueOf(first + second);

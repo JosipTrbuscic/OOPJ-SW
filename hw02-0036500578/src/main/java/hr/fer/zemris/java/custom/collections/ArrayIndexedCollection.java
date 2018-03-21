@@ -1,6 +1,6 @@
 package hr.fer.zemris.java.custom.collections;
 /**
- * Collection which elements are stored in resizeable array. The {@code add}, {@code size} and {@code get} 
+ * Collection which elements are stored in resizable array. The {@code add}, {@code size} and {@code get} 
  * operations perform in constant time. The {@code clear}, {@code insert}, {@code remove}, {@code indexOf},
  *  {@code contains}, {@code toArray} and {@code forEach} operations require O(n) time. Each {@code ArrayIndexedCollection}
  *  has {@code capacity} which is always at least as large as size of the collection
@@ -202,6 +202,26 @@ public class ArrayIndexedCollection extends Collection {
 			processor.process(elements[i]);
 		}
 		
+	}
+	/**
+	 * Removes first instance of the specified element from this collection.
+	 * If element is not present return false and collection remains unchanged.
+	 * @param o - object to be removed
+	 * @return {@code true} if element is removed from collection, {@code false} otherwise
+	 */
+	@Override
+	public boolean remove(Object o) {
+		for(int i = 0;i<size;++i) {
+			if(elements[i].equals(o)) {
+				for(int j=i;j<size-1;j++) {
+					elements[j]=elements[j+1];
+				}
+				size--;
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	/**
 	 *This method will assure there is space for 
