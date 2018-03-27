@@ -33,7 +33,7 @@ public class Lexer {
 			return token;
 		}
 
-		if (data[currentIndex++] == '{') {
+		if (data[currentIndex] == '{') {
 			if (data[currentIndex] == '$') {
 				currentIndex++;
 				return new Token(TokenType.TAG, new ElementString("{$"));
@@ -41,7 +41,7 @@ public class Lexer {
 			throw new LexerException();
 		}
 
-		if (data[currentIndex++] == '$') {
+		if (data[currentIndex] == '$') {
 			if (data[currentIndex] == '}') {
 				currentIndex++;
 				return new Token(TokenType.TAG, new ElementString("{$"));
@@ -104,8 +104,9 @@ public class Lexer {
 	private Token stringToken() {
 		StringBuilder sb = new StringBuilder();
 		boolean escape = false;
+		boolean posTag = false;
 
-		while (currentIndex < data.length && (!Character.valueOf(data[currentIndex]).equals('{') || escape)) {
+		while (currentIndex < data.length) {
 
 			char c = data[currentIndex];
 
@@ -113,14 +114,16 @@ public class Lexer {
 				escape = true;
 				currentIndex++;
 				continue;
-			}
-
-			if (escape && c != '{' && c != '\\') {
-				throw new LexerException("Invalid String");
-			}
-			escape = false;
-			sb.append(data[currentIndex]);
-			currentIndex++;
+			} 
+			
+			if (c == '{' ) posTag = true;
+//
+//			if (escape && c != '{' && c != '\\') {
+//				throw new LexerException("Invalid String");
+//			}
+//			escape = false;
+//			sb.append(data[currentIndex]);
+//			currentIndex++;
 		}
 
 		return new Token(TokenType.TEXT, new ElementString(sb.toString()));
@@ -151,7 +154,7 @@ public class Lexer {
 	}
 
 	public static void main(String[] args) {
-		 String s = "This is sam\\{ple text.\n" + "asd{$ FOR i 1 10 1 $}\n"
+		 String s = "This is sam{ple text.\n" + "asd{$ FOR i 1 10 1 $}\n"
 		 + "This is {$= i $}-th time this message is generated.\n" + "{$END$}\n" +
 		 "{$FOR i 0 10 2 $}\n"
 		 + "sin({$=i$}^2) = {$= i i * @sin \"0.000\" @decfmt $}\n" + "{$END$}";
