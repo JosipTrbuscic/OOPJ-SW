@@ -39,14 +39,20 @@ public class SmartScriptParser {
 
 				parent.addChildNode(node);
 				lexer.setState(LexerState.TAG_STATE);
-			} else if (token.getType() == TokenType.FOR) {
+			} else if (token.getType().equals(TokenType.FOR)) {
 				node = parseFor(lexer);
 				Node parent = (Node) stack.peek();
 
 				parent.addChildNode(node);
 				stack.push(node);
-			} else if (token.getType().equals(TokenType.FOR)) {
-
+			} else if (token.getType().equals(TokenType.EMPTY)) {
+				
+				
+				
+			} else if (token.getType().equals(TokenType.END)) {
+				
+				
+				
 			}
 
 		}
@@ -55,25 +61,24 @@ public class SmartScriptParser {
 	private static ForLoopNode parseFor(Lexer lexer) {
 		Element[] parameters = new Element[4];
 		Token token;
-		
+
 		token = lexer.nextToken();
-		
+
 		if (token.getType() != TokenType.VARIABLE)
 			throw new SmartScriptParserException();
-		
-		parameters[0] =lexer.getToken().getValue();
 
-		for(int i=1;i<4;++i) {
+		parameters[0] = lexer.getToken().getValue();
+
+		for (int i = 1; i < 4; ++i) {
 			token = lexer.nextToken();
-			
-			if(token.getType() == TokenType.OPERATOR ||
-				token.getType() == TokenType.FUNCTION) {
+
+			if (token.getType() == TokenType.OPERATOR || token.getType() == TokenType.FUNCTION) {
 				throw new SmartScriptParserException();
 			}
 			parameters[i] = token.getValue();
-			
+
 		}
-		
+
 		try {
 			return new ForLoopNode((ElementVariable) parameters[0], parameters[1], parameters[2], parameters[3]);
 		} catch (NullPointerException ex) {
