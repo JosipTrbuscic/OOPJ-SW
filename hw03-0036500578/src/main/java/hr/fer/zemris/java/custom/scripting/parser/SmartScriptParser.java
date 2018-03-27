@@ -1,5 +1,6 @@
 package hr.fer.zemris.java.custom.scripting.parser;
 
+import hr.fer.zemris.java.custom.scripting.elems.Element;
 import hr.fer.zemris.java.custom.scripting.elems.ElementVariable;
 import hr.fer.zemris.java.custom.scripting.lexer.Lexer;
 import hr.fer.zemris.java.custom.scripting.lexer.LexerException;
@@ -27,43 +28,56 @@ public class SmartScriptParser {
 	public void parse(Lexer lexer) {
 		ObjectStack stack = new ObjectStack();
 		stack.push(document);
-		
-		while(lexer.getToken().getType() != TokenType.EOF) {
-			Token token = lexer.nextToken();			
+
+		while (lexer.getToken().getType() != TokenType.EOF) {
+			Token token = lexer.nextToken();
 			Node node;
-			
-			if(token.getType().equals(TokenType.TAG)) {
-				if(token.getValue().asText().equals("$}")) {
-					lexer.setState(LexerState.TEXT_STATE);
-				} else {
-					lexer.setState(LexerState.TAG_STATE);
-				}
-				continue;
-			}
-			
-			if(token.getType() == TokenType.TEXT) {
+
+			if (token.getType() == TokenType.TEXT) {
 				node = new TextNode(token.getValue().asText());
 				Node parent = (Node) stack.peek();
-				
+
 				parent.addChildNode(node);
+				lexer.setState(LexerState.TAG_STATE);
 			} else if (token.getType() == TokenType.FOR) {
-				lexer.setState(LexerState.FOR_STATE);
-				try {
-					node = new ForLoopNode((ElementVariable)lexer.nextToken().getValue()
-										, lexer.nextToken().getValue()
-										, lexer.nextToken().getValue()
-										,lexer.nextToken().getValue());
-				} catch (LexerException ex) {
-					throw new SmartScriptParserException();
-				}
-				
-			} else if(token.getType().equals(TokenType.FOR)) {
-				
-				
+				node = parseFor(lexer);
+				Node parent = (Node) stack.peek();
+
+				parent.addChildNode(node);
+				stack.push(node);
+			} else if (token.getType().equals(TokenType.FOR)) {
+
 			}
+
+		}
+	}
+
+	private static ForLoopNode parseFor(Lexer lexer) {
+		Element[] parameters = new Element[4];
+		Token token;
+		
+		token = lexer.nextToken();
+		
+		if (token.getType() != TokenType.VARIABLE)
+			throw new SmartScriptParserException();
+		
+		parameters[0] =lexer.getToken().getValue();
+
+		for(int i=1;i<4;++i) {
+			token = lexer.nextToken();
 			
+			if(token.getType() == TokenType.OPERATOR ||
+				token.getType() == TokenType.FUNCTION) {
+				throw new SmartScriptParserException();
+			}
+			parameters[i] = token.getValue();
 			
-			
+		}
+		
+		try {
+			return new ForLoopNode((ElementVariable) parameters[0], parameters[1], parameters[2], parameters[3]);
+		} catch (NullPointerException ex) {
+			throw new SmartScriptParserException();
 		}
 	}
 

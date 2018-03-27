@@ -33,44 +33,19 @@ public class Lexer {
 			return token;
 		}
 
-		if (data[currentIndex] == '{') {
-			if (data[currentIndex] == '$') {
-				currentIndex++;
-				return new Token(TokenType.TAG, new ElementString("{$"));
-			}
-			throw new LexerException();
-		}
-
-		if (data[currentIndex] == '$') {
-			if (data[currentIndex] == '}') {
-				currentIndex++;
-				return new Token(TokenType.TAG, new ElementString("{$"));
-			}
-
-			throw new LexerException();
-		}
-
 		if (state.equals(LexerState.TAG_STATE)) {
 			if (data[currentIndex] == '=') {
-				return new Token(TokenType.EMPTY, new ElementString("="));
+				return new Token(TokenType.TAG, new ElementString("="));
 			}
 
-			if (isFor()) {
-				
-				return new Token(TokenType.FOR, new ElementString("FOR"));
-			}
+			while(currentIndex < data.length)
 		}
 
 		if (state.equals(LexerState.TEXT_STATE)) {
 			return stringToken();
 		}
 		
-		if(state.equals(LexerState.FOR_STATE)) {
-			if(isVariable()) {
-				
-			}
-//			while(currentIndex<data.length && data[currentIndex] != '"' &&)
-		}
+		
 		return null;
 
 	}
@@ -102,31 +77,39 @@ public class Lexer {
 	}
 
 	private Token stringToken() {
-		StringBuilder sb = new StringBuilder();
+		
+		int startIndex = currentIndex;
 		boolean escape = false;
-		boolean posTag = false;
 
 		while (currentIndex < data.length) {
-
 			char c = data[currentIndex];
-
+			
+			if(c == '$') {
+				int endIndex = currentIndex;
+				String value = new String(data,startIndex,endIndex-startIndex+1);
+				
+				if (value.contains("{$")) {
+					currentIndex++;
+					return new Token(TokenType.TAG, new  ElementString(new String(data,startIndex,endIndex-startIndex-1).trim()));
+				}
+			}
+			
 			if (!escape && c == '\\') {
 				escape = true;
 				currentIndex++;
 				continue;
 			} 
 			
-			if (c == '{' ) posTag = true;
-//
-//			if (escape && c != '{' && c != '\\') {
-//				throw new LexerException("Invalid String");
-//			}
-//			escape = false;
-//			sb.append(data[currentIndex]);
-//			currentIndex++;
+			if (escape && c != '{' && c != '\\') {
+				throw new LexerException("Invalid String");
+			}
+			
+			escape = false;
+			currentIndex++;
 		}
+		
 
-		return new Token(TokenType.TEXT, new ElementString(sb.toString()));
+		return new Token(TokenType.TEXT, new ElementString(new String(data,startIndex,currentIndex-startIndex).trim()));
 	}
 
 	private void removeBlanks() {
@@ -154,14 +137,15 @@ public class Lexer {
 	}
 
 	public static void main(String[] args) {
-		 String s = "This is sam{ple text.\n" + "asd{$ FOR i 1 10 1 $}\n"
+		 String s = "This is sam{p$$le text.\n"
+				 + "asd            {$ FOR i 1 10 1 $}\n"
 		 + "This is {$= i $}-th time this message is generated.\n" + "{$END$}\n" +
 		 "{$FOR i 0 10 2 $}\n"
 		 + "sin({$=i$}^2) = {$= i i * @sin \"0.000\" @decfmt $}\n" + "{$END$}";
 		 System.out.println(s);
 		 Lexer lex = new Lexer(s);
 		
-		 System.out.println(lex.nextToken().getValue().asText());
+		 System.out.println(lex.nextToken().getValue().asText()+"kraj");
 		//
 		// String s2 = " asd qwe ";
 		// String[] parts = s2.split("\\s+");
