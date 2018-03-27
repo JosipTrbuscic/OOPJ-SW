@@ -10,8 +10,8 @@ package hr.fer.zemris.java.custom.collections;
 public class ArrayIndexedCollection extends Collection {
 	private final static int DEFAULT_ARRAY_CAPPACITY = 16;
 	private int size = 0;
-	private int capacity; // = DEFAULT_ARRAY_CAPPACITY
-	private Object[] elements; // = DEFAULT_ARRAY_CAPPACITY
+	private int capacity;
+	private Object[] elements;
 	/**
 	 * Constructs new {@code ArrayIndexedCollection} with initial capacity of 16
 	 */
@@ -59,6 +59,7 @@ public class ArrayIndexedCollection extends Collection {
 	
 	/**
 	 * Returns the number of elements in this collection.
+	 * @return number of elements
 	 */
 	public int size() {
 		return size;

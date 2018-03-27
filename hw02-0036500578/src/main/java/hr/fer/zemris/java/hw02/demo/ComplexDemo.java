@@ -1,7 +1,11 @@
 package hr.fer.zemris.java.hw02.demo;
 
 import hr.fer.zemris.java.hw02.ComplexNumber;
-
+/**
+ * Simple program that tests basic operations with complex numbers
+ * @author JosipTrbuscic
+ *
+ */
 public class ComplexDemo {
 
 	public static void main(String[] args) {
@@ -9,8 +13,6 @@ public class ComplexDemo {
 		ComplexNumber c2 = ComplexNumber.parse("2.5-3i");
 		ComplexNumber c3 = c1.add(ComplexNumber.fromMagnitudeAndAngle(2, 1.57)).div(c2).power(3).root(2)[1];
 		System.out.println(c3);
-		ComplexNumber c4 = null;
-		System.out.println(c1.add(c4));
 	}
 
 }

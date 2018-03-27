@@ -7,7 +7,12 @@ import static java.lang.Math.atan2;
 import static java.lang.Math.sin;
 import static java.lang.Math.cos;
 import static java.lang.Math.PI;
-
+/**
+ * This class is representation of complex number. Class offers methods for basic arithmetic operations
+ * and some more complex such as {@code power} and {@code root}. Instances of this class can be created 
+ * from polar coordinates, as ordered pair or parsed from a string.
+ * @author Josip Trbuscic
+ */
 
 public class ComplexNumber {
 	public static double THRESHOLD = 1E-4;
@@ -181,7 +186,7 @@ public class ComplexNumber {
 		return roots;
 	}
 	/**
-	 * Returns String object that represents complex number
+	 * Returns String instance that represents complex number.
 	 */
 	@Override
 	public String toString() {
@@ -223,7 +228,6 @@ public class ComplexNumber {
 		return imaginary;
 	}
 	/**
- 
 	 * @return distance of ordered pair from the origin
 	 */
 	public double getMagnitude() {

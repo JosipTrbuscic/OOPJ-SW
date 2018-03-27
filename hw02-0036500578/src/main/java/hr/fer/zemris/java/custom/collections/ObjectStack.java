@@ -1,5 +1,9 @@
 package hr.fer.zemris.java.custom.collections;
-
+/**
+ * Stack structure implemented with {@code ArrayIndexedCollection}. This class offers basic stack 
+ * operations {@code push}, {@code pop}, {@code peek}, {@code isEmpty}, {@code size} and {@code clear}.
+ * @author Josip Trbuscic
+ */
 public class ObjectStack {
 	private ArrayIndexedCollection stack;
 	/**

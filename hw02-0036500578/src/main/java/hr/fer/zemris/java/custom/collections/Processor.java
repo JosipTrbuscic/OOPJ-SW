@@ -1,13 +1,16 @@
 package hr.fer.zemris.java.custom.collections;
 /**
- * Class that is not fully implemented. Should be used as superclass for class 
- * with specific implementation.
+ * This class offers one method that is used to process one object. It's expected to extend this 
+ * class and offer proper method implementation.
  * @author Josip Trbuscic
  */
 public class Processor {
 	/**
-	 * Does nothing. Do not use
-	 * @deprecated
+	 * Processes specified object.
+	 * This implementation does nothing. 
+	 * Class extending {@code Collection} 
+	 * should offer specific implementation.
+	 * @param value - object to be processed 
 	 */
 	public void process(Object value) {
 		

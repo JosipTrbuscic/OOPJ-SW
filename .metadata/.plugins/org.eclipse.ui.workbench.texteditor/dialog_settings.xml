@@ -2,12 +2,16 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Remove" key="selection"/>
+		<item value="1st" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="1st"/>
+			<item value="st"/>
+			<item value="forE"/>
+			<item value="contains"/>
 			<item value="remove"/>
 			<item value="empty"/>
 			<item value="isEmpty"/>
@@ -19,10 +23,6 @@
 			<item value="fromImaginray"/>
 			<item value="findImaginray"/>
 			<item value="(double imaginary) {"/>
-			<item value="conjugate"/>
-			<item value="size"/>
-			<item value="Double"/>
-			<item value="Equals"/>
 		</list>
 		<list key="replacehistory">
 			<item value="fromImaginary"/>

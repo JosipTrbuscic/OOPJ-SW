@@ -7,9 +7,9 @@ package hr.fer.zemris.java.custom.collections;
  */
 public class Collection {
 	/**
-	 * Empty constructor, does nothing.
-	 * Do not use.
-	 * @deprecated
+	 * Constructs new collection. This implementation
+	 * does nothing. Class extending {@code Collection} 
+	 * should offer specific implementation.
 	 */
 	protected Collection() {
 		
@@ -23,49 +23,59 @@ public class Collection {
 		return size() == 0;
 	}
 	/**
-	 * Always returns 0.
-	 * Do not use.
-	 * @deprecated 
+	 * Returns number of elements in this collection.
+	 * This implementation always returns 0 and 
+	 * should not be used. Class extending {@code Collection} 
+	 * should offer specific implementation.
 	 */
 	public int size() {
 		return 0;
 	}
 	/**
-	 * Does nothing.
-	 * Do not use.
-	 * @deprecated
+	 * Appends specified element to the end of Collection.
+	 * This implementation does nothing. Class extending
+	 *  {@code Collection} should offer specific implementation.
+	 *  @param value - object to be added to collection
 	 */
 	public void add(Object value) {
 		
 	}
 	/**
-	 * Always returns false;
-	 * Do not use.
-	 * @deprecated
+	 * Returns true if collection contains specified element.
+	 * This implementation always returns false and should
+	 * not be used. Class extending {@code Collection} 
+	 * should offer specific implementation. 
 	 */
 	public boolean contains(Object value) {
 		return  false;
 	}
 	/**
-	 * Always returns false;
-	 * Do not use.
-	 * @deprecated
+	 * Removes first instance of the specified element from
+	 * this collection. Returns true if element is successfully
+	 * removed from collection. This implementation always
+	 * returns false and should not be used. Class extending
+	 *  {@code Collection} should offer specific implementation.
+	 *  @param value to be removed
+	 *  @return {@code true} if specified element is removed from collection.
 	 */
 	public boolean remove(Object value) {
 		return false;
 	}
 	/**
-	 * Always throws exception;
-	 * Do not use.
-	 * @deprecated
+	 * Returns new array which contains all elements from collection.
+	 * Order of element will not be changed. This implementation 
+	 * always throws {@code UnsupportedOperationException} and should
+	 * not be used. Class extending {@code Collection} should offer
+	 *  specific implementation.
 	 */
 	public Object[] toArray() {
 		throw new UnsupportedOperationException();	
 	}
 	/**
-	 * Does nothing.
-	 * Do not use.
-	 * @deprecated
+	 * Processes every collection element individually
+	 * in a way specified by Processor argument.
+	 * This implementation does nothing. Class extending
+	 *  {@code Collection} should offer specific implementation.
 	 */
 	public void forEach(Processor processor) {
 		
@@ -90,9 +100,9 @@ public class Collection {
 		other.forEach(pr);
 	}
 	/**
-	 * Does nothing.
-	 * Do not use.
-	 * @deprecated
+	 * Removes all elements from the collection.
+	 * This implementation does nothing. Class extending
+	 *  {@code Collection} should offer specific implementation.
 	 */
 	public void clear() {
 		 

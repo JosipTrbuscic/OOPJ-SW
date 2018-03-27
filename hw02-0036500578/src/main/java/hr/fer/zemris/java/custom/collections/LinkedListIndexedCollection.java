@@ -1,7 +1,5 @@
 package hr.fer.zemris.java.custom.collections;
 
-import java.util.Arrays;
-
 /**
  * Collection  implemented as doubly linked list. The {@code add}, {@code size} and {@code clear} 
  * operations perform in constant time. The {@code get}, {@code insert} and {@code remove} operations run in n/2 +1 complexity.
@@ -39,6 +37,7 @@ public class LinkedListIndexedCollection extends Collection {
 	}
 	/**
 	 * Returns the number of elements in this collection.
+	 * @return number of elements
 	 */
 	public int size() {
 		return size;
