@@ -1,6 +1,7 @@
 package hr.fer.zemris.java.custom.scripting.lexer;
 
 public enum LexerState {
-	BASIC,
-	EXTENDED;
+	TEXT_STATE,
+	TAG_STATE,
+	FOR_STATE;
 }

@@ -1,16 +1,18 @@
 package hr.fer.zemris.java.custom.scripting.lexer;
 
+import hr.fer.zemris.java.custom.scripting.elems.Element;
+
 public class Token {
 	private TokenType type;
-	private Object value;
+	private Element value;
 	
-	public Token(TokenType type, Object value) {
+	public Token(TokenType type, Element value) {
 		this.type = type;
 		this.value = value;
 		
 	}
 	
-	public Object getValue() {
+	public Element getValue() {
 		
 		return value;
 	}
