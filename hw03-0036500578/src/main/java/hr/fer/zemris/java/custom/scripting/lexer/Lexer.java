@@ -1,14 +1,5 @@
 package hr.fer.zemris.java.custom.scripting.lexer;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import hr.fer.zemris.java.custom.scripting.elems.Element;
-import hr.fer.zemris.java.custom.scripting.elems.ElementConstantDouble;
-import hr.fer.zemris.java.custom.scripting.elems.ElementConstantInteger;
-import hr.fer.zemris.java.custom.scripting.elems.ElementFunction;
-import hr.fer.zemris.java.custom.scripting.elems.ElementOperator;
-import hr.fer.zemris.java.custom.scripting.elems.ElementString;
 import hr.fer.zemris.java.custom.scripting.lexer.*;
 
 public class Lexer {
@@ -58,41 +49,38 @@ public class Lexer {
 
 		char c = data[currentIndex];
 
-		Token token = null;
-
 		if (checkTagEnd()) {
 			currentIndex += 2;
-			return new Token(TokenType.TAG, new String("$}"));
+			return new Token(TokenType.EOT, new String("$}"));
 			
-		} else if (c == '@') {
-			if (currentIndex + 1 < data.length && Character.isLetter(data[currentIndex + 1])) {
-				String ident = getIdent();
-				return new Token(TokenType.FUNCTION, "@" + ident);
-			}
-
+		} else if (c == '@' && currentIndex + 1 < data.length && Character.isLetter(data[currentIndex + 1])) {
+			currentIndex++;
+			String ident = getIdent();
+			return new Token(TokenType.FUNCTION, "@" + ident);
 		} else if (c == '"') {
-			token = getTagString();
+			return new Token(TokenType.TEXT,getTagString());
 			
 		} else if (Character.isLetter(c)) {
 			String ident = getIdent();
-			return  new Token(TokenType.IDENT, ident);
+			return  new Token(TokenType.VARIABLE, ident);
 			
-		} else if (Character.isDigit(c) || c == '-') {
-			return getNumberToken();
-			
-		} else if (isOperator()) {
+		} else if (Character.isDigit(c) ) {
+				return getNumberToken();
+		}else if(c == '-'){
+			if(currentIndex+1 < data.length && Character.isDigit(data[currentIndex+1])) {
+				return getNumberToken();
+			}else {
+				return new Token(TokenType.OPERATOR, new String("-"));
+			}
+		}else if (isOperator()) {
 			Character operator = Character.valueOf(data[currentIndex++]);
-			token = new Token(TokenType.SYMBOL, new String(operator.toString()));
+			return new Token(TokenType.OPERATOR, new String(operator.toString()));
 			
-		}else {
-			while(currentIndex < data.length && c)
+		} else {
+			Character symbol = Character.valueOf(data[currentIndex++]);
+			return new Token(TokenType.SYMBOL, new String(symbol.toString()));
 		}
-
-		if (token == null) {
-			throw new LexerException("Invalid tag Expression");
-		}
-		return token;
-
+				
 	}
 
 	private boolean checkTagEnd() {
@@ -104,6 +92,15 @@ public class Lexer {
 		}
 		return false;
 	}
+	
+	private boolean tagStart() {
+		char c = data[currentIndex];
+		
+		if (c == '{' && currentIndex + 1 < data.length && data[currentIndex + 1] == '$') {
+			return true;
+		}
+		return false;
+	}
 
 	private Token getNumberToken() {
 		int startIndex = currentIndex;
@@ -111,12 +108,8 @@ public class Lexer {
 		boolean decimal = false;
 
 		if (data[currentIndex] == '-') {
-
 			prefix = -1;
 			currentIndex++;
-			
-			if (currentIndex == data.length && !Character.isDigit(data[currentIndex]))
-				return null;
 		}
 
 		while (currentIndex < data.length) {
@@ -126,10 +119,10 @@ public class Lexer {
 				String s = new String(data, startIndex, currentIndex - startIndex);
 
 				if (decimal) {
-					return new Token(TokenType.DOUBLE, new ElementConstantDouble(prefix*Double.parseDouble(s)));
+					return new Token(TokenType.DOUBLE, prefix*Double.parseDouble(s));
 					
 				} else {
-					return new Token(TokenType.INTEGER, new ElementConstantInteger(prefix*Integer.parseInt(s)));
+					return new Token(TokenType.INTEGER, prefix*Integer.parseInt(s));
 				}
 
 			}
@@ -138,20 +131,17 @@ public class Lexer {
 				decimal = true;
 
 			} else if (!Character.isDigit(c)) {
-				String s = new String(data,startIndex,currentIndex-startIndex+1): 
-				throw new LexerException("Expected number. Got "+s);
+				break;
 			}
-
 			currentIndex++;
 		}
-
-		return null;
-
+		String s = new String(data,startIndex,currentIndex-startIndex+1);
+		throw new LexerException("Expected number. Got "+s);
 	}
 
 	private String getIdent() {
 		int startIndex = currentIndex;
-
+		
 		while (currentIndex < data.length) {
 			char c = data[currentIndex];
 
@@ -165,24 +155,19 @@ public class Lexer {
 			currentIndex++;
 		}
 
-		currentIndex = startIndex;
-		return null;
+		throw new LexerException("Invalid identificator");
 	}
 
-	private Token getTagString() {
+	private String getTagString() {
 		boolean escape = false;
 		int startIndex = currentIndex++;
-
-		if (currentIndex == data.length && !Character.isLetter(data[currentIndex]))
-			return null;
 
 		while (currentIndex < data.length) {
 			char c = data[currentIndex];
 
 			if (!escape && c == '"') {
 				currentIndex++;
-				return new Token(TokenType.TEXT,
-						new ElementFunction(new String(data, startIndex, currentIndex - startIndex).replace("\\", "")));
+				return new String(data, startIndex, currentIndex - startIndex).replace("\\", "");
 			}
 
 			if (!escape && c == '\\') {
@@ -198,54 +183,15 @@ public class Lexer {
 			escape = false;
 			currentIndex++;
 		}
-		currentIndex = startIndex;
-		return null;
-	}
-
-	private boolean isFor() {
-		if (currentIndex > data.length - 3)
-			return false;
-		int temp = currentIndex;
-
-		String matcher = "for";
-
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < 3; ++i) {
-			sb.append(data[temp++]);
-		}
-
-		if (matcher.equals(sb.toString().toLowerCase())) {
-			currentIndex += 3;
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean isEnd() {
-		if (currentIndex > data.length - 3)
-			return false;
-
-		int temp = currentIndex;
-		String matcher = "end";
-
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < 3; ++i) {
-			sb.append(data[temp++]);
-		}
-
-		if (matcher.equals(sb.toString().toLowerCase())) {
-			currentIndex += 3;
-			return true;
-		}
-
-		return false;
+		String s = new String(data, startIndex, currentIndex - startIndex);
+		throw new LexerException(s+" is invalid tag string.");
 	}
 
 	private boolean isOperator() {
 		Character c = Character.valueOf(data[currentIndex]);
 		String operators = "+-*^\\";
 		if (operators.contains(c.toString())) {
+			if(currentIndex < data.length && (data[currentIndex+1] == '$'));
 			return true;
 		}
 		return false;
@@ -254,12 +200,16 @@ public class Lexer {
 	private Token getTextToken() {
 		int startIndex = currentIndex;
 		boolean escape = false;
-
+		
+		if(tagStart()) {
+			currentIndex+=2;
+			return new Token(TokenType.SOT, new String("{$"));
+		}
+		
 		while (currentIndex < data.length) {
 			char c = data[currentIndex];
 
 			if (c == '{' && currentIndex + 1 < data.length && data[currentIndex + 1] == '$') {
-				currentIndex += 2;
 				return new Token(TokenType.TEXT, new String(data, startIndex, currentIndex - startIndex));
 			}
 
@@ -291,28 +241,31 @@ public class Lexer {
 				break;
 		}
 	}
+	
 
 	public static void main(String[] args) {
-		String s = "This is sam{p$$le text.\n" + "{$ FOR i @sin \"Ovo je \\\"citat\\\"\" 1 $}\n"
+		String s = 
+				"This is sam{p$$le text."
+		+ "{$ FOR i @sin \"Ovo je \\\"citat\\\"\" 1 $}\n"
 				+ "This is {$= i $}-th time this message is generated.\n" + "{$END$}\n" + "{$FOR i 0 10 2 $}\n"
 				+ "sin({$=i$}^2) = {$= i i * @sin \"0.000\" @decfmt $}\n" + "{$END$}";
 		System.out.println(s);
 		Lexer lex = new Lexer(s);
 		System.out.println("-----------------------------");
-		System.out.println(lex.nextToken().getValue().asText() + " prvi");
-		lex.setState(LexerState.TAG_STATE);
-		System.out.println(lex.nextToken().getValue().asText() + " drugi");
-		System.out.println(lex.nextToken().getValue().asText() + " treci");
-		System.out.println(lex.nextToken().getValue().asText() + " cetvrti");
-		System.out.println(lex.nextToken().getValue().asText() + " peti");
-		System.out.println(lex.nextToken().getValue().asText() + " sesti");
-		System.out.println(lex.nextToken().getValue().asText() + " sedmi");
-		lex.setState(LexerState.TEXT_STATE);
-		System.out.println(lex.nextToken().getValue().asText() + " osmi");
-		lex.setState(LexerState.TAG_STATE);
-		System.out.println(lex.nextToken().getValue().asText() + " deveti");
-		System.out.println(lex.nextToken().getValue().asText() + " deseti");
-		System.out.println(lex.nextToken().getValue().asText() + " jedanaesti");
+		System.out.println(lex.nextToken().getValue() + " prvi");
+		System.out.println(lex.nextToken().getValue() + " drugi");
+		
+//		System.out.println(lex.nextToken().getValue() + " treci");
+//		System.out.println(lex.nextToken().getValue()+ " cetvrti");
+//		System.out.println(lex.nextToken().getValue() + " peti");
+//		System.out.println(lex.nextToken().getValue() + " sesti");
+//		System.out.println(lex.nextToken().getValue() + " sedmi");
+//		lex.setState(LexerState.TEXT_STATE);
+//		System.out.println(lex.nextToken().getValue() + " osmi");
+//		lex.setState(LexerState.TAG_STATE);
+//		System.out.println(lex.nextToken().getValue() + " deveti");
+//		System.out.println(lex.nextToken().getValue() + " deseti");
+//		System.out.println(lex.nextToken().getValue() + " jedanaesti");
 		//
 		// String s2 = " asd qwe ";
 		// String[] parts = s2.split("\\s+");

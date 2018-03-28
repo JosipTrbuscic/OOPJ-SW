@@ -13,6 +13,7 @@ public class Node {
 	}
 	
 	public int numberOfChildren() {
+		if(nodesArray==null) return 0; 
 		return nodesArray.size();
 	}
 	

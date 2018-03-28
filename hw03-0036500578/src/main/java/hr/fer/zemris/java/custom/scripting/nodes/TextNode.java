@@ -1,13 +1,15 @@
 package hr.fer.zemris.java.custom.scripting.nodes;
 
+import hr.fer.zemris.java.custom.scripting.elems.ElementString;
+
 public class TextNode extends Node {
-	private String text;
+	private ElementString text;
 	
-	public TextNode(String text) {
+	public TextNode(ElementString text) {
 		this.text = text;
 	}
 	
-	public String getText() {
+	public ElementString getText() {
 		return text;
 	}
 }

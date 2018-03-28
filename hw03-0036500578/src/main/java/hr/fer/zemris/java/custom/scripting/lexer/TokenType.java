@@ -4,18 +4,14 @@ public enum TokenType {
 
 	EOF,
 	SYMBOL,
-	IDENT,
-	FOR,
-	TAG,
-	END_TAG,
-	EMPTY,
+	SOT,
+	EOT,
 	TEXT,
 	VARIABLE, 
 	INTEGER,
 	DOUBLE,
 	OPERATOR,
-	FUNCTION,
-	END;
+	FUNCTION;
 	
 	
 }

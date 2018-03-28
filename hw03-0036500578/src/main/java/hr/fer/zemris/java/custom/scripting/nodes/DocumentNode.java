@@ -1,12 +1,11 @@
 package hr.fer.zemris.java.custom.scripting.nodes;
 
+import hr.fer.zemris.java.custom.scripting.elems.ElementString;
+
 public class DocumentNode extends Node {
-	private String document;
 	
-	public DocumentNode(String documnet) {
-		if(documnet == null) throw new NullPointerException("Document cannot be null");
-		
-		this.document = documnet;
+	public DocumentNode() {
+		super();
 	}
 	
 	
