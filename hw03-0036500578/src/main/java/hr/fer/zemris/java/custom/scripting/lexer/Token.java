@@ -4,15 +4,15 @@ import hr.fer.zemris.java.custom.scripting.elems.Element;
 
 public class Token {
 	private TokenType type;
-	private Element value;
+	private Object value;
 	
-	public Token(TokenType type, Element value) {
+	public Token(TokenType type, Object value) {
 		this.type = type;
 		this.value = value;
 		
 	}
 	
-	public Element getValue() {
+	public Object getValue() {
 		
 		return value;
 	}
