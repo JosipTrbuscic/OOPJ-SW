@@ -1,6 +1,5 @@
 package hr.fer.zemris.java.custom.scripting.parser;
 
-import java.util.Arrays;
 import java.util.EmptyStackException;
 
 import hr.fer.zemris.java.custom.scripting.elems.Element;
@@ -11,6 +10,7 @@ import hr.fer.zemris.java.custom.scripting.elems.ElementOperator;
 import hr.fer.zemris.java.custom.scripting.elems.ElementString;
 import hr.fer.zemris.java.custom.scripting.elems.ElementVariable;
 import hr.fer.zemris.java.custom.scripting.lexer.Lexer;
+import hr.fer.zemris.java.custom.scripting.lexer.LexerException;
 import hr.fer.zemris.java.custom.scripting.lexer.LexerState;
 import hr.fer.zemris.java.custom.scripting.lexer.Token;
 import hr.fer.zemris.java.custom.scripting.lexer.TokenType;
@@ -38,7 +38,14 @@ public class SmartScriptParser {
 		stack.push(document);
 
 		while (true) {
-			Token token = lexer.nextToken();
+			Token token;
+			
+			try {
+				token = lexer.nextToken();
+			}catch(LexerException ex){
+				throw new SmartScriptParserException("");
+			}
+			
 			Node node;
 
 			if (token.getType().equals(TokenType.EOF)) {
@@ -64,6 +71,10 @@ public class SmartScriptParser {
 				throw new SmartScriptParserException("Invalid document");
 			}
 		}
+		
+		if(stack.size()!=1) {
+			throw new SmartScriptParserException("Too many END tags");
+		}
 
 	}
 
@@ -71,15 +82,19 @@ public class SmartScriptParser {
 		ArrayIndexedCollection params = new ArrayIndexedCollection();
 		Node node;
 		
-		Token token = lexer.nextToken();
-		while (!token.getType().equals(TokenType.EOT)) {
-			params.add(token);
-			token = lexer.nextToken();
+		try {
+			Token token = lexer.nextToken();
+			while (!token.getType().equals(TokenType.EOT)) {
+				params.add(token);
+				token = lexer.nextToken();
+			}
+		}catch(LexerException ex) {
+			throw new SmartScriptParserException("Invalid tag expression.");
 		}
 
 		Token tagName = (Token) params.get(0);
 
-		if (tagName.getValue().equals("=")) {
+		if (tagName.getValue().equals("=") || tagName.getType().equals(TokenType.VARIABLE)) {
 			node = parseEmptyTag(params);
 			
 			Node parent = (Node) stack.peek();
@@ -115,29 +130,13 @@ public class SmartScriptParser {
 	private Node parseEmptyTag(ArrayIndexedCollection params) {
 		Element[] elements = new Element[params.size()];
 
-		for (int i = 1, size = params.size(); i < size; ++i) {
+		for (int i = 0, size = params.size(); i < size; ++i) {
 			Token token = (Token) params.get(i);
-
-			if (token.getType().equals(TokenType.DOUBLE)) {
-				elements[i] = new ElementConstantDouble((Double) token.getValue());
-				
-			} else if (token.getType().equals(TokenType.INTEGER)) {
-				elements[i] = new ElementConstantInteger((Integer) token.getValue());
-				
-			} else if (token.getType().equals(TokenType.FUNCTION)) {
-				elements[i] = new ElementFunction((String) token.getValue());
-				
-			} else if (token.getType().equals(TokenType.OPERATOR)) {
-				elements[i] = new ElementOperator((String) token.getValue());
-				
-			} else if (token.getType().equals(TokenType.TEXT)) {
+			
+			if(i==0 && token.getValue().equals("=")) {
 				elements[i] = new ElementString((String) token.getValue());
-				
-			} else if (token.getType().equals(TokenType.VARIABLE)) {
-				elements[i] = new ElementVariable((String) token.getValue());
-				
-			} else {
-				throw new SmartScriptParserException("Illegal Empty tag argument");
+			}else {
+				elements[i] = elementCreator(token);
 			}
 		}
 		
@@ -157,13 +156,13 @@ public class SmartScriptParser {
 
 			if (params.size() == 4) {;
 
-				return new ForLoopNode((ElementVariable) first.getValue(), (Element) second.getValue(),
-						(Element) third.getValue());
+				return new ForLoopNode((ElementVariable) elementCreator(first), elementCreator(second),
+						(Element) elementCreator(third));
 			} else {
 				fourth = (Token) params.get(4);
 
-				return new ForLoopNode((ElementVariable) first.getValue(), (Element) second.getValue(),
-						(Element) third.getValue(), (Element) fourth.getValue());
+				return new ForLoopNode((ElementVariable) elementCreator(first), elementCreator(second),
+						(Element) elementCreator(third), (Element) elementCreator(fourth));
 			}
 		}
 		throw new SmartScriptParserException("Invalid FOR parameters");
@@ -175,7 +174,7 @@ public class SmartScriptParser {
 		for (int i = 1; i < size; ++i) {
 			Token token = (Token) params.get(i);
 
-			if (i == 1 && token.getType().equals(TokenType.VARIABLE)) {
+			if (i == 1 && !token.getType().equals(TokenType.VARIABLE)) {
 				throw new SmartScriptParserException("Invalid FOR argument");
 			}
 
@@ -187,7 +186,31 @@ public class SmartScriptParser {
 		return true;
 	}
 	
-	
+	private Element elementCreator(Token token) {
+		if (token.getType().equals(TokenType.DOUBLE)) {
+			return new ElementConstantDouble((Double) token.getValue());
+			
+		} else if (token.getType().equals(TokenType.INTEGER)) {
+			return new ElementConstantInteger((Integer) token.getValue());
+			
+		} else if (token.getType().equals(TokenType.FUNCTION)) {
+			return new ElementFunction((String) token.getValue());
+			
+		} else if (token.getType().equals(TokenType.OPERATOR)) {
+			return new ElementOperator((String) token.getValue());
+			
+		} else if (token.getType().equals(TokenType.TEXT)) {
+			return new ElementString((String) token.getValue());
+			
+		} else if (token.getType().equals(TokenType.VARIABLE)) {
+			return new ElementVariable((String) token.getValue());
+			
+		} else {
+			throw new SmartScriptParserException("Illegal Empty tag argument");
+		}
+		
+		
+	}
 	
 	public DocumentNode getDocumentNode() {
 		return document;

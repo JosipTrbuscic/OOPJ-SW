@@ -1,13 +1,24 @@
 package hr.fer.zemris.java.custom.scripting.lexer;
 
-import hr.fer.zemris.java.custom.scripting.lexer.*;
+import hr.fer.zemris.java.hw03.prob1.LexerException;
 
+/**
+ * Simple lexer used to generate tokens from given string. Lexer will analize
+ * string reading character by character and group them accordingly.
+ * @author Josip Trbuscic
+ *
+ */
 public class Lexer {
-	private char[] data;
-	private Token token;
-	private int currentIndex;
-	private LexerState state;
+	private char[] data; //Array where string is stored.
+	private Token token; //Token that was last read
+	private int currentIndex; //Current position in array
+	private LexerState state; //State of lexer
 
+	/**
+	 * Constructs new {@code Lexer} with given string
+	 * that will be processed
+	 * @param text - String to process
+	 */
 	public Lexer(String text) {
 		if (text == null)
 			throw new IllegalArgumentException("Null cannot be processed by lexer");
@@ -17,6 +28,12 @@ public class Lexer {
 		state = LexerState.TEXT_STATE;
 	}
 
+	/**
+	 * Extracts next token from source string  
+	 * @return next found token
+	 * @throws LexerException if character sequence doesn't
+	 * 			represent valid token
+	 */
 	public Token nextToken() {
 		if (token != null && token.getType() == TokenType.EOF)
 			throw new LexerException("No tokens available");
@@ -33,7 +50,9 @@ public class Lexer {
 		}
 
 	}
-
+	/**
+	 * @return previous token
+	 */
 	public Token getToken() {
 		return token;
 	}
@@ -43,7 +62,14 @@ public class Lexer {
 			throw new NullPointerException("Must specify valid lexer state");
 		this.state = state;
 	}
-
+	
+	/**
+	 * Processes character sequence in {@code TAG_STATE} lexer state and returns next
+	 * valid token.
+	 * @return next valid token
+	 * @throws LexerException if character sequence doesn't
+	 * 			represent valid token
+	 */
 	private Token getTagToken() {
 		removeBlanks();
 
@@ -55,20 +81,20 @@ public class Lexer {
 			
 		} else if (c == '@' && currentIndex + 1 < data.length && Character.isLetter(data[currentIndex + 1])) {
 			currentIndex++;
-			String ident = getIdent();
+			String ident = getVariable();
 			return new Token(TokenType.FUNCTION, "@" + ident);
 		} else if (c == '"') {
 			return new Token(TokenType.TEXT,getTagString());
 			
 		} else if (Character.isLetter(c)) {
-			String ident = getIdent();
+			String ident = getVariable();
 			return  new Token(TokenType.VARIABLE, ident);
 			
 		} else if (Character.isDigit(c) ) {
-				return getNumberToken();
+				return getNumber();
 		}else if(c == '-'){
 			if(currentIndex+1 < data.length && Character.isDigit(data[currentIndex+1])) {
-				return getNumberToken();
+				return getNumber();
 			}else {
 				return new Token(TokenType.OPERATOR, new String("-"));
 			}
@@ -83,16 +109,24 @@ public class Lexer {
 				
 	}
 
+	/**
+	 * If next two characters in string are "&}" returns true
+	 * @return true if character sequence represents
+	 * 			end of {@code TAG_STATE}, false otherwise
+	 */
 	private boolean checkTagEnd() {
 		if (data[currentIndex] == '$') {
 			if ((currentIndex + 1 < data.length) && data[currentIndex + 1] == '}') {
-				currentIndex++;
 				return true;
 			}
 		}
 		return false;
 	}
-	
+	/**
+	 * If next two characters in string are "{$" returns true
+	 * @return true if character sequence represents
+	 * 			start of {@code TAG_STATE}, false otherwise
+	 */
 	private boolean tagStart() {
 		char c = data[currentIndex];
 		
@@ -101,14 +135,18 @@ public class Lexer {
 		}
 		return false;
 	}
-
-	private Token getNumberToken() {
+	
+	/**
+	 * Private method that returns next token which
+	 * represents sequence of digits.
+	 * @return number token 
+	 * @throws LexerException if sequence does not represent number
+	 */
+	private Token getNumber() {
 		int startIndex = currentIndex;
-		int prefix = 1;
 		boolean decimal = false;
 
 		if (data[currentIndex] == '-') {
-			prefix = -1;
 			currentIndex++;
 		}
 
@@ -119,10 +157,10 @@ public class Lexer {
 				String s = new String(data, startIndex, currentIndex - startIndex);
 
 				if (decimal) {
-					return new Token(TokenType.DOUBLE, prefix*Double.parseDouble(s));
+					return new Token(TokenType.DOUBLE,Double.parseDouble(s));
 					
 				} else {
-					return new Token(TokenType.INTEGER, prefix*Integer.parseInt(s));
+					return new Token(TokenType.INTEGER, Integer.parseInt(s));
 				}
 
 			}
@@ -138,8 +176,15 @@ public class Lexer {
 		String s = new String(data,startIndex,currentIndex-startIndex+1);
 		throw new LexerException("Expected number. Got "+s);
 	}
-
-	private String getIdent() {
+	
+	/**
+	 * Private method that returns String which
+	 * represents valid variable name.
+	 * @return variable name 
+	 * @throws LexerException if sequence does not represent 
+	 *			valid variable name
+	 */
+	private String getVariable() {
 		int startIndex = currentIndex;
 		
 		while (currentIndex < data.length) {
@@ -209,7 +254,7 @@ public class Lexer {
 		while (currentIndex < data.length) {
 			char c = data[currentIndex];
 
-			if (c == '{' && currentIndex + 1 < data.length && data[currentIndex + 1] == '$') {
+			if (c == '{' && currentIndex + 1 < data.length && data[currentIndex + 1] == '$' && !escape) {
 				return new Token(TokenType.TEXT, new String(data, startIndex, currentIndex - startIndex));
 			}
 
@@ -241,41 +286,4 @@ public class Lexer {
 				break;
 		}
 	}
-	
-
-	public static void main(String[] args) {
-		String s = 
-				"This is sam{p$$le text."
-		+ "{$ FOR i @sin \"Ovo je \\\"citat\\\"\" 1 $}\n"
-				+ "This is {$= i $}-th time this message is generated.\n" + "{$END$}\n" + "{$FOR i 0 10 2 $}\n"
-				+ "sin({$=i$}^2) = {$= i i * @sin \"0.000\" @decfmt $}\n" + "{$END$}";
-		System.out.println(s);
-		Lexer lex = new Lexer(s);
-		System.out.println("-----------------------------");
-		System.out.println(lex.nextToken().getValue() + " prvi");
-		System.out.println(lex.nextToken().getValue() + " drugi");
-		
-//		System.out.println(lex.nextToken().getValue() + " treci");
-//		System.out.println(lex.nextToken().getValue()+ " cetvrti");
-//		System.out.println(lex.nextToken().getValue() + " peti");
-//		System.out.println(lex.nextToken().getValue() + " sesti");
-//		System.out.println(lex.nextToken().getValue() + " sedmi");
-//		lex.setState(LexerState.TEXT_STATE);
-//		System.out.println(lex.nextToken().getValue() + " osmi");
-//		lex.setState(LexerState.TAG_STATE);
-//		System.out.println(lex.nextToken().getValue() + " deveti");
-//		System.out.println(lex.nextToken().getValue() + " deseti");
-//		System.out.println(lex.nextToken().getValue() + " jedanaesti");
-		//
-		// String s2 = " asd qwe ";
-		// String[] parts = s2.split("\\s+");
-		// for(String part:parts) {
-		// System.out.println(part);
-		// }
-
-		// String var = "32";
-		// System.out.println(isVariable(var));
-
-	}
-
 }
