@@ -1,4 +1,4 @@
-package hr.fer.zemris.java.custom.scripting.nodes;
+package hr.fer.zemris.java.custom.scripting.collections;
 /**
  * Stack structure implemented with {@code ArrayIndexedCollection}. This class offers basic stack 
  * operations {@code push}, {@code pop}, {@code peek}, {@code isEmpty}, {@code size} and {@code clear}.

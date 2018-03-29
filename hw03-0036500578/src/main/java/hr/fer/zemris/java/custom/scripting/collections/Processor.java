@@ -1,4 +1,4 @@
-package hr.fer.zemris.java.custom.scripting.nodes;
+package hr.fer.zemris.java.custom.scripting.collections;
 /**
  * This class offers one method that is used to process one object. It's expected to extend this 
  * class and offer proper method implementation.

@@ -1,4 +1,4 @@
-package hr.fer.zemris.java.custom.scripting.nodes;
+package hr.fer.zemris.java.custom.scripting.collections;
 /**
  * Collection that is not fully implemented. Should be used as superclass for class 
  * with specific implementation.

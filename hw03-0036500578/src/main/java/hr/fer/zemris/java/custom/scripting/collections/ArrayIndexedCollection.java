@@ -1,4 +1,4 @@
-package hr.fer.zemris.java.custom.scripting.nodes;
+package hr.fer.zemris.java.custom.scripting.collections;
 
 /**
  * Collection which elements are stored in resizable array. The {@code add},

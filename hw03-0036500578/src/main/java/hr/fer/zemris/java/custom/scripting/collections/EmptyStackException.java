@@ -1,4 +1,4 @@
-package hr.fer.zemris.java.custom.scripting.nodes;
+package hr.fer.zemris.java.custom.scripting.collections;
 /**
  * Thrown to indicate that program tried to access the element of an empty stack
  * @author Josip Trbuscic

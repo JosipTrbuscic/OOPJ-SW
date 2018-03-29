@@ -7,7 +7,7 @@ package hr.fer.zemris.java.custom.scripting.elems;
  */
 public class ElementConstantDouble extends Element {
 
-	private double value; //Store value of double type
+	private double value; //Stores value of double type
 	
 	/**
 	 * Constructs new {@code ElementConstantDouble}

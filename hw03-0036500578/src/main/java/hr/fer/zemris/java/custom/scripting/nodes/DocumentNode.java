@@ -1,9 +1,14 @@
 package hr.fer.zemris.java.custom.scripting.nodes;
 
-import hr.fer.zemris.java.custom.scripting.elems.ElementString;
-
+/**
+ * This class represents head of parsed document tree
+ * @author Josip Trbuscic
+ *
+ */
 public class DocumentNode extends Node {
-	
+	/**
+	 * Constructs new {@code DocumentNode}
+	 */
 	public DocumentNode() {
 		super();
 	}

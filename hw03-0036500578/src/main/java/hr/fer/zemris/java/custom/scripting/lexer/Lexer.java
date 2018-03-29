@@ -202,7 +202,14 @@ public class Lexer {
 
 		throw new LexerException("Invalid identificator");
 	}
-
+	
+	/**
+	 * Private method that returns next character which
+	 * represents valid String in {@code TAG_STATE} lexer state;
+	 * @return valid string  
+	 * @throws LexerException if sequence does not represent
+	 *			valid string
+	 */
 	private String getTagString() {
 		boolean escape = false;
 		int startIndex = currentIndex++;
@@ -212,7 +219,7 @@ public class Lexer {
 
 			if (!escape && c == '"') {
 				currentIndex++;
-				return new String(data, startIndex, currentIndex - startIndex).replace("\\", "");
+				return new String(data, startIndex, currentIndex - startIndex);
 			}
 
 			if (!escape && c == '\\') {
@@ -231,7 +238,11 @@ public class Lexer {
 		String s = new String(data, startIndex, currentIndex - startIndex);
 		throw new LexerException(s+" is invalid tag string.");
 	}
-
+	
+	/**
+	 * Returns true if next character is valid operator
+	 * @return true if valid operator is found, false otherwise
+	 */
 	private boolean isOperator() {
 		Character c = Character.valueOf(data[currentIndex]);
 		String operators = "+-*^\\";
@@ -242,6 +253,13 @@ public class Lexer {
 		return false;
 	}
 
+	/**
+	 * Private method that returns next token which
+	 * represents String which contains of all string characters
+	 * until start of tag or end of string is reached.
+	 * @return Document text token 
+	 * @throws LexerException if sequence is not valid word
+	 */
 	private Token getTextToken() {
 		int startIndex = currentIndex;
 		boolean escape = false;
@@ -265,7 +283,7 @@ public class Lexer {
 			}
 
 			if (escape && c != '{' && c != '\\') {
-				throw new LexerException("Invalid String");
+				throw new LexerException("Invalid document text");
 			}
 
 			escape = false;
@@ -275,6 +293,10 @@ public class Lexer {
 		return new Token(TokenType.TEXT, new String(data, startIndex, currentIndex - startIndex));
 	}
 
+	/**
+	 * Moves current index over any whitespaces, tabulators or 
+	 * new line characters.
+	 */
 	private void removeBlanks() {
 
 		while (currentIndex < data.length) {

@@ -1,0 +1,3 @@
+This is start of the document
+\{$ Thisisnotatag$}{$ this is empty tag$}
+everything else...
