@@ -1,3 +1,5 @@
 This is start of the document
 \{$ Thisisnotatag$}{$ this is empty tag$}
 everything else...
+for tag follows
+{$ for variable "String" -3.14$}

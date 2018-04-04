@@ -125,22 +125,15 @@ public class SmartScriptParser {
 		}
 
 		Token tagName = (Token) params.get(0);
-
-		if (tagName.getValue().equals("=") || tagName.getType().equals(TokenType.VARIABLE)) {
-			node = parseEmptyTag(params);
-
-			Node parent = (Node) stack.peek();
-
-			parent.addChildNode(node);
-		} else if (tagName.getValue().toString().toLowerCase().equals("for")) {
+		
+		if (tagName.getValue().toString().toLowerCase().equals("for")) {
 			node = parseForTag(params);
 
 			Node parent = (Node) stack.peek();
 
 			parent.addChildNode(node);
 			stack.push(node);
-
-		} else if (tagName.getValue().toString().toLowerCase().equals("end")) {
+		}else if (tagName.getValue().toString().toLowerCase().equals("end")) {
 			if (params.size() != 1)
 				throw new SmartScriptParserException();
 
@@ -153,7 +146,13 @@ public class SmartScriptParser {
 				throw new SmartScriptParserException("Too many END tags");
 			}
 
-		} else {
+		} else if (tagName.getValue().equals("=") || tagName.getType().equals(TokenType.VARIABLE)) {
+			node = parseEmptyTag(params);
+
+			Node parent = (Node) stack.peek();
+
+			parent.addChildNode(node);
+		}  else {
 			throw new SmartScriptParserException();
 		}
 

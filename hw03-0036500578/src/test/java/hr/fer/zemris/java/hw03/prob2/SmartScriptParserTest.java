@@ -33,12 +33,35 @@ public class SmartScriptParserTest {
 	}
 
 	@Test
-	public void test() {
+	public void parseTest() {
 		String s = loader("test2.txt");
 		
 		SmartScriptParser test = new SmartScriptParser(s);
 		
-		SmartScriptTester.createOriginalDocumentBody(test.getDocumentNode());
+		String recreated = SmartScriptTester.createOriginalDocumentBody(test.getDocumentNode());
+		System.out.println(recreated);
+	}
+	
+	@Test
+	public void parseTest2() {
+		System.out.println("--------------------");
+		String s = loader("test2.txt");
+		
+		SmartScriptParser test = new SmartScriptParser(s);
+		
+		String recreated = SmartScriptTester.createOriginalDocumentBody(test.getDocumentNode());
+		System.out.println(recreated);
+	}
+	
+	@Test
+	public void parseTest3() {
+		System.out.println("--------------------");
+		String s = loader("test3.txt");
+		
+		SmartScriptParser test = new SmartScriptParser(s);
+		
+		String recreated = SmartScriptTester.createOriginalDocumentBody(test.getDocumentNode());
+		System.out.println(recreated);
 	}
 
 }
