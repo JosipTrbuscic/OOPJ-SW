@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import hr.fer.zemris.math.Vector2D;
 
+@SuppressWarnings("javadoc")
 public class Vector2DTest {
 	public static final double DELTA = 1E-6;
 	Vector2D vect;

@@ -5,7 +5,16 @@ import hr.fer.zemris.lsystems.LSystemBuilderProvider;
 import hr.fer.zemris.lsystems.gui.LSystemViewer;
 import hr.fer.zemris.lsystems.impl.LSystemBuilderImpl;
 
+/**
+ * Program for creating L system which draws Koch curve
+ * 
+ *@author Josip Trbuscic
+ */
 public class Glavni {
+	/**
+	 * Main method. Initializes L system
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		LSystemViewer.showLSystem(createKochCurve(LSystemBuilderImpl::new));
