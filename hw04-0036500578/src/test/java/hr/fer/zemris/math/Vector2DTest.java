@@ -1,4 +1,4 @@
-package hr.fer.zemris.java.custom.collections;
+package hr.fer.zemris.math;
 
 import static org.junit.Assert.*;
 

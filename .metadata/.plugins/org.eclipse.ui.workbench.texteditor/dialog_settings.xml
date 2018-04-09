@@ -2,12 +2,19 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="origin" key="selection"/>
+		<item value="iterator" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="iterator"/>
+			<item value="modCount"/>
+			<item value="iterato"/>
+			<item value="system.ou"/>
+			<item value="system"/>
+			<item value="parseaction"/>
+			<item value="map"/>
 			<item value="origin"/>
 			<item value="pow"/>
 			<item value="razin"/>
@@ -16,13 +23,6 @@
 			<item value="checkfo"/>
 			<item value="throw"/>
 			<item value="throws"/>
-			<item value="params.size"/>
-			<item value="LexerException"/>
-			<item value="Object"/>
-			<item value="nodes"/>
-			<item value="indexOf"/>
-			<item value="1st"/>
-			<item value="st"/>
 		</list>
 		<list key="replacehistory">
 			<item value="dict"/>
@@ -37,7 +37,7 @@
 		<item value="322" key="DIALOG_WIDTH"/>
 		<item value="1|Noto Sans|9.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 		<item value="423" key="DIALOG_HEIGHT"/>
-		<item value="1190" key="DIALOG_X_ORIGIN"/>
-		<item value="269" key="DIALOG_Y_ORIGIN"/>
+		<item value="1421" key="DIALOG_X_ORIGIN"/>
+		<item value="448" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
