@@ -86,12 +86,12 @@ public class SimpleHashtable<K, V> implements Iterable<SimpleHashtable.TableEntr
 		}
 		size = 0;
 	}
-
+	//nova metoda find key
 	public V get(Object key) {
 		if (key == null)
 			return null;
-
-		int slot = tableSlot(key, table.length);
+		
+		int slot = tableSlot((K)key, table.length);
 		TableEntry<K, V> entry = table[slot];
 		while (entry != null) {
 			if (entry.key.equals(key)) {
@@ -106,7 +106,7 @@ public class SimpleHashtable<K, V> implements Iterable<SimpleHashtable.TableEntr
 		if (key == null)
 			return false;
 
-		int slot = tableSlot(key, table.length);
+		int slot = tableSlot((K)key, table.length);
 		TableEntry<K, V> entry = table[slot];
 		while (entry != null) {
 			if (entry.key.equals(key)) {
@@ -133,7 +133,7 @@ public class SimpleHashtable<K, V> implements Iterable<SimpleHashtable.TableEntr
 	}
 
 	public void remove(Object key) {
-		int slot = tableSlot(key, table.length);
+		int slot = tableSlot((K)key, table.length);
 		TableEntry<K, V> entry = table[slot];
 		if (table[slot].key.equals(key)) {
 			table[slot] = table[slot].next;
@@ -176,7 +176,7 @@ public class SimpleHashtable<K, V> implements Iterable<SimpleHashtable.TableEntr
 		return sb.toString();
 	}
 
-	private int tableSlot(Object key, int tableLength) {
+	private int tableSlot(K key, int tableLength) {
 		int hash = key.hashCode();
 		if (hash == Integer.MIN_VALUE)
 			throw new ArithmeticException("Index out of range");

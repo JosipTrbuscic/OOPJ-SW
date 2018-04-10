@@ -42,7 +42,7 @@ public class StudentDatabase {
 	}
 	
 	private StudentRecord recordFactory(String record) {
-		String[] parts = record.split("\\s+");
+		String[] parts = record.split("\\t+");
 		return new StudentRecord(parts[0], parts[1], parts[2], parts[3]);
 	}
 

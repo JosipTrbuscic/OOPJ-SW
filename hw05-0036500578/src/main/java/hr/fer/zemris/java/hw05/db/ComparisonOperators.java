@@ -24,7 +24,7 @@ public class ComparisonOperators {
 	public static final IComparisonOperator NOT_EQUALS = (s1, s2) -> {
 		return s1.compareTo(s2) != 0;
 	};
-
+	//previše koda za lambdu
 	public static final IComparisonOperator LIKE = (s1, s2) -> {
 		if (s2.contains("*")) {
 			if (s2.indexOf("*") != s2.lastIndexOf("*")) {
@@ -54,7 +54,7 @@ public class ComparisonOperators {
 	public static void main(String[] args) {
 		IComparisonOperator oper = ComparisonOperators.LIKE;
 		System.out.println(oper.satisfied("Zagreb", "Aba*")); // false
-		System.out.println(oper.satisfied("AAA", "AA*AA")); // false
+		System.out.println(oper.satisfied("AAA", "AA*AA   ")); // false
 		System.out.println(oper.satisfied("AAAA", "AA*AA")); // true
 
 		IComparisonOperator oper2 = ComparisonOperators.EQUALS;
