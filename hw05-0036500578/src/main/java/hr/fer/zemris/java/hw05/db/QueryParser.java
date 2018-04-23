@@ -1,13 +1,30 @@
 package hr.fer.zemris.java.hw05.db;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Simple parser used for parsing string as a sequence of 
+ * conditional expressions. Sequence is internally stored as
+ * a list.
+ * @author Josip Trbuscic
+ */
 public class QueryParser {
+	/**
+	 * Lexer used for lexicographical analysis of a query
+	 */
 	private QueryLexer lexer;
+
+	/**
+	 * List where conditional expressions of a query are stored
+	 */
 	private List<ConditionalExpression> queryList;
 	
+	/**
+	 * Constructs new parser which will parse given 
+	 * string as a query
+	 * @param query - string representation of a query
+	 */
 	public QueryParser(String query) {
 		if(query == null) throw new NullPointerException("Query cannot be null");
 		lexer = new QueryLexer(query);
@@ -15,34 +32,74 @@ public class QueryParser {
 		parseQuery();
 	}
 	
+	/**
+	 * Returns {@code true} if query is direct
+	 * @return {@code true} if query is direct, 
+	 * 			{@code false} otherwise
+	 */
 	public boolean isDirectQuery() {
-		return queryList.size() == 1;
+		if(queryList.size() == 1 && 
+				queryList.get(0).getFieldGetter() == FieldValueGetters.JMBAG &&
+				queryList.get(0).getComparisonOperator() == ComparisonOperators.EQUALS ){
+			return true;
+		}
+		return false;
 	}
 	
+	/**
+	 * Returns queried JMBAG if query is direct
+	 * @return queried JMBAG
+	 * @throws IllegalStateException if query is not direct
+	 */
 	public String getQueriedJMBAG() {
 		if(!isDirectQuery()) throw new IllegalStateException("Query is not direct");
 		
 		return queryList.get(0).getStringLiteral();
 	}
 	
+	/**
+	 * Returns query as a list of conditional
+	 * expressions
+	 * @return list of conditional expressions
+	 */
 	public List<ConditionalExpression> getQuery(){
 		return queryList;
 	}
 	
+	/**
+	 * Parses the given query by grouping 
+	 * conditional expressions and 
+	 * storing them in a list
+	 */
 	private void parseQuery() {
 		while(lexer.hasNext()) {
-			IFieldValueGetter fieldGetter = getValidFieldGetter(lexer.getNextAttributeName());
-			IComparisonOperator comparisonOperator = getValidcomparisonOperator(lexer.getNextOperator());
-			String literal = lexer.getNextLiteral();
-			
-			queryList.add(new ConditionalExpression(fieldGetter, literal, comparisonOperator));
-			
-			if(lexer.hasNext() && !lexer.nextLogicOperator().toLowerCase().equals("and")) {
+			try {
+				IFieldValueGetter fieldGetter = getValidFieldGetter(lexer.getNextAttributeName());
+				IComparisonOperator comparisonOperator = getValidcomparisonOperator(lexer.getNextOperator());
+				String literal = lexer.getNextLiteral();
+				
+				queryList.add(new ConditionalExpression(fieldGetter, literal, comparisonOperator));
+				
+				if(lexer.hasNext() && !lexer.nextLogicOperator().toLowerCase().equals("and")) {
+					throw new QueryParserException("Invalid querry expression");
+				}
+			} catch (QueryLexerException ex){
 				throw new QueryParserException("Invalid querry expression");
 			}
+			
+			
 		}
 	}
 	
+	/**
+	 * Returns {@link IFieldValueGetter} if given string 
+	 * is valid attribute of student record
+	 * @param s - string to be checked
+	 * @return {@link IFieldValueGetter} if given string 
+	 *			 is valid attribute
+	 * @throws QueryLexerException if given string 
+	 * 			is not valid attribute of student record
+	 */
 	private IFieldValueGetter getValidFieldGetter(String s) {
 		if(s.equals("jmbag")) {
 			return FieldValueGetters.JMBAG;
@@ -55,6 +112,15 @@ public class QueryParser {
 		}
 	}
 	
+	/**
+	 * Returns {@link IComparisonOperator} if given string 
+	 * is valid operator
+	 * @param s - string to be checked
+	 * @return {@link IComparisonOperator} if given string 
+	 *			 is operator
+	 * @throws QueryLexerException if given string 
+	 * 			is not valid operatord
+	 */
 	private IComparisonOperator getValidcomparisonOperator(String s) {
 		if(s.equals("<")) {
 			return ComparisonOperators.LESS;
@@ -71,19 +137,8 @@ public class QueryParser {
 		}else if(s.equals("LIKE")){
 			return ComparisonOperators.LIKE;
 		}else {
-			throw new QueryParserException("Invalid attribute name");
+			throw new QueryParserException("Invalid operator");
 		}
 		
-	}
-	
-	public static void main(String[] args) {
-		QueryParser qp1 = new QueryParser(" jmbag       =\"0123456789\"    ");
-		System.out.println("isDirectQuery(): " + qp1.isDirectQuery()); // true
-		System.out.println("jmbag was: " + qp1.getQueriedJMBAG()); // 0123456789
-		System.out.println("size: " + qp1.getQuery().size()); // 1
-		QueryParser qp2 = new QueryParser("jmbag=\"0123456789\" and lastName>\"J\"");
-		System.out.println("isDirectQuery(): " + qp2.isDirectQuery()); // false
-		//System.out.println(qp2.getQueriedJMBAG()); // would throw!
-		System.out.println("size: " + qp2.getQuery().size()); // 2
 	}
 }

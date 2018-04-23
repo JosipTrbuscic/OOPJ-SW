@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+@SuppressWarnings("javadoc")
 public class StudentDatabaseTest {
 	public List<String> lines;
 	public StudentDatabase db;

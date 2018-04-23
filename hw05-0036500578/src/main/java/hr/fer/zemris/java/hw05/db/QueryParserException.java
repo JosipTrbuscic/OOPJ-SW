@@ -1,5 +1,11 @@
 package hr.fer.zemris.java.hw05.db;
 
+/**
+ * Exception thrown by {@link QueryParser} if given 
+ * query parameters do not represent valid query
+ * @author Josip Trbuscic
+ *
+ */
 public class QueryParserException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
 

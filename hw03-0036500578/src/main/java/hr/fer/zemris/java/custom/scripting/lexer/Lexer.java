@@ -57,6 +57,10 @@ public class Lexer {
 		return token;
 	}
 
+	/**
+	 * Sets lexer state
+	 * @param state - lexer state
+	 */
 	public void setState(LexerState state) {
 		if (state == null)
 			throw new NullPointerException("Must specify valid lexer state");

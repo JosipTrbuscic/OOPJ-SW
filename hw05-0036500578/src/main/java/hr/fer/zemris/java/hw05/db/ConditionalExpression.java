@@ -1,10 +1,33 @@
 package hr.fer.zemris.java.hw05.db;
 
+/**
+ * Representation of a conditional expression which consists of a 
+ * attribute name, operator and string literal. 
+ * @author Josip Trbuscic
+ */
 public class ConditionalExpression {
+	
+	/**
+	 * Comparison operator
+	 */
 	private IComparisonOperator comparisonOperator;
+	
+	/**
+	 * Getter of a student record's attribute
+	 */
 	private IFieldValueGetter fieldGetter;
+	
+	/**
+	 * String literal
+	 */
 	private String stringLiteral;
 
+	/**
+	 * Constructs new conditional expression from given arguments.
+	 * @param getter - getter of a student record attribute
+	 * @param literal - String literal
+	 * @param operator - comparison operator
+	 */
 	public ConditionalExpression(IFieldValueGetter getter, String literal, IComparisonOperator operator) {
 		if(operator == null) throw new NullPointerException("Operator cannot be null");
 		if(getter == null) throw new NullPointerException("Getter cannot be null");
@@ -14,30 +37,29 @@ public class ConditionalExpression {
 		this.fieldGetter = getter;
 		this.stringLiteral = literal;
 	}
-
+	
+	/**
+	 * Returns comparison operator
+	 * @return comparison operator
+	 */
 	public IComparisonOperator getComparisonOperator() {
 		return comparisonOperator;
 	}
 
+	/**
+	 * Returns attribute getter
+	 * @return attribute gettter
+	 */
 	public IFieldValueGetter getFieldGetter() {
 		return fieldGetter;
 	}
 
+	/**
+	 * Returns string literal
+	 * @return string literal
+	 */
 	public String getStringLiteral() {
 		return stringLiteral;
 	}
 	
-	public static void main(String[] args) {
-		ConditionalExpression expr = new ConditionalExpression(
-				  FieldValueGetters.LAST_NAME,
-				  "Bos*",
-				  ComparisonOperators.LIKE
-				);
-				StudentRecord record = new StudentRecord("0036500578", "BosTrbuscic", "Josip", "1");
-				boolean recordSatisfies = expr.getComparisonOperator().satisfied(
-				  expr.getFieldGetter().get(record),  // returns lastName from given record
-				  expr.getStringLiteral()             // returns "Bos*"
-				);
-				System.out.println(recordSatisfies);
-	}
 }
