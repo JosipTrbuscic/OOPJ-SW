@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="724" key="DIALOG_X_ORIGIN"/>
+		<item value="380" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="Charsets" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="dropd"/>
+			<item value="charsets"/>
+			<item value="cd"/>
+			<item value="cat"/>
+			<item value="system.out"/>
+			<item value="copy option"/>
+			<item value="for i"/>
 			<item value="runtime"/>
 			<item value="toMap"/>
 			<item value="0000000001"/>
@@ -16,13 +27,6 @@
 			<item value="toString"/>
 			<item value="hasnext"/>
 			<item value="containsvalue"/>
-			<item value="iterator"/>
-			<item value="modCount"/>
-			<item value="iterato"/>
-			<item value="system.ou"/>
-			<item value="system"/>
-			<item value="parseaction"/>
-			<item value="map"/>
 		</list>
 		<list key="replacehistory">
 			<item value="dict"/>
@@ -37,7 +41,7 @@
 		<item value="322" key="DIALOG_WIDTH"/>
 		<item value="1|Noto Sans|9.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 		<item value="423" key="DIALOG_HEIGHT"/>
-		<item value="1303" key="DIALOG_X_ORIGIN"/>
-		<item value="399" key="DIALOG_Y_ORIGIN"/>
+		<item value="1191" key="DIALOG_X_ORIGIN"/>
+		<item value="261" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
