@@ -1,6 +1,7 @@
 package hr.fer.zemris.java.hw02;
 
 import static java.lang.Math.abs;
+
 import static java.lang.Math.sqrt;
 import static java.lang.Math.pow;
 import static java.lang.Math.atan2;
@@ -13,7 +14,6 @@ import static java.lang.Math.PI;
  * from polar coordinates, as ordered pair or parsed from a string.
  * @author Josip Trbuscic
  */
-
 public class ComplexNumber {
 	public static double THRESHOLD = 1E-4;
 	public static final ComplexNumber ZERO = new ComplexNumber(0,0);
@@ -166,6 +166,7 @@ public class ComplexNumber {
 		
 		return fromMagnitudeAndAngle(magnitude, angle);
 	}
+	
 	/**
 	 * Finds n roots of complex number. Degree of root 
 	 * is given as argument and must be positive
