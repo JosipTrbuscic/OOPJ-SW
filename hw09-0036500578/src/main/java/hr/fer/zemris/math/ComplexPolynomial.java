@@ -1,8 +1,25 @@
 package hr.fer.zemris.math;
 
+/**
+ * Class representing complex polynomial. Instances of this class are 
+ * created by specifying arbitrary number of complex factors where each factor 
+ * is a polynomial coefficient.
+ * @author Josip Trbuscic
+ *
+ */
 public class ComplexPolynomial {
+	
+	/**
+	 * Coefficients
+	 */
 	private Complex[] factors;
 
+	/**
+	 * Constructor
+	 * @param factors - polynomial factors
+	 * @throws NullPointerException if given factors are null
+	 * @throws IllegalArgumentException
+	 */
 	public ComplexPolynomial(Complex... factors) {
 		if (factors == null)
 			throw new NullPointerException("factors cannot be null");
@@ -12,10 +29,21 @@ public class ComplexPolynomial {
 		this.factors = factors;
 	}
 
+	/**
+	 * Returns degree of polynomial
+	 * @return degree of polynomial
+	 */
 	public short order() {
 		return (short) (factors.length - 1);
 	}
 
+	/**
+	 * Multiplies this polynomial with given one and returns 
+	 * the result as new polynomial
+	 * @param p - other polynomial
+	 * @return result of polynomial multiplication 
+	 * @throws NullPointerException if given polynomial is null
+	 */
 	public ComplexPolynomial multiply(ComplexPolynomial p) {
 		if (p == null)
 			throw new NullPointerException("Other complex polynomial cannot be null");
@@ -33,6 +61,10 @@ public class ComplexPolynomial {
 		return new ComplexPolynomial(resultFactors);
 	}
 
+	/**
+	 * Takes the derivative of this polynomial and returns it as new one 
+	 * @return derivative of this polynomial
+	 */
 	public ComplexPolynomial derive() {
 		Complex[] derivedFactors = new Complex[factors.length - 1];
 		
@@ -43,6 +75,11 @@ public class ComplexPolynomial {
 		return new ComplexPolynomial(derivedFactors);
 	}
 
+	/**
+	 * Returns value of this polynomial at given point
+	 * @param z - point for which value of polynomial will be evaluated
+	 * @return value of this polynomial at given point
+	 */
 	public Complex apply(Complex z) {
 		Complex result = Complex.ZERO;
 		
@@ -53,6 +90,7 @@ public class ComplexPolynomial {
 		return result;
 	}
 	
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("f(z) = ");
 		
@@ -68,20 +106,5 @@ public class ComplexPolynomial {
 		sb.append("("+factors[factors.length-1]+")");
 		
 		return sb.toString();
-	}
-	
-	public static void main(String[] args) {
-		Complex c1 = new Complex(1,0);
-		Complex c2 = new Complex(-1,0);
-		Complex c3 = new Complex(0,1);
-		Complex c4 = new Complex(0,-1);
-		ComplexRootedPolynomial crp = new ComplexRootedPolynomial(c1,c2,c3,c4);
-//		ComplexPolynomial cp = new ComplexPolynomial(c1,c2,c3,c4);
-		System.out.println(crp.toComplexPolynom());
-		System.out.println(crp.toComplexPolynom().derive());
-//		for(Complex c : crp.toComplexPolynom().factors) {
-//			System.out.println(c);
-//		}
-
 	}
 }

@@ -19,11 +19,37 @@ import hr.fer.zemris.math.Complex;
 import hr.fer.zemris.math.ComplexPolynomial;
 import hr.fer.zemris.math.ComplexRootedPolynomial;
 
+/**
+ * This program draws fractals derived from Newton-Raphson iteration. User must enter 
+ * two or more roots of complex polynomial in format "a+ib" where a and b are real numbers 
+ * and i is imaginary unit. Roots will be used to compute the polynomial by
+ * multiplying together a series of (x−a) terms.
+ * Each pixel is represented by complex number which will be tested for convergence. Convergence 
+ * test stops when max number of iterations or convergence threshold is reached. If our approximation 
+ * is close enough to the root pixel will be colored accordingly.
+ * @author Josip Trbuscic
+ *
+ */
 public class Newton {
+	/**
+	 * Complex number convergence threshold
+	 */
 	private static final double convergenceThreshold = 1E-3;
-	private static final int maxIter = 50;
+	
+	/**
+	 * Max number of Newton-Raphson iterations
+	 */
+	private static final int maxIter = 100;
+	
+	/**
+	 * Comparison threshold 
+	 */
 	private static final double rootThreshold = 2E-3;
 
+	/**
+	 * Starting method 
+	 * @param args - Command line arguments. Not used here
+	 */
 	public static void main(String[] args) {
 		System.out.println("Welcome to Newton-Raphson " + "iteration-based fractal viewer.");
 		System.out.println("Please enter at least two roots, " + "one root per line. Enter 'done' when done.");
@@ -43,13 +69,16 @@ public class Newton {
 			try {
 				root = parse(input);
 				roots.add(root);
-
+				
 			} catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 				continue;
-				//System.exit(0);
 			}
 			rootNumber++;
+		}
+		if(roots.size() < 2 ) {
+			System.out.println("You must enter at least 2 roots");
+			System.exit(0);
 		}
 
 		Complex[] rootsArray = new Complex[roots.size()];
@@ -59,17 +88,29 @@ public class Newton {
 		sc.close();
 	}
 
+	/**
+	 * Parses given string as complex number in format "a+ib"
+	 * @param s - string to be parsed
+	 * @return - new complex number whose real and imaginary part 
+	 * 			were given in a string
+	 * @throws IllegalArgumentException if string does not represent 
+	 * 			complex number in a valid format
+	 */
 	public static Complex parse(String s) {
-		Pattern p = Pattern.compile("^\\s*([+-]?\\d*\\.?\\d+)?\\s*" + "(([+-])?\\s*i(\\d*\\.?\\d+)?)\\s*$");
+		Pattern p = Pattern.compile("^\\s*([+-]?\\d*\\.?\\d+)?\\s*" 
+								+ "(([+-])?\\s*i(\\d*\\.?\\d+)?)\\s*$");
 		Matcher m = p.matcher(s);
 
 		if (s.trim().matches("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?")) {
 			return new Complex(Double.parseDouble(s), 0);
 
 		} else if (m.find()) {
+			if(m.group(1) != null && m.group(3) == null) {
+				throw new IllegalArgumentException("Invalid complex number");
+			}
 			StringBuilder imSb = new StringBuilder();
 			StringBuilder reSb = new StringBuilder();
-
+			
 			imSb.append(m.group(3) == null ? "+" : m.group(3));
 			imSb.append(m.group(4) == null ? "1" : m.group(4));
 
@@ -80,20 +121,89 @@ public class Newton {
 		throw new IllegalArgumentException("Invalid complex number");
 	}
 
+	/**
+	 * Class which represents a task which will potentially
+	 * be executed in a different thread. This implementation
+	 * determines index of root in a list that is closest to 
+	 * calculated complex number. 
+	 * @author Josip Trbuscic
+	 *
+	 */
 	public static class CalculationJob implements Callable<Void> {
-		double reMin;
-		double reMax;
-		double imMin;
-		double imMax;
-		int width;
-		int height;
-		int yMin;
-		int yMax;
+		/**
+		 * Minimum value for real part of complex number
+		 */
+		private double reMin;
+		
+		/**
+		 * Maximum value for real part of complex number
+		 */
+		private double reMax;
+		
+		/**
+		 * Minimum value for imaginary part of complex number
+		 */
+		private double imMin;
+		
+		/**
+		 * Maximum value for imaginary part of complex number
+		 */
+		private double imMax;
+		
+		/**
+		 * Window width
+		 */
+		private int width;
+		
+		/**
+		 * Window height
+		 */
+		private int height;
+		
+		/**
+		 * Minimum pixel row for this job
+		 */
+		private int yMin;
+		
+		/**
+		 * Maximum pixel row for this job
+		 */
+		private int yMax;
+		
+		/**
+		 * Array of indexes
+		 */
 		short[] data;
-		ComplexPolynomial polynomial;
-		ComplexRootedPolynomial roots;
+		
+		/**
+		 * Complex polynomial
+		 */
+		private ComplexPolynomial polynomial;
+		
+		/**
+		 * Roots of complex polynomial
+		 */
+		private ComplexRootedPolynomial roots;
+		
+		/**
+		 * Array offset
+		 */
 		int offset;
 
+		/**
+		 * Constructs new job
+		 * @param reMin - Minimum value for real part of complex number
+		 * @param reMax - Maximum value for real part of complex number
+		 * @param imMin - Minimum value for imaginary part of complex number
+		 * @param imMax - Maximum value for imaginary part of complex number
+		 * @param width - Window width
+		 * @param height - Window height
+		 * @param yMin - Minimum pixel row for this job
+		 * @param yMax - Maximum pixel row for this job
+		 * @param data - Array of indexes
+		 * @param polynomial - Complex polynomial
+		 * @param roots - Array offset
+		 */
 		public CalculationJob(double reMin, double reMax, double imMin, double imMax, int width, int height, int yMin,
 				int yMax, short[] data, ComplexPolynomial polynomial, ComplexRootedPolynomial roots) {
 			super();
@@ -145,14 +255,45 @@ public class Newton {
 		}
 	}
 
+	/**
+	 * Class that represents fractal generated by 
+	 * Newton-Raphsons iteration
+	 * @author Josip Trbuscic
+	 *
+	 */
 	public static class MyProducer implements IFractalProducer {
+		/**
+		 * Complex polynomial
+		 */
 		private ComplexPolynomial polynomial;
 
+		/**
+		 * Roots of complex polynomial
+		 */
 		private ComplexRootedPolynomial roots;
 
+		/**
+		 * Thread pool
+		 */
+		private ExecutorService pool;
+		
+		/**
+		 * Constructor
+		 * @param polynomial - complex polynomial
+		 * @param roots - roots of complex polynomial
+		 */
 		public MyProducer(ComplexPolynomial polynomial, ComplexRootedPolynomial roots) {
 			this.polynomial = polynomial;
 			this.roots = roots;
+			
+			pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
+					new ThreadFactory() {
+						public Thread newThread(Runnable r) {
+							Thread t = Executors.defaultThreadFactory().newThread(r);
+							t.setDaemon(true);
+							return t;
+						}
+					});
 		}
 
 		@Override
@@ -161,23 +302,13 @@ public class Newton {
 			System.out.println("Zapocinjem izracun...");
 			short[] data = new short[width * height];
 			final int jobPartsCount = 8 * Runtime.getRuntime().availableProcessors();
-			int brojYPoTraci = height / jobPartsCount;
-
-			// TODO: Lambda for thread factory
-			ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
-					new ThreadFactory() {
-						public Thread newThread(Runnable r) {
-							Thread t = Executors.defaultThreadFactory().newThread(r);
-							t.setDaemon(true);
-							return t;
-						}
-					});
+			int heightPerJob = height / jobPartsCount;
 
 			List<Future<Void>> results = new ArrayList<>();
 
 			for (int i = 0; i < jobPartsCount; i++) {
-				int yMin = i * brojYPoTraci;
-				int yMax = (i + 1) * brojYPoTraci - 1;
+				int yMin = i * heightPerJob;
+				int yMax = (i + 1) * heightPerJob - 1;
 				if (i == jobPartsCount - 1) {
 					yMax = height - 1;
 				}
@@ -185,13 +316,12 @@ public class Newton {
 						polynomial, roots);
 				results.add(pool.submit(job));
 			}
-			for (Future<Void> posao : results) {
+			for (Future<Void> resJob : results) {
 				try {
-					posao.get();
+					resJob.get();
 				} catch (InterruptedException | ExecutionException e) {
 				}
 			}
-			pool.shutdown();
 			System.out.println("Racunanje gotovo. Idem obavijestiti promatraca tj. GUI!");
 			observer.acceptResult(data, (short) (polynomial.order() + 1), requestNo);
 		}

@@ -3,6 +3,7 @@
 	<item value="false" key="TypeHierarchyViewPart.qualifiednames"/>
 	<item value="3" key="TypeHierarchyViewPart.orientation"/>
 	<item value="false" key="TypeHierarchyViewPart.linkeditors"/>
+	<item value="/home/josip/hw-workspace/hw09-0036500578/src/main/lib" key="org.eclipse.jdt.ui.lastextjar"/>
 	<item value="filter_imports;" key="filters_last_used"/>
 	<item value="2" key="TypeHierarchyViewPart.hierarchyview"/>
 	<item value="false" key="delegateUpdating"/>
@@ -84,7 +85,7 @@
 	<section name="RenameInformationPopup">
 	</section>
 	<section name="ClasspathContainerSelectionPage">
-		<item value="4" key="index"/>
+		<item value="3" key="index"/>
 	</section>
 	<section name="quick_assist_proposal_size">
 	</section>

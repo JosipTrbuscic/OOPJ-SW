@@ -23,7 +23,7 @@ public class Complex {
 	/**
 	 * Comparison threshold
 	 */
-	private static final double THRESHOLD = 1E-5;
+	private static final double THRESHOLD = 1E-9;
 	
 	/**
 	 * Complex number whose real and

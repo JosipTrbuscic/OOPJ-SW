@@ -2,10 +2,25 @@ package hr.fer.zemris.math;
 
 import static java.lang.Math.abs;
 
+/**
+ * This class represents complex polynomial which is 
+ * constructed from given roots 
+ * @author Josip Trbuscic
+ *
+ */
 public class ComplexRootedPolynomial {
 
+	/**
+	 * Roots of polynomial
+	 */
 	private Complex[] roots;
 
+	/**
+	 * Constructor 
+	 * @param roots - roots of polynomial
+	 * @throws NullPointerException if given roots are null
+	 * @throws IllegalArgumentException
+	 */
 	public ComplexRootedPolynomial(Complex... roots) {
 		if (roots == null)
 			throw new NullPointerException("Roots cannot be null");
@@ -15,6 +30,11 @@ public class ComplexRootedPolynomial {
 		this.roots = roots;
 	}
 
+	/**
+	 * Returns value of this polynomial at given point
+	 * @param z - point for which value of polynomial will be evaluated
+	 * @return value of this polynomial at given point
+	 */
 	public Complex apply(Complex z) {
 		if (z == null)
 			throw new NullPointerException("Complex number cannot be null");
@@ -28,6 +48,11 @@ public class ComplexRootedPolynomial {
 		return result;
 	}
 
+	/**
+	 * Calculates coefficients of complex polynomial and 
+	 * converts this representation to ComplexPolynomial type
+	 * @return new ComplexPolynomial
+	 */
 	public ComplexPolynomial toComplexPolynom() {
 		ComplexPolynomial polynomial = new ComplexPolynomial(Complex.ONE, roots[0].negate());
 
@@ -38,6 +63,7 @@ public class ComplexRootedPolynomial {
 		return polynomial;
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("f(z) = ");
 
@@ -63,9 +89,15 @@ public class ComplexRootedPolynomial {
 		return sb.toString();
 	}
 
+	/**
+	 *  Finds index of closest root for given complex number z that is within
+	 *  threshold, if there is no such root, returns -1 
+	 * @param z - complex number
+	 * @param threshold - distance threshold
+	 * @return index of closest root
+	 */
 	public int indexOfClosestRootFor(Complex z, double threshold) {
 		if(z == null) throw new NullPointerException("Complex number must not be null");
-		if(threshold <= 0) throw new IllegalArgumentException("Threshold must be positive");
 		
 		int index = 0;
 		double minDistance = z.sub(roots[0]).module();

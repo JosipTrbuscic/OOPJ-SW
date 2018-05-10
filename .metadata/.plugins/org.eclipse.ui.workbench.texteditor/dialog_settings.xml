@@ -6,12 +6,14 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Charsets" key="selection"/>
+		<item value="offset" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="offset"/>
+			<item value="ComplexNumber"/>
 			<item value="dropd"/>
 			<item value="charsets"/>
 			<item value="cd"/>
@@ -25,10 +27,9 @@
 			<item value="1"/>
 			<item value="put"/>
 			<item value="toString"/>
-			<item value="hasnext"/>
-			<item value="containsvalue"/>
 		</list>
 		<list key="replacehistory">
+			<item value="Complex"/>
 			<item value="dict"/>
 			<item value="SmartScriptParserException"/>
 			<item value="Element"/>
@@ -41,7 +42,7 @@
 		<item value="322" key="DIALOG_WIDTH"/>
 		<item value="1|Noto Sans|9.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 		<item value="423" key="DIALOG_HEIGHT"/>
-		<item value="1191" key="DIALOG_X_ORIGIN"/>
-		<item value="261" key="DIALOG_Y_ORIGIN"/>
+		<item value="1454" key="DIALOG_X_ORIGIN"/>
+		<item value="278" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

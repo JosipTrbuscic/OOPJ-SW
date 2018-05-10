@@ -1,6 +1,16 @@
 package hr.fer.zemris.math;
 
+/**
+ * Demonstration program for {@link Vector3} class
+ * @author Josip Trbuscic
+ *
+ */
 public class Vector3Demo {
+	
+	/**
+	 * Starting method
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Vector3 i = new Vector3(1, 0, 0);
 		Vector3 j = new Vector3(0, 1, 0);

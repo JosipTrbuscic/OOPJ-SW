@@ -1,7 +1,12 @@
 package hr.fer.zemris.java.raytracer.model;
 
-import hr.fer.zemris.math.Vector3;
-
+/**
+ * This class represents a sphere in three dimensional space.
+ * Every sphere has its center represented by point in space 
+ * and radius by positive real number. 
+ * @author Josip Trbuscic
+ *
+ */
 public class Sphere extends GraphicalObject {
 	private Point3D center;
 	private double radius;
@@ -13,8 +18,21 @@ public class Sphere extends GraphicalObject {
 	private double krb;
 	private double krn;
 	
+	/**
+	 * Constructor
+	 * @param center - center of a sphere
+	 * @param radius - radius of a sphere
+	 * @param kdr - diffuse component of red color
+	 * @param kdg - diffuse component of green color
+	 * @param kdb - diffuse component of blue color
+	 * @param krr - reflective component of red color
+	 * @param krg - reflective component of green color
+	 * @param krb - reflective component of blue color
+	 * @param krn - intensity of reflective component
+	 */
 	public Sphere(Point3D center, double radius, double kdr, double kdg, double kdb, double krr, double krg, double krb,
 			double krn) {
+		if(radius < 0) throw new IllegalArgumentException("Radius of a sphere must be positive");
 		this.center = center;
 		this.radius = radius;
 		this.kdr = kdr;
@@ -43,34 +61,12 @@ public class Sphere extends GraphicalObject {
 		Point3D intersectionPoint = ray.start.add(ray.direction.scalarMultiply(distance));
 		return new SphereRayIntersection(intersectionPoint, distance, intersectionPoint.sub(ray.start).norm() > radius);
 	}
-
-//	
-//	@Override
-//	public RayIntersection findClosestRayIntersection(Ray ray) {
-//		Point3D p0 = ray.start;
-//		Point3D v = ray.direction;
-//		Point3D a = center.sub(p0);
-//		
-//		double root = getSquareRoot(v, a);
-//		if(root < 0) return null;
-//		
-//		double first = (-2*(v.scalarProduct(a)+root))/(2*Math.pow(v.norm(), 2));
-//		double second = (-2*(v.scalarProduct(a)-root))/(2*Math.pow(v.norm(), 2));
-//		if(first < 0 && second<0) return null;
-//		double distance = first<second ? first : second;
-////		Point3D intersection = new Point3D(p0.x + v.x*distance, p0.y + v.y*distance, p0.z + v.z*distance);
-//		Point3D intersection = ray.start.add(ray.direction.scalarMultiply(distance));
-//		return new SphereRayIntersection(intersection, distance, intersection.sub(ray.start).norm() > radius);
-//		
-//	}
 	
-	private double getSquareRoot(Point3D v, Point3D a) {
-		double first = 4*Math.pow((v.scalarProduct(a)),2);
-		double second = -4*Math.pow(v.norm(),2)*(a.norm()-Math.pow(radius, 2));
-//		if((first+second) <0) return -1;
-		return Math.sqrt(first+second);
-	}
-	
+	/**
+	 * Class that represents intersection of sphere and ray
+	 * @author Josip Trbuscic
+	 *
+	 */
 	private class SphereRayIntersection extends RayIntersection{
 
 		protected SphereRayIntersection(Point3D point, double distance, boolean outer) {

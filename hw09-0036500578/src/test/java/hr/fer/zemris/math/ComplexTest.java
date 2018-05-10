@@ -147,20 +147,6 @@ public class ComplexTest {
 	}
 	
 	@Test
-	public void rootPositive() {
-		Complex c1 = new Complex(3.5, 1);
-		Complex[] result = new Complex[3];
-		result[0]=new Complex(1.53167, 0.142497);
-		result[1]=new Complex(-0.88924, 1.25522);
-		result[2]=new Complex(-0.642428, -1.397712);
-		List<Complex> roots = c1.roots(3);
-
-		assertEquals(result[0], roots.get(0));
-		assertEquals(result[1], roots.get(1));
-		assertEquals(result[2], roots.get(2));
-	}
-	
-	@Test
 	public void getMagnitudeFirstQuadrant() {
 		Complex c1 = new Complex(4, 3);
 		double result = 5;
