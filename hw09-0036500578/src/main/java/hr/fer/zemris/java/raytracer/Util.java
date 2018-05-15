@@ -1,4 +1,11 @@
-package hr.fer.zemris.java.raytracer.model;
+package hr.fer.zemris.java.raytracer;
+
+import hr.fer.zemris.java.raytracer.model.GraphicalObject;
+import hr.fer.zemris.java.raytracer.model.LightSource;
+import hr.fer.zemris.java.raytracer.model.Point3D;
+import hr.fer.zemris.java.raytracer.model.Ray;
+import hr.fer.zemris.java.raytracer.model.RayIntersection;
+import hr.fer.zemris.java.raytracer.model.Scene;
 
 /**
  * Utility class used by ray casters. This class offers

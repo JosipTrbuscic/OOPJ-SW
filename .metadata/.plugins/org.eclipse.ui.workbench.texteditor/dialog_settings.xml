@@ -6,12 +6,17 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="offset" key="selection"/>
+		<item value="add" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="add"/>
+			<item value="setBound"/>
+			<item value="xfudge"/>
+			<item value="component"/>
+			<item value="distance"/>
 			<item value="offset"/>
 			<item value="ComplexNumber"/>
 			<item value="dropd"/>
@@ -22,13 +27,9 @@
 			<item value="copy option"/>
 			<item value="for i"/>
 			<item value="runtime"/>
-			<item value="toMap"/>
-			<item value="0000000001"/>
-			<item value="1"/>
-			<item value="put"/>
-			<item value="toString"/>
 		</list>
 		<list key="replacehistory">
+			<item value="gap"/>
 			<item value="Complex"/>
 			<item value="dict"/>
 			<item value="SmartScriptParserException"/>
