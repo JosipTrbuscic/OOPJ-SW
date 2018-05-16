@@ -36,10 +36,9 @@ public class PrimDemo extends JFrame {
 		
 		JList<Integer> firstList = new JList<>(model);
 		JList<Integer> secondList = new JList<>(model);
-		JScrollPane firstScroll = new JScrollPane(firstList);
-		JScrollPane secondScroll = new JScrollPane(secondList);
-		panel.add(firstScroll);
-		panel.add(secondScroll);
+
+		panel.add(new JScrollPane(firstList));
+		panel.add(new JScrollPane(secondList));
 
 		JButton next = new JButton("sljedeći");
 		next.addActionListener(l->{	

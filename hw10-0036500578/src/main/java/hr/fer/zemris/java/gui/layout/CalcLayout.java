@@ -1,22 +1,22 @@
 package hr.fer.zemris.java.gui.layout;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridBagLayoutInfo;
 import java.awt.Insets;
 import java.awt.LayoutManager2;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.WindowConstants;
-
+/**
+ * Layout Manager used by simple calculators. Layout is designed as a grid 
+ * with 5 rows and 7 columns where positions (1,2-5) are reserved for "display"
+ * placed at position (1,1) and cannot be used by any other component.
+ * Gap between components can be specified in constructor as positive integer which 
+ * will be treated as number of pixels.
+ * @author Josip Trbuscic
+ *
+ */
 public class CalcLayout implements LayoutManager2 {
 
 	/**
@@ -24,18 +24,48 @@ public class CalcLayout implements LayoutManager2 {
 	 */
 	private static final int DEFAULT_GAP = 0;
 
-	private static final Dimension GRID = new Dimension(7, 5);
+	/**
+	 * Max row index
+	 */
+	private static final int MAX_ROWS = 5;
+	
+	/**
+	 * Max column index
+	 */
+	private static final int MAX_COLS  = 7;
 
+	/**
+	 * 2D array indicating if cell is occupied by another component
+	 */
 	private boolean[][] occupied = new boolean[5][7];
 
+	/**
+	 * 2D array of components
+	 */
 	private Component[][] components = new Component[5][7];
 
+	/**
+	 * Minimum size of container managed by this layout manager
+	 */
 	private int minWidth = 0;
 	private int minHeight = 0;
+	
+
+	/**
+	 * Maximum size of container managed by this layout manager
+	 */
 	private int maxWidth = 0;
 	private int maxHeight = 0;
+	
+	/**
+	 * Preferred size of container managed by this layout manager
+	 */
 	private int preferredWidth = 0;
 	private int preferredHeight = 0;
+	
+	/**
+	 * Indicator if preferred size is set
+	 */
 	private boolean sizeUnknown = true;
 
 	/**
@@ -70,9 +100,11 @@ public class CalcLayout implements LayoutManager2 {
 		this(DEFAULT_GAP);
 	}
 
-	@Override
-	public void addLayoutComponent(String name, Component comp) {}
-
+	
+	/**
+	 * Lays out the specified container.
+	 * @param parent - container
+	 */
 	@Override
 	public void layoutContainer(Container parent) {
 		Insets insets = parent.getInsets();
@@ -85,11 +117,11 @@ public class CalcLayout implements LayoutManager2 {
 			setSizes(parent);
 		}
 
-		int compHeight = (maxHeight - (GRID.height - 1) * gap) / GRID.height;
-		int compWidth = (maxWidth - (GRID.width - 1) * gap) / GRID.width;
+		int compHeight = (maxHeight - (MAX_ROWS - 1) * gap) / MAX_ROWS;
+		int compWidth = (maxWidth - (MAX_COLS - 1) * gap) / MAX_COLS;
 
-		for (int i = 0; i < GRID.height; i++) {
-			for (int j = 0; j < GRID.width; j++) {
+		for (int i = 0; i < MAX_ROWS; i++) {
+			for (int j = 0; j < MAX_COLS; j++) {
 				if (components[i][j] == null)
 					continue;
 				Component c = components[i][j];
@@ -103,40 +135,51 @@ public class CalcLayout implements LayoutManager2 {
 		}
 	}
 
+	/**
+	 * Calculates the minimum size dimensions for the specified container.
+	 * @param param - container 
+	 * @return minimum dimensions required by specified container
+	 */
 	@Override
 	public Dimension minimumLayoutSize(Container parent) {
-		Dimension dim = new Dimension(0, 0);
-
 		setSizes(parent);
-
-		Insets insets = parent.getInsets();
-		dim.width = minWidth + insets.left + insets.right;
-		dim.height = minHeight + insets.top + insets.bottom;
-
 		sizeUnknown = false;
 
-		return dim;
+		return addInsets(parent.getInsets(), minHeight, minWidth);
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public Dimension maximumLayoutSize(Container parent) {
+		setSizes(parent);
+		sizeUnknown = false;
+
+		return addInsets(parent.getInsets(), maxHeight, maxWidth);
 	}
 
+	/**
+	 * Calculates the preferred size dimensions for the specified container.
+	 * @param param - container 
+	 * @return preferred dimensions required by specified container
+	 */
 	@Override
 	public Dimension preferredLayoutSize(Container parent) {
-		Dimension dim = new Dimension(0, 0);
-
 		setSizes(parent);
-
-		Insets insets = parent.getInsets();
-		dim.width = preferredWidth + insets.left + insets.right;
-		dim.height = preferredHeight + insets.top + insets.bottom;
-
 		sizeUnknown = false;
 
-		return dim;
+		return addInsets(parent.getInsets(), preferredHeight, preferredWidth);
 	}
 
+	/**
+	 * Removes specified component from this layout manager.
+	 * @param comp - component to be removed
+	 */
 	@Override
 	public void removeLayoutComponent(Component comp) {
-		for (int i = 0; i < GRID.height; i++) {
-			for (int j = 0; j < GRID.width; j++) {
+		for (int i = 0; i < MAX_ROWS; i++) {
+			for (int j = 0; j < MAX_COLS; j++) {
 				if (components[i][j] == comp) {
 					components[i][j] = null;
 				}
@@ -145,6 +188,12 @@ public class CalcLayout implements LayoutManager2 {
 
 	}
 
+	/**
+	 * Adds specified component with given constraints to this
+	 * layout manager
+	 * @param comp - component to be added
+	 * @param constraint - position constraint
+	 */
 	@Override
 	public void addLayoutComponent(Component comp, Object constraint) {
 		RCPosition rcconstraint;
@@ -163,49 +212,72 @@ public class CalcLayout implements LayoutManager2 {
 		occupied[rcconstraint.getRow() - 1][rcconstraint.getColumn() - 1] = true;
 	}
 
+	/**
+	 * Returns the alignment along the x axis.
+	 * @param parent - container
+	 */
 	@Override
 	public float getLayoutAlignmentX(Container parent) {
 		return 0.5f;
 	}
 
+	/**
+	 * Returns the alignment along the y axis.
+	 * @param parent - container
+	 */
 	@Override
 	public float getLayoutAlignmentY(Container parent) {
 		return 0.5f;
 	}
 
+	/**
+	 * Invalidates the layout, indicating that if the
+	 * layout manager has cached information it should be discarded.
+	 */
 	@Override
 	public void invalidateLayout(Container parent) {
 	}
-
+	
+	/**
+	 * Adds the component to the layout, associating
+	 *  it with the string specified by name.
+	 *  @param name - component name
+	 *  @param comp - component to be added
+	 */
 	@Override
-	public Dimension maximumLayoutSize(Container parent) {
-		Dimension dim = new Dimension(0, 0);
+	public void addLayoutComponent(String name, Component comp) {}
 
-		setSizes(parent);
-
-		Insets insets = parent.getInsets();
-		dim.width = maxWidth + insets.left + insets.right;
-		dim.height = maxHeight + insets.top + insets.bottom;
-
-		sizeUnknown = false;
-
-		return dim;
+	/**
+	 * Returns {@code Dimension} representing size of the container 
+	 * after subtracting its insets.
+	 * @param insets - container insets
+	 * @param height - container height
+	 * @param width - container width
+	 * @return size of the container after subtracting its insets
+	 */
+	private Dimension addInsets(Insets insets, int height, int width) {
+		return new Dimension(width - insets.left - insets.right,
+							height-insets.bottom -insets.top);
 	}
-
+	
+	/**
+	 * Sets preferred, minimum and maximum size of container. Size are calculated 
+	 * by getting information from every component. If components do not specify 
+	 * sizes zero will be set.
+	 * @param parent
+	 */
 	private void setSizes(Container parent) {
-		setPreferredSize(parent);
-		setMinimumSize(parent);
-		setMaximumSize(parent);
-	}
-
-	private void setPreferredSize(Container parent) {
 		Dimension dim = null;
 		int maxPreferredHeight = 0;
 		int maxPreferredWidth = 0;
-
-		for (int i = 0; i < GRID.height; i++) {
-			for (int j = 0; j < GRID.width; j++) {
-				if (!occupied[i][j] || isFirstComponent(i, j))
+		int minMaximumHeight = 0;
+		int minMaximumWidth = 0;
+		int maxMinimumHeight = 0;
+		int maxMinimumWidth = 0;
+		
+		for (int i = 0; i < MAX_ROWS; i++) {
+			for (int j = 0; j < MAX_COLS; j++) {
+				if (!occupied[i][j] || isDisplayComponent(i, j))
 					continue;
 				Component c = components[i][j];
 
@@ -216,102 +288,43 @@ public class CalcLayout implements LayoutManager2 {
 
 					int height = dim.height;
 					int width;
-
+					
 					if (i == 0 && j == 0) {
 						width = (dim.width - 4 * gap) / 5;
 					} else {
 						width = dim.width;
 					}
-
-					if (height > maxPreferredHeight) {
-						maxPreferredHeight = height;
-					}
-					if (width > maxPreferredWidth) {
-						maxPreferredWidth = width;
-					}
+					
+					maxPreferredHeight = height > maxPreferredHeight ? height : maxPreferredHeight;
+					maxPreferredWidth = width > maxPreferredWidth ? width : maxPreferredWidth;
+					
+					minMaximumHeight = height < minMaximumHeight ? height : minMaximumHeight;
+					minMaximumWidth = width < minMaximumWidth ? width : minMaximumWidth;
+					
+					maxMinimumHeight = height > maxMinimumHeight ? height : maxMinimumHeight;
+					maxMinimumWidth = width > maxMinimumWidth ? width : maxMinimumWidth;
 				}
 			}
 		}
-		preferredHeight = maxPreferredHeight * GRID.height + (GRID.height - 1) * gap;
-		preferredWidth = maxPreferredWidth * GRID.width + (GRID.width - 1) * gap;
+		
+		preferredHeight = maxPreferredHeight * MAX_ROWS + (MAX_ROWS - 1) * gap;
+		preferredWidth = maxPreferredWidth * MAX_COLS + (MAX_COLS - 1) * gap;
+		
+		minHeight = maxMinimumHeight * MAX_ROWS + (MAX_ROWS - 1) * gap;
+		minWidth = maxMinimumWidth * MAX_COLS + (MAX_COLS - 1) * gap;
+		
+		maxHeight = maxMinimumHeight * MAX_ROWS + (MAX_ROWS - 1) * gap;
+		maxWidth = maxMinimumWidth * MAX_COLS + (MAX_COLS - 1) * gap;
 	}
 
-	private void setMinimumSize(Container parent) {
-		Dimension dim = null;
-		int maxMinimumHeight = 0;
-		int maxMinimumWidth = 0;
-
-		for (int i = 0; i < GRID.height; i++) {
-			for (int j = 0; j < GRID.width; j++) {
-				if (!occupied[i][j] || isFirstComponent(i, j))
-					continue;
-				Component c = components[i][j];
-
-				if (c.isVisible()) {
-					dim = c.getMinimumSize();
-					if (dim == null)
-						continue;
-
-					int height = dim.height;
-					int width;
-
-					if (i == 0 && j == 0) {
-						width = (dim.width - 4 * gap) / 5;
-					} else {
-						width = dim.width;
-					}
-
-					if (height > maxMinimumHeight) {
-						maxMinimumHeight = height;
-					}
-					if (width > maxMinimumWidth) {
-						maxMinimumWidth = width;
-					}
-				}
-			}
-		}
-		minHeight = maxMinimumHeight * GRID.height + (GRID.height - 1) * gap;
-		minWidth = maxMinimumWidth * GRID.width + (GRID.width - 1) * gap;
-	}
-
-	private void setMaximumSize(Container parent) {
-		Dimension dim = null;
-		int minMaximumHeight = 0;
-		int minMaximumWidth = 0;
-
-		for (int i = 0; i < GRID.height; i++) {
-			for (int j = 0; j < GRID.width; j++) {
-				if (!occupied[i][j] || isFirstComponent(i, j))
-					continue;
-				Component c = components[i][j];
-
-				if (c.isVisible()) {
-					dim = c.getMinimumSize();
-					if (dim == null)
-						continue;
-
-					int height = dim.height;
-					int width;
-
-					if (i == 0 && j == 0) {
-						width = (dim.width - 4 * gap) / 5;
-					} else {
-						width = dim.width;
-					}
-
-					if (height < minMaximumHeight) {
-						minMaximumHeight = height;
-					}
-					if (width < minMaximumWidth) {
-						minMaximumWidth = width;
-					}
-				}
-			}
-		}
-		minHeight = minMaximumHeight * GRID.height + (GRID.height - 1) * gap;
-		minWidth = minMaximumWidth * GRID.width + (GRID.width - 1) * gap;
-	}
-
+	/**
+	 * Checks if given row and column indexes are valid. Constraint is 
+	 * valid if cell is not occupied by another component or is not 
+	 * one of the cells reserved for the "display" component
+	 * @param row - row index
+	 * @param column - column index
+	 * @return true if indexes are valid, false otherwise
+	 */
 	private boolean isValidConstraint(int row, int column) {
 		if (row < 1 || row > 5)
 			return false;
@@ -321,14 +334,28 @@ public class CalcLayout implements LayoutManager2 {
 		return !occupied[row - 1][column - 1];
 	}
 
-	private boolean isFirstComponent(int x, int y) {
-		if (x != 0)
+	/**
+	 * Checks if given row and column indexes represent 
+	 * one of the cells reserved for the "display" component
+	 * @param row
+	 * @param column
+	 * @return
+	 */
+	private boolean isDisplayComponent(int row, int column) {
+		if (row != 0)
 			return false;
-		if (y == 0 || y == 5 || y == 6)
+		if (column == 0 || column == 5 || column == 6)
 			return false;
 		return true;
 	}
 
+	/**
+	 * Returns a new {@code RCPosition} initialized to the value represented by
+	 * the specified string.
+	 * @param constraint - string to parse
+	 * @return {@code RCPosition} represented by the argument
+	 * @throws IllegalArgumentException if given string does not represent valid {@code RCPosition}
+	 */
 	private static RCPosition parseConstraint(String constraint) {
 		Pattern pattern = Pattern.compile("^\\s*(\\d+)\\s*,\\s*(\\d+)\\s*$");
 		Matcher matcher = pattern.matcher(constraint);
@@ -339,46 +366,5 @@ public class CalcLayout implements LayoutManager2 {
 			throw new IllegalArgumentException("Invalid constraint");
 		}
 	}
-
-//	static class Prozor4 extends JFrame {
-//
-//		private static final long serialVersionUID = 1L;
-//
-//		public Prozor4() {
-//			super();
-//			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-//			setTitle("Prozor1");
-//			setLocation(20, 20);
-//			setSize(500, 200);
-//			initGUI();
-//
-//		}
-//
-//		private void initGUI() {
-//			Container cp = getContentPane();
-//			cp.setLayout(new BorderLayout());
-//			JPanel p = new JPanel(new CalcLayout(3));
-//
-//			p.add(new JButton("x"), "1,1");
-//			p.add(new JButton("y"), "2,3");
-//			p.add(new JButton("z"), "2,7");
-//			p.add(new JButton("w"), "4,2");
-//			p.add(new JButton("a"), "4,5");
-//			p.add(new JButton("b"), "4,7");
-//			cp.add(p, BorderLayout.CENTER);
-//
-//		}
-//
-//	}
-//
-//	public static void main(String[] args) {
-//		SwingUtilities.invokeLater(new Runnable() {
-//			@Override
-//			public void run() {
-//				Prozor4 prozor = new Prozor4();
-//				prozor.setVisible(true);
-//			}
-//		});
-//	}
 
 }

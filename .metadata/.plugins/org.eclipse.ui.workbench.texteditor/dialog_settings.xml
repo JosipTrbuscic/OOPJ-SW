@@ -6,12 +6,16 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="add" key="selection"/>
+		<item value="notifyObservers" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="notifyAll"/>
+			<item value="getTe"/>
+			<item value="tostring"/>
+			<item value="asd"/>
 			<item value="add"/>
 			<item value="setBound"/>
 			<item value="xfudge"/>
@@ -23,12 +27,9 @@
 			<item value="charsets"/>
 			<item value="cd"/>
 			<item value="cat"/>
-			<item value="system.out"/>
-			<item value="copy option"/>
-			<item value="for i"/>
-			<item value="runtime"/>
 		</list>
 		<list key="replacehistory">
+			<item value="notifyObservers"/>
 			<item value="gap"/>
 			<item value="Complex"/>
 			<item value="dict"/>

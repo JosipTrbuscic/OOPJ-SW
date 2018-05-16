@@ -10,7 +10,7 @@ public class Sin implements UnaryOperation {
 		double value = model.getValue();
 		if (inv) {
 			if(value < -1 || value > 1)
-				throw new IllegalArgumentException("ArcSin not defined for " + value);
+				throw new ArithmeticException("ArcSin not defined for " + value);
 			model.setValue(Math.asin(value));
 		} else {
 			model.setValue(Math.sin(value));

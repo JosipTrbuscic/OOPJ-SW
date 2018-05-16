@@ -9,7 +9,7 @@ public class Cos implements UnaryOperation{
 		double value = model.getValue();
 		if (inv) {
 			if(value < -1 || value > 1)
-				throw new IllegalArgumentException("ArcCos not defined for " + value);
+				throw new ArithmeticException("ArcCos not defined for " + value);
 			model.setValue(Math.acos(value));
 		} else {
 			model.setValue(Math.cos(value));

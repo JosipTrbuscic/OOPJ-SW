@@ -9,6 +9,7 @@ public class MulInverse implements UnaryOperation{
 		double value = model.getValue();
 		
 		if (!inv) {
+			if(value == 0) throw new ArithmeticException("Division by zero is not alowed");
 			model.setValue(1/value);
 		}
 

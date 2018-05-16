@@ -1,5 +1,11 @@
 package hr.fer.zemris.java.gui.layout;
 
+/**
+ * Exception thrown by {@link CalcLayout} when action which is not 
+ * allowed is performed
+ * @author Josip Trbuscic
+ *
+ */
 public class CalcLayoutException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
