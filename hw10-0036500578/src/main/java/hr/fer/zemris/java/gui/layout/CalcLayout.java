@@ -8,6 +8,8 @@ import java.awt.LayoutManager2;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.lang.Math.round;
+
 /**
  * Layout Manager used by simple calculators. Layout is designed as a grid 
  * with 5 rows and 7 columns where positions (1,2-5) are reserved for "display"
@@ -117,8 +119,8 @@ public class CalcLayout implements LayoutManager2 {
 			setSizes(parent);
 		}
 
-		int compHeight = (maxHeight - (MAX_ROWS - 1) * gap) / MAX_ROWS;
-		int compWidth = (maxWidth - (MAX_COLS - 1) * gap) / MAX_COLS;
+		double compHeight = (maxHeight - (MAX_ROWS - 1) * gap) / (double)MAX_ROWS;
+		double compWidth = (maxWidth - (MAX_COLS - 1) * gap) / (double)MAX_COLS;
 
 		for (int i = 0; i < MAX_ROWS; i++) {
 			for (int j = 0; j < MAX_COLS; j++) {
@@ -127,10 +129,12 @@ public class CalcLayout implements LayoutManager2 {
 				Component c = components[i][j];
 
 				if (i == 0 && j == 0) {
-					c.setBounds(left, top, compWidth * 5 + gap * 4, compHeight);
+					c.setBounds(left, top, (int)round(compWidth * 5 + gap * 4), (int)round(compHeight));
 					continue;
 				}
-				c.setBounds(left + j * (compWidth + gap), top + i * (compHeight + gap), compWidth, compHeight);
+				c.setBounds( (int)round(left + j * (compWidth + gap)),
+						(int)round(top + i * (compHeight + gap)),
+						 (int)round(compWidth),  (int)round(compHeight));
 			}
 		}
 	}

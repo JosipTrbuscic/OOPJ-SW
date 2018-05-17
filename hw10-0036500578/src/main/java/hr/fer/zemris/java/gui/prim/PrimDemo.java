@@ -1,24 +1,36 @@
 package hr.fer.zemris.java.gui.prim;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
-import javax.swing.border.Border;
 
+/**
+ * Simple program which demonstrates generation and
+ * listing of prime numbers. Prime number will be calculated
+ * only one but it will be displayed in 2 lists. When prime 
+ * number is generated list will automatically scroll to 
+ * show last generated number. 
+ * @author Josip Trbuscic
+ *
+ */
 public class PrimDemo extends JFrame {
 	
+	/**
+	 * Universal ID
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Constructor
+	 */
 	public PrimDemo() {
 		setLocation(20, 50);
 		setSize(300, 200);
@@ -28,6 +40,9 @@ public class PrimDemo extends JFrame {
 		initGUI();
 	}
 	
+	/**
+	 * GUI initialization method
+	 */
 	private void initGUI() {
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
@@ -51,6 +66,10 @@ public class PrimDemo extends JFrame {
 		cp.add(panel);
 	}
 
+	/**
+	 * Starting method
+	 * @param args - command line arguments. Not used here
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			

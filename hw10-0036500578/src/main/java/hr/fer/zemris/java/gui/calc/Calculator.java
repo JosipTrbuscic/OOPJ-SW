@@ -5,15 +5,10 @@ import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,34 +16,44 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
-import hr.fer.zemris.java.gui.calc.binaryoperation.Addition;
-import hr.fer.zemris.java.gui.calc.binaryoperation.BinaryOperation;
-import hr.fer.zemris.java.gui.calc.binaryoperation.Division;
-import hr.fer.zemris.java.gui.calc.binaryoperation.Multiply;
-import hr.fer.zemris.java.gui.calc.binaryoperation.Power;
-import hr.fer.zemris.java.gui.calc.binaryoperation.Subtract;
-import hr.fer.zemris.java.gui.calc.unaryoperation.Cos;
-import hr.fer.zemris.java.gui.calc.unaryoperation.Ctg;
-import hr.fer.zemris.java.gui.calc.unaryoperation.Ln;
-import hr.fer.zemris.java.gui.calc.unaryoperation.Log;
-import hr.fer.zemris.java.gui.calc.unaryoperation.MulInverse;
-import hr.fer.zemris.java.gui.calc.unaryoperation.Sin;
-import hr.fer.zemris.java.gui.calc.unaryoperation.Tan;
-import hr.fer.zemris.java.gui.calc.unaryoperation.UnaryOperation;
+import hr.fer.zemris.java.gui.calc.buttons.BinaryOperationButton;
+import hr.fer.zemris.java.gui.calc.buttons.CalculatorButton;
+import hr.fer.zemris.java.gui.calc.buttons.GenericCalculatorButton;
+import hr.fer.zemris.java.gui.calc.buttons.UnaryOperationButton;
 import hr.fer.zemris.java.gui.layout.CalcLayout;
 
 /**
- * 
- * @author josip
+ * Simple calculator program which provides arithmetic operations 
+ * and basic trigonometric operations and their inverses. 
+ * @author Josip Trbuscic
  *
  */
 public class Calculator extends JFrame{
-	private CalcModel model;
-	private JCheckBox inv;
-	private Map<String, BinaryOperation> binaryOperations;
-	private Map<String, UnaryOperation> unaryOperations;
+	/**
+	 * Universal ID
+	 */
+	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * Calculator model
+	 */
+	private CalcModel calcModel;
+	
+	/**
+	 * Check box which indicates if unary operation
+	 * should be inverted
+	 */
+	private JCheckBox inv;
+	
+	/**
+	 * Stack
+	 */
 	private List<Double> stack = new ArrayList<>();
+	
+	/**
+	 * Starting method
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			
@@ -60,25 +65,28 @@ public class Calculator extends JFrame{
 		});
 	}
 	
-
+	/**
+	 * Constructor. Sets basic frame parameters.
+	 */
 	public Calculator() {
 		super();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Calculator");
 		setLocation(500, 300);
-		setSize(550, 400);
-		model = new CalcModelImpl();
-		createBinaryOperations();
-		createUnaryOperations();
+		setSize(700, 400);
+		calcModel = new CalcModelImpl();
 		initGUI(); 
 	}
 	
+	/**
+	 * Initializes GUI by adding components to the frame
+	 */
 	private void initGUI() {
 		Container cp = getContentPane();
 		
 		JPanel panel = new JPanel(new CalcLayout(5));
 		
-		panel.add(new CalculatorLabel(model),"1,1");
+		panel.add(new CalculatorLabel(calcModel),"1,1");
 
 		
 		inv = new JCheckBox("Inv");
@@ -88,161 +96,101 @@ public class Calculator extends JFrame{
 		List<CalculatorButton> buttons = createButtons();
 		buttons.forEach(b->{
 			panel.add(b, b.getPosition());
-			b.setBackground(Color.decode("#729FCF"));	
+			b.setBackground(new Color(7512015));	
 		});
 		cp.add(panel);
 		
 	}
 	
+	/**
+	 * Creates a list of all buttons of this calculator
+	 * and returns it
+	 * @return list of all calculator buttons
+	 */
 	private List<CalculatorButton> createButtons(){
 		List<CalculatorButton> buttons = new ArrayList<>(30);
-		
 		int buttonName = 0;
-		buttons.add(new CalculatorButton(String.valueOf(buttonName),
-				"5,3",
-				l->model.insertDigit(0)));
+		buttons.add(new GenericCalculatorButton(String.valueOf(buttonName),
+										"5,3",
+										l->calcModel.insertDigit(0)));
+		
 		for(int i = 4; i > 1; i--) {
 			for(int j = 3; j < 6;j++) {
 				buttonName++;
 				int digit = buttonName;
-				buttons.add(new CalculatorButton(String.valueOf(buttonName),
+				buttons.add(new GenericCalculatorButton(String.valueOf(buttonName),
 						String.format("%d,%d", i,j),
-						l->model.insertDigit(digit)));
+						l->calcModel.insertDigit(digit)));
 			}
 		}
 		
-		buttons.add(new CalculatorButton("=","1,6",l->{
-			if(!model.isActiveOperandSet()) {
-				model.setValue(model.getValue());
+		buttons.add(new GenericCalculatorButton("=","1,6",l->{
+			if(!calcModel.isActiveOperandSet()) {
+				calcModel.setValue(calcModel.getValue());
 				return;
 			}
 			double result = 0;
 			try {
-				result = model.getPendingBinaryOperation().applyAsDouble(model.getActiveOperand(),model.getValue());
+				result = calcModel.getPendingBinaryOperation().applyAsDouble(calcModel.getActiveOperand(),calcModel.getValue());
 			} catch(ArithmeticException e) {
 				JOptionPane.showMessageDialog(this, e.getMessage(), "Arithmetic Error", JOptionPane.ERROR_MESSAGE);
-				model.clear();
+				calcModel.clear();
 			}
-			model.clearAll();
-			model.setValue(result);
+			calcModel.clearAll();
+			calcModel.setValue(result);
 		}));
-		buttons.add(new CalculatorButton("/","2,6",l->{ 
-			try {
-				binaryOperations.get("div").doOperation(model);
-			} catch(ArithmeticException e) {
-				JOptionPane.showMessageDialog(this, e.getMessage(), "Arithmetic Error", JOptionPane.ERROR_MESSAGE);
-				model.clear();
+		buttons.add(new BinaryOperationButton("/","2,6",calcModel,(a,b)->{
+			if(b == 0) {
+				throw new ArithmeticException("Division by zero");
+			} else {
+				return a/b;
 			}
-		}));
-		buttons.add(new CalculatorButton("*","3,6",l->{ 
-			binaryOperations.get("mul").doOperation(model);
-		}));
-		buttons.add(new CalculatorButton("-","4,6",l->{ 
-			binaryOperations.get("sub").doOperation(model);
-		}));
-		buttons.add(new CalculatorButton("+","5,6",l->{ 
-			binaryOperations.get("add").doOperation(model);
 		}));
 		
-		buttons.add(new CalculatorButton("x^n","5,1",l->{ 
-			binaryOperations.get("xpown").doOperation(model);
-		}));
+		buttons.add(new BinaryOperationButton("*","3,6",calcModel,(a,b)->a*b));
+		buttons.add(new BinaryOperationButton("-","4,6",calcModel,(a,b)->a-b));
+		buttons.add(new BinaryOperationButton("+","5,6",calcModel,(a,b)->a+b));
 		
-		buttons.add(new CalculatorButton("+/-", "5,4", l->model.swapSign()));
-		buttons.add(new CalculatorButton(".","5,5",l->model.insertDecimalPoint()));
-		buttons.add(new CalculatorButton("clr", "1,7", l->model.clear()));
-		buttons.add(new CalculatorButton("res", "2,7", l->model.clearAll()));
-		buttons.add(new CalculatorButton("push", "3,7", l->{
-			stack.add(model.getValue());
+		buttons.add(new BinaryOperationButton("x^n","5,1",calcModel,(a,b)->Math.pow(a, b)));
+		
+		buttons.add(new GenericCalculatorButton("+/-", "5,4", l->calcModel.swapSign()));
+		buttons.add(new GenericCalculatorButton(".","5,5",l->calcModel.insertDecimalPoint()));
+		buttons.add(new GenericCalculatorButton("clr", "1,7", l->calcModel.clear()));
+		buttons.add(new GenericCalculatorButton("res", "2,7", l->calcModel.clearAll()));
+		buttons.add(new GenericCalculatorButton("push", "3,7", l->{
+			stack.add(calcModel.getValue());
 		}));
-		buttons.add(new CalculatorButton("pop", "4,7", l->{
+		buttons.add(new GenericCalculatorButton("pop", "4,7", l->{
 			if(stack.isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Stack is empty", "Stack Error", JOptionPane.ERROR_MESSAGE);
 			}else {
-				model.setValue(stack.get(stack.size()-1));
+				calcModel.setValue(stack.get(stack.size()-1));
 				stack.remove(stack.size()-1);
 			}
-			
 		}));
 		
-		buttons.add(new CalculatorButton("1/x", "2,1", l-> {
-			try {
-				unaryOperations.get("inv").doOperation(model, inv.isSelected());
-			} catch(ArithmeticException e) {
-				JOptionPane.showMessageDialog(this, e.getMessage(), "Arithmetic Error", JOptionPane.ERROR_MESSAGE);
-				model.clear();
-			}
-			
-		}));
-		buttons.add(new CalculatorButton("log", "3,1", l-> {
-			unaryOperations.get("log").doOperation(model, inv.isSelected());
-		}));
-		buttons.add(new CalculatorButton("ln", "4,1", l-> {
-			unaryOperations.get("ln").doOperation(model, inv.isSelected());
-		}));
-		
-		buttons.add(new CalculatorButton("sin", "2,2", l-> {
-			try {
-				unaryOperations.get("sin").doOperation(model, inv.isSelected());
-			} catch(ArithmeticException e) {
-				JOptionPane.showMessageDialog(this, e.getMessage(), "Arithmetic Error", JOptionPane.ERROR_MESSAGE);
-				model.clear();
-			}
-		}));
-		buttons.add(new CalculatorButton("cos", "3,2", l-> {
-			try {
-				unaryOperations.get("cos").doOperation(model, inv.isSelected());
-			} catch(ArithmeticException e) {
-				JOptionPane.showMessageDialog(this, e.getMessage(), "Arithmetic Error", JOptionPane.ERROR_MESSAGE);
-				model.clear();
-			}
-		}));
-		buttons.add(new CalculatorButton("tan", "4,2", l-> {
-			unaryOperations.get("tan").doOperation(model, inv.isSelected());
-		}));
-		buttons.add(new CalculatorButton("ctg", "5,2", l-> {
-			unaryOperations.get("ctg").doOperation(model, inv.isSelected());
-		}));
+		buttons.add(new UnaryOperationButton("1/x", "2,1",calcModel,x->1/x,x->x, inv));
+		buttons.add(new UnaryOperationButton("log", "3,1",calcModel,Math::log10,x->Math.pow(10, x), inv));
+		buttons.add(new UnaryOperationButton("ln", "4,1",calcModel,x->1/x,x->x, inv));
+		buttons.add(new UnaryOperationButton("sin", "2,2",calcModel,Math::sin,Math::asin, inv));
+		buttons.add(new UnaryOperationButton("cos", "3,2",calcModel,Math::cos,Math::acos, inv));
+		buttons.add(new UnaryOperationButton("tan", "4,2",calcModel,Math::tan,Math::atan, inv));
+		buttons.add(new UnaryOperationButton("ctg", "5,2",calcModel,x->1/Math.tan(x),x->1/Math.atan(x), inv));
 		
 		return buttons;
 	}
-	
-	private void createBinaryOperations() {
-		binaryOperations = new HashMap<>();
-		binaryOperations.put("add", new Addition());
-		binaryOperations.put("mul", new Multiply());
-		binaryOperations.put("div", new Division());
-		binaryOperations.put("sub", new Subtract());
-		binaryOperations.put("xpown", new Power());
-	}
-	
-	private void createUnaryOperations() {
-		unaryOperations = new HashMap<>();
-		unaryOperations.put("cos", new Cos());
-		unaryOperations.put("sin", new Sin());
-		unaryOperations.put("tan", new Tan());
-		unaryOperations.put("ln", new Ln());
-		unaryOperations.put("log", new Log());
-		unaryOperations.put("ctg", new Ctg());
-		unaryOperations.put("inv", new MulInverse());
-	}
-	
-	private static class CalculatorButton extends JButton{
-		private static final long serialVersionUID = 1L;
-		private String position;
-		
-		public CalculatorButton(String name, String position, ActionListener listener) {
-			super(name);
-			this.addActionListener(listener);
-			this.position = position;
-		}
-		
-		public String getPosition() {
-			return position;
-		}
-	}
-	
+
+	/**
+	 * Class which represents screen of the calculator. It
+	 * implements {@link CalcValueListener} interface that
+	 * allows it to update currently displayed text when 
+	 * values are being entered 
+	 * @author Josip Trbuscic
+	 *
+	 */
 	private static class CalculatorLabel extends JLabel implements CalcValueListener{
+
+		private static final long serialVersionUID = 1L;
 
 		public CalculatorLabel(CalcModel model) {
 			setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -261,6 +209,5 @@ public class Calculator extends JFrame{
 		}
 		
 	}
-
 }
 

@@ -71,13 +71,16 @@ public class CalcModelImpl implements CalcModel{
 	 */
 	@Override
 	public String toString() {
-		if(enteredValue.isEmpty()) return "0";
+		if(enteredValue.isEmpty() || enteredValue.equals("0")) return "0";
 		if(enteredValue.equals("-0")) return "-0";
 		if(enteredValue.contains(".")) {
 			removeLeadingZeroesDouble();
 			return enteredValue;
 		}
-		return String.format("%d", Integer.parseInt(enteredValue));
+		double d = Double.parseDouble(enteredValue);
+		if(d > Integer.MAX_VALUE) return String.valueOf(d);
+		return String.valueOf(Math.round(d));
+//		return String.format("%d", Integer.parseInt(enteredValue));
 	}
 	
 	/**
@@ -104,6 +107,8 @@ public class CalcModelImpl implements CalcModel{
 				enteredValue = valueString;
 			}
 			notifyObservers();
+		}else {
+			throw new ArithmeticException("Artihmetic error");
 		}
 	}
 
@@ -160,11 +165,7 @@ public class CalcModelImpl implements CalcModel{
 	@Override
 	public void insertDigit(int digit) {
 		
-		if(enteredValue.contains(".")) {
-			if(getValue() != 0 && Double.MAX_VALUE / Math.abs(getValue()) < 10) return;
-		}else {
-			if(getValue() != 0 && Integer.MAX_VALUE / Math.abs(getValue()) < 10) return;
-		}
+		if(getValue() != 0 && Double.MAX_VALUE / Math.abs(getValue()) < 10) return;
 		
 		if(enteredValue.equals("0") && digit == 0) return;
 		
