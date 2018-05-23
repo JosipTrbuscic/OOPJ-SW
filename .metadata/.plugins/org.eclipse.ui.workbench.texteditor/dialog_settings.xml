@@ -6,12 +6,17 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="notifyObservers" key="selection"/>
+		<item value="TOP_INDENT" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="TOP_OFFSET"/>
+			<item value="RIGHT_OFFSET"/>
+			<item value="numerate"/>
+			<item value="grid.height"/>
+			<item value="grid.width"/>
 			<item value="notifyAll"/>
 			<item value="getTe"/>
 			<item value="tostring"/>
@@ -22,13 +27,12 @@
 			<item value="component"/>
 			<item value="distance"/>
 			<item value="offset"/>
-			<item value="ComplexNumber"/>
-			<item value="dropd"/>
-			<item value="charsets"/>
-			<item value="cd"/>
-			<item value="cat"/>
 		</list>
 		<list key="replacehistory">
+			<item value="TOP_INDENT"/>
+			<item value="RIGHT_INDENT"/>
+			<item value="MAX_ROWS"/>
+			<item value="MAX_COLS"/>
 			<item value="notifyObservers"/>
 			<item value="gap"/>
 			<item value="Complex"/>

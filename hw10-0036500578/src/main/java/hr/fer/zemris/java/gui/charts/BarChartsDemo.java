@@ -42,7 +42,7 @@ public class BarChartsDemo extends JFrame{
 	private BarChart barChart;
 	
 	/**
-	 * Str+ring representation of path
+	 * String representation of path
 	 */
 	private String path;
 	

@@ -1,6 +1,5 @@
 package hr.fer.zemris.java.gui.layout;
 
-import static org.junit.Assert.*;
 
 import java.awt.Dimension;
 
@@ -9,6 +8,7 @@ import javax.swing.JPanel;
 
 import org.junit.Test;
 
+@SuppressWarnings("javadoc")
 public class CalcLayoutTest {
 
 	@Test

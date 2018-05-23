@@ -171,7 +171,7 @@ public class Calculator extends JFrame{
 		
 		buttons.add(new UnaryOperationButton("1/x", "2,1",calcModel,x->1/x,x->x, inv));
 		buttons.add(new UnaryOperationButton("log", "3,1",calcModel,Math::log10,x->Math.pow(10, x), inv));
-		buttons.add(new UnaryOperationButton("ln", "4,1",calcModel,x->1/x,x->x, inv));
+		buttons.add(new UnaryOperationButton("ln", "4,1",calcModel,x->Math.log(x),x->Math.pow(Math.E, x), inv));
 		buttons.add(new UnaryOperationButton("sin", "2,2",calcModel,Math::sin,Math::asin, inv));
 		buttons.add(new UnaryOperationButton("cos", "3,2",calcModel,Math::cos,Math::acos, inv));
 		buttons.add(new UnaryOperationButton("tan", "4,2",calcModel,Math::tan,Math::atan, inv));

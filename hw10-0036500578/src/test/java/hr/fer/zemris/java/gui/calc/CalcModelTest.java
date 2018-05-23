@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import java.util.function.DoubleBinaryOperator;
 
+@SuppressWarnings("javadoc")
 public class CalcModelTest {
 	
 	private CalcModel model;
@@ -196,6 +197,7 @@ public class CalcModelTest {
 		assertEquals("34", model.toString()); 
 	}
 
+	@SuppressWarnings("unused")
 	private static class DummyCalcModel implements CalcModel {
 
 		@Override
