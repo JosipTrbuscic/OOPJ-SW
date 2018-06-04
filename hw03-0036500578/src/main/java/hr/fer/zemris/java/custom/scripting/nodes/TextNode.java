@@ -26,4 +26,13 @@ public class TextNode extends Node {
 	public ElementString getText() {
 		return text;
 	}
+	
+	/**
+	 * Returns string representation of text this node contains
+	 * @return text this node contains
+	 */
+	@Override
+	public String toString() {
+		return text.asText();
+	}
 }

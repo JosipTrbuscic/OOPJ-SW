@@ -156,7 +156,10 @@ public class Calculator extends JFrame{
 		buttons.add(new GenericCalculatorButton("+/-", "5,4", l->calcModel.swapSign()));
 		buttons.add(new GenericCalculatorButton(".","5,5",l->calcModel.insertDecimalPoint()));
 		buttons.add(new GenericCalculatorButton("clr", "1,7", l->calcModel.clear()));
-		buttons.add(new GenericCalculatorButton("res", "2,7", l->calcModel.clearAll()));
+		buttons.add(new GenericCalculatorButton("res", "2,7",l->{
+			calcModel.clearAll();
+			stack.clear();
+		}));
 		buttons.add(new GenericCalculatorButton("push", "3,7", l->{
 			stack.add(calcModel.getValue());
 		}));
@@ -175,7 +178,7 @@ public class Calculator extends JFrame{
 		buttons.add(new UnaryOperationButton("sin", "2,2",calcModel,Math::sin,Math::asin, inv));
 		buttons.add(new UnaryOperationButton("cos", "3,2",calcModel,Math::cos,Math::acos, inv));
 		buttons.add(new UnaryOperationButton("tan", "4,2",calcModel,Math::tan,Math::atan, inv));
-		buttons.add(new UnaryOperationButton("ctg", "5,2",calcModel,x->1/Math.tan(x),x->1/Math.atan(x), inv));
+		buttons.add(new UnaryOperationButton("ctg", "5,2",calcModel,x->1/Math.tan(x),x->Math.atan(1/x), inv));
 		
 		return buttons;
 	}

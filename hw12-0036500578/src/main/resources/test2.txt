@@ -1,0 +1,6 @@
+{$fOr fd_ 345 -9 as$}
+{$ end$}
+{$= @fkf4e "-48\"\\" 4.45$}
+This is the rest of
+the
+document.

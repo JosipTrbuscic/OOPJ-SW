@@ -66,13 +66,6 @@ public class BarChartsDemo extends JFrame{
 	 * GUI initialization method
 	 */
 	private void initGUI(){
-		List<XYValue> list = new ArrayList<>();
-		list.add(new XYValue(1, 8));
-		list.add(new XYValue(2, 20));
-		list.add(new XYValue(3, 22));
-		list.add(new XYValue(4, 10));
-		list.add(new XYValue(5, 4));
-		
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 		JLabel pathLabel = new JLabel(path, JLabel.CENTER);

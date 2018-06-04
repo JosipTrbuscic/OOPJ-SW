@@ -83,6 +83,33 @@ public class ForLoopNode extends Node {
 		return stepExpression;
 	}
 	
-	
+	/**
+	 * Returns string representation of this node
+	 * @return string representation of this node
+	 */
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{$ FOR");
+		sb.append(" " + getVariable().asText());
+		sb.append(" " + getStartExpression().asText());
+		sb.append(" " + getEndExpression().asText());
+
+		if (getStepExpression() != null) {
+			sb.append(" " + getStepExpression().asText());
+		}
+		sb.append(" $}");
+
+		int i = 0;
+		while (i < numberOfChildren()) {
+			Node child = getChild(i);
+
+			sb.append(child.toString());
+			i++;
+		}
+		sb.append("{$ END $}");
+
+		return sb.toString();
+	}
 	
 }

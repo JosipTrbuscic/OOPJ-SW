@@ -3,10 +3,10 @@ package hr.fer.zemris.java.hw03.prob1;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 
+@SuppressWarnings("javadoc")
 public class Prob1Test {
 
 	@Test
@@ -222,7 +222,7 @@ public class Prob1Test {
 	// ----------------------------------------------------------------------------------------------------------
 
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=NullPointerException.class)
 	public void testNullState() {
 		new Lexer("").setState(null);
 	}

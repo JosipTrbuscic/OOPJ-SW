@@ -6,15 +6,54 @@ package hr.fer.zemris.java.custom.scripting.lexer;
  */
 public enum TokenType {
 
-	EOF, //End of file type
-	SYMBOL, //Symbol type
-	SOT, //Start of tag type
-	EOT, //End of tag type
-	TEXT, //Text type
-	VARIABLE, //Variable type
-	INTEGER, //Integer type 
-	DOUBLE, //Double type
-	OPERATOR, //Operator type
-	FUNCTION; //Function type
+	/**
+	 * End of file type
+	 */
+	EOF,
+	
+	/**
+	 * Symbol type
+	 */
+	SYMBOL,
+	
+	/**
+	 * Start of tag type
+	 */
+	SOT,
+	
+	/**
+	 * End of tag type
+	 */
+	EOT,
+	
+	/**
+	 * Text type
+	 */
+	TEXT,
+	
+	/**
+	 * Variable type
+	 */
+	VARIABLE,
+	
+	/**
+	 * Integer type
+	 */
+	INTEGER,
+	
+	/**
+	 * Double type
+	 */
+	DOUBLE,
+	
+	/**
+	 * Operator type
+	 */
+	OPERATOR,
+	
+	/**
+	 *Function type
+	 */
+	FUNCTION;
 	
 }

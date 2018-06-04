@@ -1,5 +1,10 @@
 package hr.fer.zemris.java.custom.scripting.lexer;
 
+/**
+ * Exception thrown by lexer
+ * @author Josip Trbuscic
+ *
+ */
 public class LexerException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 

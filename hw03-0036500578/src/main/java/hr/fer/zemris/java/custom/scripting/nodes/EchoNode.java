@@ -30,4 +30,19 @@ public class EchoNode extends Node{
 	public Element[] getElements() {
 		return elements;
 	}
+	
+	/**
+	 * Returns string representation of this node
+	 * @return returns string representation of this node
+	 */
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("{$");
+		for (Element el : elements) {
+			sb.append(" " + el.asText());
+		}
+
+		sb.append(" $}");
+		return sb.toString();
+	}
 }

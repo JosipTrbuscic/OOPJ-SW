@@ -32,6 +32,7 @@ public class ElementString extends Element {
 	
 	/**
 	 * Returns string value
+	 * @return string value
 	 */
 	public String getValue() {
 		return value;

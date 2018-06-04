@@ -5,6 +5,14 @@ package hr.fer.zemris.java.hw03.prob1;
  *
  */
 public enum LexerState {
+	
+	/**
+	 * Basic lexer processing state
+	 */
 	BASIC, //Basic lexer processing state
-	EXTENDED; ///Extended lexer processing state
+	
+	/**
+	 * Extended lexer porcessing state
+	 */
+	EXTENDED;
 }

@@ -22,6 +22,7 @@ public class Token {
 	
 	/**
 	 * Returns token value
+	 * @return token value
 	 */
 	public Object getValue() {
 		
@@ -30,6 +31,7 @@ public class Token {
 	
 	/**
 	 * Returns token type
+	 * @return token type
 	 */
 	public TokenType getType() {
 		return type;

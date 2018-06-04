@@ -6,27 +6,27 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="TOP_INDENT" key="selection"/>
+		<item value=")" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="TOP_OFFSET"/>
-			<item value="RIGHT_OFFSET"/>
-			<item value="numerate"/>
-			<item value="grid.height"/>
-			<item value="grid.width"/>
-			<item value="notifyAll"/>
-			<item value="getTe"/>
-			<item value="tostring"/>
-			<item value="asd"/>
-			<item value="add"/>
-			<item value="setBound"/>
-			<item value="xfudge"/>
-			<item value="component"/>
-			<item value="distance"/>
-			<item value="offset"/>
+			<item value=")"/>
+			<item value="System.out"/>
+			<item value="syso"/>
+			<item value="sys"/>
+			<item value="system.out"/>
+			<item value=" -&gt; "/>
+			<item value="-&gt;"/>
+			<item value="namep"/>
+			<item value="namemp"/>
+			<item value="nampep"/>
+			<item value="dvp"/>
+			<item value="isEmpty"/>
+			<item value="sessions"/>
+			<item value="setper"/>
+			<item value="heade"/>
 		</list>
 		<list key="replacehistory">
 			<item value="TOP_INDENT"/>
@@ -48,7 +48,7 @@
 		<item value="322" key="DIALOG_WIDTH"/>
 		<item value="1|Noto Sans|9.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 		<item value="423" key="DIALOG_HEIGHT"/>
-		<item value="1454" key="DIALOG_X_ORIGIN"/>
-		<item value="278" key="DIALOG_Y_ORIGIN"/>
+		<item value="1443" key="DIALOG_X_ORIGIN"/>
+		<item value="270" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

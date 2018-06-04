@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    ...
+    <style>
+      body {background-color:#{$= "background" "7F7F7F" @tparamGet $} ;}
+    </style>
+  </head>
+  <body>
+   <a href="/scripts/osnovni.smscr">Osnovni</a>
+   <a href="/scripts/brojPoziva.smscr">Broj poziva</a>
+   <a href="/scripts/fibonaccihtml.smscr">Fibonacci</a>
+   <a href="/ext/HelloWorker">Hello Worker</a>
+   <a href="/ext/CircleWorker">Circle Worker</a>
+   <form action="/ext/SumWorker" method"GET">
+	a:<br>
+	<input type="text" name="a">
+	<br>
+	b:<br>
+	<input type="text" name="b">
+	<br><br>
+	<input type="submit" value="Submit">
+   </form>
+   <form action="/ext/BgColorWorker">
+	 <select name="bgcolor">
+  		<option value="FF0000">Red</option>
+  		<option value="00FF00">Green</option>
+  		<option value="0000FF">Blue</option>
+  		<option value="FFFF00">Yellow</option>
+	</select> 
+	<input type="submit" value="Submit">
+   </form>
+   
+  </body>
+</html>

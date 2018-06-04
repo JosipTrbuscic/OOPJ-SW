@@ -1,5 +1,5 @@
 package hr.fer.zemris.java.custom.scripting.elems;
-/*
+/**
  * Class represents valid function which consists of function name. 
  * Valid function name stars with '@' followed by letter and then follows 
  * zero or more letters, numbers or underscores

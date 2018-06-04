@@ -6,10 +6,25 @@ package hr.fer.zemris.java.hw03.prob1;
  */
 public enum TokenType {
 
-	EOF, //End of file type 
-	WORD, //Sequence of letters type
-	NUMBER, // Number type
-	SYMBOL; //Symbol type
+	/**
+	 * End of file type
+	 */
+	EOF, 
+	
+	/**
+	 * Sequence of letters type
+	 */
+	WORD,
+	
+	/**
+	 * Number type
+	 */
+	NUMBER,
+	
+	/**
+	 * Symbol type
+	 */
+	SYMBOL; 
 	
 	
 }

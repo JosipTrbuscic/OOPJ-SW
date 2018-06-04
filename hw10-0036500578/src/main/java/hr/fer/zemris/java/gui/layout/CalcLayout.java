@@ -9,6 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.Math.round;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 /**
  * Layout Manager used by simple calculators. Layout is designed as a grid 
@@ -56,8 +58,8 @@ public class CalcLayout implements LayoutManager2 {
 	/**
 	 * Maximum size of container managed by this layout manager
 	 */
-	private int maxWidth = 0;
-	private int maxHeight = 0;
+	private int maxWidth = Integer.MAX_VALUE;
+	private int maxHeight = Integer.MAX_VALUE;
 	
 	/**
 	 * Preferred size of container managed by this layout manager
@@ -65,11 +67,6 @@ public class CalcLayout implements LayoutManager2 {
 	private int preferredWidth = 0;
 	private int preferredHeight = 0;
 	
-	/**
-	 * Indicator if preferred size is set
-	 */
-	private boolean sizeUnknown = true;
-
 	/**
 	 * Component gap in pixels
 	 */
@@ -115,10 +112,6 @@ public class CalcLayout implements LayoutManager2 {
 		int left = insets.left;
 		int top = insets.top;
 
-		if (sizeUnknown) {
-			setSizes(parent);
-		}
-
 		double compHeight = (maxHeight - (MAX_ROWS - 1) * gap) / (double)MAX_ROWS;
 		double compWidth = (maxWidth - (MAX_COLS - 1) * gap) / (double)MAX_COLS;
 
@@ -147,8 +140,8 @@ public class CalcLayout implements LayoutManager2 {
 	@Override
 	public Dimension minimumLayoutSize(Container parent) {
 		setSizes(parent);
-		sizeUnknown = false;
-
+		parent.setMinimumSize(new Dimension(minWidth, minHeight));
+		
 		return addInsets(parent.getInsets(), minHeight, minWidth);
 	}
 	
@@ -158,8 +151,8 @@ public class CalcLayout implements LayoutManager2 {
 	@Override
 	public Dimension maximumLayoutSize(Container parent) {
 		setSizes(parent);
-		sizeUnknown = false;
-
+		parent.setMaximumSize(new Dimension(maxWidth, maxHeight));
+		
 		return addInsets(parent.getInsets(), maxHeight, maxWidth);
 	}
 
@@ -171,8 +164,8 @@ public class CalcLayout implements LayoutManager2 {
 	@Override
 	public Dimension preferredLayoutSize(Container parent) {
 		setSizes(parent);
-		sizeUnknown = false;
-
+		parent.setPreferredSize(new Dimension(preferredWidth, preferredHeight));
+		
 		return addInsets(parent.getInsets(), preferredHeight, preferredWidth);
 	}
 
@@ -186,6 +179,7 @@ public class CalcLayout implements LayoutManager2 {
 			for (int j = 0; j < MAX_COLS; j++) {
 				if (components[i][j] == comp) {
 					components[i][j] = null;
+					occupied[i][j] = false;
 				}
 			}
 		}
@@ -271,54 +265,54 @@ public class CalcLayout implements LayoutManager2 {
 	 * @param parent
 	 */
 	private void setSizes(Container parent) {
-		Dimension dim = null;
-		int maxPreferredHeight = 0;
-		int maxPreferredWidth = 0;
-		int minMaximumHeight = 0;
-		int minMaximumWidth = 0;
-		int maxMinimumHeight = 0;
-		int maxMinimumWidth = 0;
-		
 		for (int i = 0; i < MAX_ROWS; i++) {
 			for (int j = 0; j < MAX_COLS; j++) {
-				if (!occupied[i][j] || isDisplayComponent(i, j))
-					continue;
+				if (!occupied[i][j] || isDisplayComponent(i, j)) continue;
 				Component c = components[i][j];
 
 				if (c.isVisible()) {
-					dim = c.getPreferredSize();
-					if (dim == null)
-						continue;
+					Dimension dimPref = c.getPreferredSize();
+					Dimension dimMin = c.getMinimumSize();
+					Dimension dimMax = c.getMaximumSize();
 
-					int height = dim.height;
-					int width;
-					
-					if (i == 0 && j == 0) {
-						width = (dim.width - 4 * gap) / 5;
-					} else {
-						width = dim.width;
+					if (dimPref != null) {
+						preferredHeight = max(preferredHeight, dimPref.height);
+						if (i == 0 && j == 0) {
+							preferredWidth = (dimPref.width - 4 * gap) / 5;
+						} else {
+							preferredWidth = max(preferredWidth, dimPref.width);
+						}
 					}
 					
-					maxPreferredHeight = height > maxPreferredHeight ? height : maxPreferredHeight;
-					maxPreferredWidth = width > maxPreferredWidth ? width : maxPreferredWidth;
+					if (dimMin != null) {
+						minHeight = max(minHeight, dimMin.height);
+						if (i == 0 && j == 0) {
+							minWidth = max(minWidth,(dimMin.width - 4 * gap) / 5);
+						} else {
+							minWidth = max(minWidth, dimMin.width);
+						}
+					}
 					
-					minMaximumHeight = height < minMaximumHeight ? height : minMaximumHeight;
-					minMaximumWidth = width < minMaximumWidth ? width : minMaximumWidth;
-					
-					maxMinimumHeight = height > maxMinimumHeight ? height : maxMinimumHeight;
-					maxMinimumWidth = width > maxMinimumWidth ? width : maxMinimumWidth;
+					if (dimMax != null) {
+						maxHeight = min(maxHeight, dimMax.height);
+						if (i == 0 && j == 0) {
+							maxWidth = min(maxWidth,(dimMax.width - 4 * gap) / 5);
+						} else {
+							maxWidth = min(maxWidth, dimMax.width);
+						}
+					}
 				}
 			}
 		}
 		
-		preferredHeight = maxPreferredHeight * MAX_ROWS + (MAX_ROWS - 1) * gap;
-		preferredWidth = maxPreferredWidth * MAX_COLS + (MAX_COLS - 1) * gap;
+		preferredHeight = preferredHeight * MAX_ROWS + (MAX_ROWS - 1) * gap;
+		preferredWidth = preferredWidth * MAX_COLS + (MAX_COLS - 1) * gap;
 		
-		minHeight = maxMinimumHeight * MAX_ROWS + (MAX_ROWS - 1) * gap;
-		minWidth = maxMinimumWidth * MAX_COLS + (MAX_COLS - 1) * gap;
+		minHeight = minHeight * MAX_ROWS + (MAX_ROWS - 1) * gap;
+		minWidth = minWidth * MAX_COLS + (MAX_COLS - 1) * gap;
 		
-		maxHeight = maxMinimumHeight * MAX_ROWS + (MAX_ROWS - 1) * gap;
-		maxWidth = maxMinimumWidth * MAX_COLS + (MAX_COLS - 1) * gap;
+		maxHeight = maxHeight * MAX_ROWS + (MAX_ROWS - 1) * gap;
+		maxWidth = maxWidth * MAX_COLS + (MAX_COLS - 1) * gap;
 	}
 
 	/**

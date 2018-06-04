@@ -5,6 +5,13 @@ package hr.fer.zemris.java.custom.scripting.lexer;
  *
  */
 public enum LexerState {
-	TEXT_STATE, // Text reading state
-	TAG_STATE, //Tag reading state
+	/**
+	 * Text reading state
+	 */
+	TEXT_STATE,
+	
+	/**
+	 * Tag reading state
+	 */
+	TAG_STATE,
 }

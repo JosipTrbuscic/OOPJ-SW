@@ -88,6 +88,7 @@ public class Lexer {
 	
 	/**
 	 * Returns last found token
+	 * @return last found token
 	 */
 	public Token getToken() {
 		return token;

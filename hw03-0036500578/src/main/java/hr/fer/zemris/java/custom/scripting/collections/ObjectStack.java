@@ -6,12 +6,14 @@ package hr.fer.zemris.java.custom.scripting.collections;
  */
 public class ObjectStack {
 	private ArrayIndexedCollection stack;
+	
 	/**
 	 * Constructs an empty stack
 	 */
 	public ObjectStack() {
 		stack = new ArrayIndexedCollection();
 	}
+	
 	/**
 	 * Returns true if stack contains 
 	 * no elements
@@ -20,6 +22,7 @@ public class ObjectStack {
 	public boolean isEmpty() {
 		return stack.isEmpty();
 	}
+	
 	/**
 	 * Returns number of elements on stack
 	 * @return 	number of elements on stack
@@ -27,6 +30,7 @@ public class ObjectStack {
 	public int size() {
 		return stack.size();
 	}
+	
 	/**
 	 * Adds element to the top of the stack. Method
 	 * will assure 
@@ -35,6 +39,7 @@ public class ObjectStack {
 	public void push(Object value) {
 		stack.add(value);
 	}
+	
 	/**
 	 * Removes the first element from the stack
 	 * and returns it.
@@ -48,6 +53,7 @@ public class ObjectStack {
 		
 		return obj;
 	}
+	
 	/**
 	 * Returns the first element from the stack 
 	 * but stack remains unchanged
@@ -58,7 +64,8 @@ public class ObjectStack {
 
 		return stack.get(size()-1);
 	}
-	/*
+	
+	/**
 	 * Removes all elements from the stack
 	 */
 	public void clear() {

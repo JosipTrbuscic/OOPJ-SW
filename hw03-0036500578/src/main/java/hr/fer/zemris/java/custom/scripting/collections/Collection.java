@@ -27,6 +27,7 @@ public class Collection {
 	 * This implementation always returns 0 and 
 	 * should not be used. Class extending {@code Collection} 
 	 * should offer specific implementation.
+	 * @return number of elements in this collection
 	 */
 	public int size() {
 		return 0;
@@ -45,6 +46,8 @@ public class Collection {
 	 * This implementation always returns false and should
 	 * not be used. Class extending {@code Collection} 
 	 * should offer specific implementation. 
+	 * @param value - object to search for
+	 * @return true if collection contains specified element
 	 */
 	public boolean contains(Object value) {
 		return  false;
@@ -67,6 +70,7 @@ public class Collection {
 	 * always throws {@code UnsupportedOperationException} and should
 	 * not be used. Class extending {@code Collection} should offer
 	 *  specific implementation.
+	 *  @return array of elements
 	 */
 	public Object[] toArray() {
 		throw new UnsupportedOperationException();	
@@ -76,6 +80,7 @@ public class Collection {
 	 * in a way specified by Processor argument.
 	 * This implementation does nothing. Class extending
 	 *  {@code Collection} should offer specific implementation.
+	 *  @param processor
 	 */
 	public void forEach(Processor processor) {
 		
