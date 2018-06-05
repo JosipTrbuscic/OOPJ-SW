@@ -25,6 +25,8 @@ public class Powers extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("application/octet-stream");
+		resp.setHeader("Content-Disposition", "attachment; filename=\"tablica.xls\"");
 		String a = req.getParameter("a");
 		String b = req.getParameter("b");
 		String n = req.getParameter("n");

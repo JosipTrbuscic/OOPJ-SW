@@ -4,6 +4,7 @@
 		<a href="setcolor?pickedBgCol=00FFFF">CYAN</a>
 		<a href="setcolor?pickedBgCol=FFFFFF">WHITE</a>
 		<a href="setcolor?pickedBgCol=FF0000">RED</a>
-		<a href="setcolor?pickedBgCol=00FF00">GREEN</a>
+		<a href="setcolor?pickedBgCol=00FF00">GREEN</a><br>
+		<a href="index.jsp">Return to home page</a>
 	</body>
 </html>

@@ -21,7 +21,12 @@ import org.jfree.util.Rotation;
 public class ReportImage extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/pages/report.jsp").forward(req, resp);
+		resp.setContentType("image/png");
+		PieDataset dataset = createDataset();
+        JFreeChart chart = createChart(dataset, "");
+        OutputStream os = resp.getOutputStream();
+        ImageIO.write(chart.createBufferedImage(480, 270), "png", os);
+        os.close();
 	}
 	
 	private PieDataset createDataset() {

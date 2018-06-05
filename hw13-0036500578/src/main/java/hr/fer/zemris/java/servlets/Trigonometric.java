@@ -1,8 +1,10 @@
 package hr.fer.zemris.java.servlets;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,20 +16,20 @@ import javax.servlet.http.HttpServletResponse;
 public class Trigonometric extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String a = req.getParameter("a");
-		String b = req.getParameter("b");
+		String aString = req.getParameter("a");
+		String bString = req.getParameter("b");
 		
-		int aInt = getInteger(a, false);
-		int bInt = getInteger(b, true);
+		int a = isInt(aString) ? Integer.parseInt(aString) : 0;
+		int b = isInt(bString) ? Integer.parseInt(bString) : 360;
 		
-		if(aInt > bInt) {
-			int temp = aInt;
-			aInt = bInt;
-			bInt=temp;
+		if(a > b) {
+			int temp = a;
+			a = b;
+			b=temp;
 		}
 		
-		List<NumberAndTrigValues> list = new LinkedList<>();
-		for(int i = aInt; i<=bInt; i++) {
+		List<NumberAndTrigValues> list = new ArrayList<>();
+		for(int i = a; i<=b; i++) {
 			list.add(new NumberAndTrigValues(i, Math.sin(Math.toRadians(i)), Math.cos(Math.toRadians(i))));
 		}
 		
@@ -59,13 +61,11 @@ public class Trigonometric extends HttpServlet{
 		}
 	}
 
-	private Integer getInteger(String a, boolean isB) {
-		if(a != null) {
-			try {
-				return Integer.valueOf(a);
-			} catch(NumberFormatException ignore) {
-			}
-		}
-		return isB ?Integer.valueOf(360) : Integer.valueOf(0);
+	private boolean isInt(String s) {
+		Pattern p = Pattern.compile("^\\d+$");
+		Matcher	m = p.matcher(s);
+		
+		if(m.find()) return true;
+		return false;
 	}
 }

@@ -12,7 +12,8 @@
 					<tr><td>${value.number}</td><td>${value.sin}</td><td>${value.cos}</td></tr>
 				</c:forEach>
 			</tbody>
-		</table>
+		</table><br>
+		<a href="index.jsp">Return to home page</a>
 	</body>
 
 </html>

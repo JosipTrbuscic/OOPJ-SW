@@ -27,7 +27,6 @@ public class ReportImageGenerator extends HttpServlet {
         OutputStream os = resp.getOutputStream();
         ImageIO.write(chart.createBufferedImage(480, 270), "png", os);
         os.close();
-	
 	}
 	
 	private PieDataset createDataset() {
