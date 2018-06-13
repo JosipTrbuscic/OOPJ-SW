@@ -3,8 +3,6 @@ package hr.fer.zemris.java.servlets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,60 +10,114 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Implementation of a servlet which processes HTTP GET request and calculates
+ * sin and cos value of every angle(in degrees) defined by integer value in a
+ * range whose bounds are defined by arguments specified by client. Valid
+ * arguments are any integer values, if lower bound is not specified it will
+ * default to 0 while upper bound will default to 360.
+ * 
+ * @author Josip Trbuscic
+ *
+ */
 @WebServlet("/trigonometric")
-public class Trigonometric extends HttpServlet{
+public class Trigonometric extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Lower bound default value
+	 */
+	private static final int DEFAULT_LOWER_BOUND = 0;
+	
+	/**
+	 * Upper bound default value
+	 */
+	private static final int DEFAULT_UPPER_BOUND = 360;
+	
+	/**
+	 * Max range of values
+	 */
+	private static final int MAX_DIFF = 720;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String aString = req.getParameter("a");
 		String bString = req.getParameter("b");
+		Integer a = DEFAULT_LOWER_BOUND;
+		Integer b = DEFAULT_UPPER_BOUND;
+
+		try {
+			a = Integer.parseInt(aString);
+			b = Integer.parseInt(bString);
+		} catch (NumberFormatException e) {
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid bound value");
+			return;
+		} catch (NullPointerException ignorable) {}
+
 		
-		int a = isInt(aString) ? Integer.parseInt(aString) : 0;
-		int b = isInt(bString) ? Integer.parseInt(bString) : 360;
-		
-		if(a > b) {
+		if (a > b) {
 			int temp = a;
 			a = b;
-			b=temp;
+			b = temp;
 		}
-		
-		List<NumberAndTrigValues> list = new ArrayList<>();
-		for(int i = a; i<=b; i++) {
-			list.add(new NumberAndTrigValues(i, Math.sin(Math.toRadians(i)), Math.cos(Math.toRadians(i))));
+
+		if (b > a + MAX_DIFF) {
+			b = a + MAX_DIFF;
 		}
-		
-		req.setAttribute("values", list );
+
+		List<AngleAndTrigValues> list = new ArrayList<>();
+		for (int i = a; i <= b; i++) {
+			list.add(new AngleAndTrigValues(i, Math.sin(Math.toRadians(i)), Math.cos(Math.toRadians(i))));
+		}
+
+		req.setAttribute("values", list);
 		req.getRequestDispatcher("WEB-INF/pages/trigonometric.jsp").forward(req, resp);
 	}
-	
-	public static class NumberAndTrigValues{
-		private int number;
+
+	/**
+	 * Simple class containing angle value and its sin and cos value
+	 * @author Josip Trbuscic
+	 *
+	 */
+	public static class AngleAndTrigValues {
+		private int angle;
 		private double sin;
 		private double cos;
-		
-		public NumberAndTrigValues(int number, double sin, double cos) {
-			this.number = number;
+
+		/**
+		 * constructor
+		 * @param angle - angle value
+		 * @param sin - sin value
+		 * @param cos - cos value
+		 */
+		public AngleAndTrigValues(int angle, double sin, double cos) {
+			this.angle = angle;
 			this.sin = sin;
 			this.cos = cos;
 		}
-		
-		public int getNumber() {
-			return number;
+
+		/**
+		 * Returns angle value
+		 * @return angle value
+		 */
+		public int getAngle() {
+			return angle;
 		}
-		
+
+		/**
+		 * Returns sin value
+		 * @return sin value
+		 */
 		public double getSin() {
 			return sin;
 		}
-		
+
+		/**
+		 * Returns cos value
+		 * @return cos value
+		 */
 		public double getCos() {
 			return cos;
 		}
-	}
-
-	private boolean isInt(String s) {
-		Pattern p = Pattern.compile("^\\d+$");
-		Matcher	m = p.matcher(s);
-		
-		if(m.find()) return true;
-		return false;
 	}
 }

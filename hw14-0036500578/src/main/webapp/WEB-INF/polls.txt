@@ -1,0 +1,2 @@
+Glasanje za omiljeni bend	Od sljedećiih bendova koji vam je najdraži	/WEB-INF/bands.txt
+Glasanje za omiljeni film	Od sljedećiih filmova koji vam je najdraži	/WEB-INF/movies.txt

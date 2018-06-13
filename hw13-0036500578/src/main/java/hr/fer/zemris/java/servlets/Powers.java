@@ -13,7 +13,10 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
- * @author josip
+ * Implementation of a servlet which processes HTTP  GET request
+ * and generates .xls file which contains integers from specified 
+ * value raised to the specified range of powers.
+ * @author Josip Trbuscic
  *
  */
 @WebServlet("/powers")
@@ -26,14 +29,14 @@ public class Powers extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("application/octet-stream");
-		resp.setHeader("Content-Disposition", "attachment; filename=\"tablica.xls\"");
+		resp.setHeader("Content-Disposition", "attachment; filename=\"powers.xls\"");
 		String a = req.getParameter("a");
 		String b = req.getParameter("b");
 		String n = req.getParameter("n");
 		
 		if(a == null || b == null || n == null) {
-			req.setAttribute("msg", "Must specify a, b and n parameters");
-			req.getRequestDispatcher("/WEB-INF/pages/powerError.jsp").forward(req, resp);
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Must specify a, b and n parameters");
+			return;
 		}
 		
 		int aInt = 0;
@@ -44,15 +47,15 @@ public class Powers extends HttpServlet{
 			bInt = Integer.parseInt(b);
 			nInt = Integer.parseInt(n);
 		}catch(NumberFormatException e) {
-			req.setAttribute("msg", "Invalid parameters value");
-			req.getRequestDispatcher("/WEB-INF/pages/powerError.jsp").forward(req, resp);
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameters value");
+			return;
 		}
 		
 		if(aInt < -100 || aInt > 100 ||
 			bInt < -100 || bInt > 100 ||
 			nInt <1 || nInt > 5) {
-			req.setAttribute("msg", "Parameter(s) out of range");
-			req.getRequestDispatcher("/WEB-INF/pages/powerError.jsp").forward(req, resp);
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parameter(s) out of range");
+			return;
 		}
 		
 		if(aInt > bInt) {

@@ -3,13 +3,14 @@
 
 <html>
 	<body bgcolor="#${not empty sessionScope.pickedBgCol ? sessionScope.pickedBgCol : 'FFFFFF'}">
+		<a href="index.jsp">Return to home page</a>
 		<table>
 			<thead>
 				<tr><th>Angle</th><th>Sin</th><th>Cos</th></tr>
 			</thead>
 			<tbody>
 				<c:forEach var="value" items="${values}">
-					<tr><td>${value.number}</td><td>${value.sin}</td><td>${value.cos}</td></tr>
+					<tr><td>${value.angle}</td><td>${value.sin}</td><td>${value.cos}</td></tr>
 				</c:forEach>
 			</tbody>
 		</table><br>

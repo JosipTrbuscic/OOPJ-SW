@@ -4,6 +4,12 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+/**
+ * Application listeners which maps the time application was
+ * in the servlet context 
+ * @author Josip Trbuscic
+ *
+ */
 @WebListener
 public class AppInfoListener implements ServletContextListener{
 

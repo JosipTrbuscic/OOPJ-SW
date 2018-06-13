@@ -5,8 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -17,49 +15,46 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import hr.fer.zemris.java.servlets.GlasanjeServlet.Band;
+import hr.fer.zemris.java.servlets.util.Util;
 
-@WebServlet("glasanje-glasaj")
+/**
+ * Implementation of a servlet which processes HTTP  GET request and 
+ * adds one to the number of votes to the band represented by the 
+ * specified id. Id must be an integer and must correspond to the 
+ * one of the available bands.
+ * @author Josip Trbuscic
+ *
+ */
+@WebServlet("/glasanje-glasaj")
 public class GlasanjeGlasajServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String idString = req.getParameter("id");
 		String fileName = req.getServletContext().getRealPath("/WEB-INF/glasanje-rezultati.txt");
-		File res = Paths.get(fileName).toFile();
-		
-		if(!res.exists()) {
-			Files.createFile(res.toPath());
-		}
+		Util.createResultsFile(fileName);
 		
 		int id=0;
 		try {
 			id = Integer.parseInt(idString);
 		} catch(NumberFormatException e) {
-			//TODO add error .jsp
-			req.getRequestDispatcher("").forward(req, resp);
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Band ID must be an integer");
 		}
-		List<String> resultsLines = Files.readAllLines(res.toPath());
-		Map<Integer,Integer> resultsMap = new TreeMap<>();
 		
-		resultsLines.forEach(r->{
-			String[] parts = r.split("\\t+");
-			resultsMap.put(Integer.valueOf(parts[0]), Integer.valueOf(parts[1]));
-		});
-		resultsMap.put(id, resultsMap.get(id)==null ? 1 : resultsMap.get(id) +1);
-		
-		Iterator<Integer> it = resultsMap.keySet().iterator();
-		FileWriter fw = new FileWriter(res);
-		while (it.hasNext()) {
-			try {
-				Integer key = it.next();
-				fw.write(key+"\t"+resultsMap.get(key));
-				if(it.hasNext()) {
-					fw.write(System.lineSeparator());
-				}
-			} catch (IOException ignorable) {
+		synchronized (this) {
+			Map<Integer, Integer> resultsMap = Util.getResults(req);
+			resultsMap.put(id, resultsMap.get(id)==null ? 1 : resultsMap.get(id) +1);
+			
+			FileWriter fw = new FileWriter(fileName);
+			
+			for(Integer key : resultsMap.keySet()) {
+				fw.write(key+"\t"+resultsMap.get(key)+System.lineSeparator());
 			}
+			fw.close();
 		}
-		fw.close();
+		
 		resp.sendRedirect(req.getContextPath() + "/glasanje-rezultati");
 	}
+	
 }

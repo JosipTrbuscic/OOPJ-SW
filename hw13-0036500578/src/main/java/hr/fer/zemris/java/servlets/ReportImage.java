@@ -17,8 +17,18 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.util.Rotation;
 
+
+/**
+ * Implementation of a servlet which processes HTTP  GET request 
+ * and generates report in a form of image of piechart and writes it
+ * in outputstream of a response
+ * @author Josip Trbuscic
+ *
+ */
 @WebServlet("/reportImage")
 public class ReportImage extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("image/png");
@@ -29,11 +39,15 @@ public class ReportImage extends HttpServlet {
         os.close();
 	}
 	
+	/**
+	 * Creates dataset
+	 * @return dataset
+	 */
 	private PieDataset createDataset() {
 		DefaultPieDataset result = new DefaultPieDataset();
-		result.setValue("Linux", 30);
-		result.setValue("Mac", 50);
-		result.setValue("Windows", 20);
+		result.setValue("Linux", 10);
+		result.setValue("Mac", 10);
+		result.setValue("Windows", 10);
 		return result;
 
 	}
@@ -44,8 +58,8 @@ public class ReportImage extends HttpServlet {
 	private JFreeChart createChart(PieDataset dataset, String title) {
 
 		JFreeChart chart = ChartFactory.createPieChart3D(title, // chart title
-				dataset, // data
-				true, // include legend
+				dataset,
+				true,
 				true, false);
 
 		PiePlot3D plot = (PiePlot3D) chart.getPlot();

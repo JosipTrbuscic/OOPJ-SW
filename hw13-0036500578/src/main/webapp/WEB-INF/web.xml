@@ -11,13 +11,4 @@
   <description>
      Prva aplikacija
   </description>
-  
-<!--   <servlet> -->
-<!--   	<servlet-name>randomColor</servlet-name> -->
-<!--   	<servlet-class>hr.fer.zemris.java.servlets.RandomFontColor</servlet-class> -->
-<!--   </servlet> -->
-<!--   <servlet-mapping> -->
-<!--   	<servlet-name>randomColor</servlet-name> -->
-<!--   	<url-pattern>stories/funny.jsp</url-pattern> -->
-<!--   </servlet-mapping> -->
 </web-app>
