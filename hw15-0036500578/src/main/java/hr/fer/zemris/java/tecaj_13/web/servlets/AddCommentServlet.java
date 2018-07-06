@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import hr.fer.zemris.java.tecaj_13.dao.DAOProvider;
 import hr.fer.zemris.java.tecaj_13.model.BlogComment;
 import hr.fer.zemris.java.tecaj_13.model.BlogEntry;
+import hr.fer.zemris.java.tecaj_13.model.BlogUser;
 
 /**
  * Servlet used to add comment on a blog entry
@@ -29,6 +30,7 @@ public class AddCommentServlet extends HttpServlet{
 		String email = req.getParameter("email");
 		String text = req.getParameter("text");
 		
+		email = email == null ? ((BlogUser) req.getSession().getAttribute("login")).getEmail() : email;
 		Long eid = (long) 0;
 		try {
 			eid = Long.parseLong(eidString);

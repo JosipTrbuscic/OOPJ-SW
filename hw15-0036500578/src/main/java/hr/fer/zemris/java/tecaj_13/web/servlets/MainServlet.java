@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import hr.fer.zemris.java.tecaj_13.dao.DAOProvider;
+import hr.fer.zemris.java.tecaj_13.forms.LoginForm;
 import hr.fer.zemris.java.tecaj_13.model.BlogUser;
-import hr.fer.zemris.java.tecaj_13.model.LoginForm;
 
 /**
  * Servlet used to fetch all data needed to display home page and

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="WorkbenchPreferenceDialogSettings">
-		<item value="657" key="DIALOG_X_ORIGIN"/>
-		<item value="161" key="DIALOG_Y_ORIGIN"/>
+		<item value="552" key="DIALOG_X_ORIGIN"/>
+		<item value="-385" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
 		<item value="-1" key="dialogHeight"/>
@@ -32,6 +32,13 @@
 		<item value="true" key="WizardZipFileResourceExportPage1.STORE_COMPRESS_CONTENTS_ID"/>
 		<item value="false" key="WizardZipFileResourceExportPage1.STORE_CREATE_STRUCTURE_ID"/>
 		<list key="WizardZipFileResourceExportPage1.STORE_DESTINATION_NAMES_ID">
+			<item value="/home/josip/Documents/Faks/OPJJ/zadace/ispravljeno/hw15-0036500578.zip"/>
+			<item value="/home/josip/Documents/Faks/OPJJ/zadace/ispravljeno/hw15-0036500578-1.zip"/>
+			<item value="/home/josip/Documents/Faks/OPJJ/zadace/ispravljeno/hw16-0036500578-1.zip"/>
+			<item value="/home/josip/Documents/Faks/OPJJ/zadace/ispravljeno/hw16-0036500578-2.zip"/>
+			<item value="/home/josip/Documents/Faks/OPJJ/zadace/HW17-0036500578.zip"/>
+			<item value="/home/josip/Documents/Faks/OPJJ/zadace/HW16-0036500578-2.zip"/>
+			<item value="/home/josip/Documents/Faks/OPJJ/zadace/HW16-0036500578-1.zip"/>
 			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw15-0036500578.zip"/>
 			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw14-0036500578.zip"/>
 			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw13-0036500578.zip"/>
@@ -45,11 +52,6 @@
 			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw08-0036500578.zip"/>
 			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw07-0036500578.zip"/>
 			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw06-0036500578.zip"/>
-			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw05-0036500578.zip"/>
-			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw04-0036500578.zip"/>
-			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw03-0036500578.zip"/>
-			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw02-0036500578.zip"/>
-			<item value="/home/josip/Documents/Faks/OPJJ/zadace/hw01-0036500578.zip"/>
 		</list>
 	</section>
 </section>

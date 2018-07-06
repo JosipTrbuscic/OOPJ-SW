@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			
+			.tagbutton {
+   			      background-color: #131722;
+				  color: white;
+				  padding: 15px 20px;
+				  text-align: center;
+				  text-decoration: none;
+				  display: inline-block;
+				  font-size: 16px;
+				  margin: 4px 2px;
+				  cursor: pointer;
+			}
+			
+			.tagbutton:HOVER {
+				 color: yellow;
+				 background-color: #103d6a;
+			}
+			
+			#head {
+		    	text-align: center;
+		    	font-family:times, Times New Roman, times-roman, georgia, serif;
+		    	font-size: 65px;
+ 				line-height: 47px;
+ 				letter-spacing: -2px;
+ 				font-weight: bold;
+ 				text-shadow:
+			    -1px -1px 0 yellow,
+			    1px -1px 0 yellow,
+			    -1px 1px 0 yellow,
+			    1px 1px 0 yellow;
+			}
+			
+			body {
+			    background-image: url("body_background.jpg");
+			}
+			
+			#tags {
+		    	text-align: center;
+			}
+			
+			#thumbs {
+		    	text-align: center;
+			}
+			
+			.thumbnail {
+				margin: 10px 10px;
+				border: 3px solid yellow;
+			}
+			
+			#description {
+		    	text-align: center;
+		    	font-family: times, Times New Roman, times-roman, georgia, serif;
+		    	font-size: 40px;
+ 				line-height: 35px;
+ 				font-weight: bold;
+ 				color: yellow;
+			}
+			
+			#currentTags {
+				margin-left: 50px;
+		    	text-align: left;
+		    	color: white;
+		    	font-size: 20px;
+			}
+			
+			#full {
+		    	text-align: center;
+			}
+		</style>
+		
+		<meta charset="UTF-8">
+		<title>Galerija</title>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript">
+		
+		 $(document).ready(function(){
+			 $.ajax({
+	             type: "GET",
+	             dataType:"json",
+	             url:  "rest/galerija/getTags",
+	             success: function(data) {
+	                 var html = ""
+	                 $.each(data.tags, function(index, tag) {
+	                	 html += "<button class=\"tagbutton\" onClick=\"showThumbnails(\'"+tag+"\')\" type=\"button\" >"+tag+"</button> ";
+	                 });
+	                 $("#tags").html(html);
+	             }
+	         });
+		 });
+		 
+		function showThumbnails(tagValue){
+			$("#full").html("");
+			$("#currentTags").html("");
+			$("#description").html("");
+			var pictureList = [];
+			getThumbnailList(tagValue).done(function(result){
+				pictureList = result.thumbs;
+				var thumbsHtml = ""
+				$.each(pictureList, function(index, picture) {
+               	 	thumbsHtml += "<img class='thumbnail' src='servlets/thumbnail?name="+picture+"' onClick=\"getFullPicture(\'"+picture+"\')\"/>";
+                });
+				$("#thumbs").html(thumbsHtml);
+			}).done(function(){
+				console.log(pictureList);
+			});
+			
+		}
+
+		function getThumbnailList(tagValue){
+		   return $.ajax({
+		        type: "GET",
+		        url: "rest/galerija/thumbnailList/"+tagValue,
+		    });
+		}
+		
+		function getFullPicture(picture){
+		    var fullHtml = "<img class='fullPicture' src='servlets/fullPicture?name="+picture+"' />";
+		    var currentTags = "<p>Tags: "
+		    var description = ""
+		    getPictureDecription(picture).done(function(result){
+		    	description = "<p>"+result.description+"</p>";
+		    	let first = true;
+		    	$.each(result.tags, function(index, tag) {
+		    		if(first){
+		    			currentTags += tag;
+		    			first = false;
+		    		} else{
+		    			currentTags += ", "+tag;
+		    		}
+		    		
+                });
+		    	currentTags += "</p>";
+		    	console.log(result);
+		    	 $("#full").html(fullHtml);
+				 $("#currentTags").html(currentTags);
+				 $("#description").html(description);
+		    });
+		   
+		}
+		
+		function getPictureDecription(picture){
+			return $.ajax({
+		        type: "GET",
+		        url: "rest/galerija/pictureInfo/"+picture
+		    });
+		}
+		
+		</script>
+	
+	</head>
+	
+	<body>
+		<h2 id="head" > Star Wars Gallery</h2>
+		<div id="tags">&nbsp;</div>
+		<div id="thumbs">&nbsp;</div><br><br>
+		<div id="description">&nbsp;</div><div id="currentTags">&nbsp;</div>
+		<div id="full">&nbsp;</div>
+	
+	
+	
+	</body>
+	
+</html>

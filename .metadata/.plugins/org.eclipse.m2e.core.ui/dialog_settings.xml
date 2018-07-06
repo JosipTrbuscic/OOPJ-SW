@@ -20,6 +20,9 @@
 	</section>
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="/home/josip/hw-workspace/hw17-0036500578"/>
+			<item value="/home/josip/hw-workspace/hw16-0036500578-2"/>
+			<item value="/home/josip/hw-workspace/hw16-0036500578-1"/>
 			<item value="/home/josip/hw-workspace/hw15-0036500578"/>
 			<item value="/home/josip/hw-workspace/hw13-0036500578"/>
 			<item value="/home/josip/hw-workspace/hw12-0036500578"/>
@@ -32,7 +35,6 @@
 			<item value="/home/josip/hw-workspace/hw04-0036500578"/>
 			<item value="/home/josip/hw-workspace/hw03-0036500578"/>
 			<item value="/home/josip/hw-workspace/hw02-0036500578"/>
-			<item value="/home/josip/hw-workspace/hw01-0036500578"/>
 		</list>
 		<list key="projectNameTemplate">
 			<item value="[artifactId]"/>

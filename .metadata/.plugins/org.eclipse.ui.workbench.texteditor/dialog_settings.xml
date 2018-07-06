@@ -6,29 +6,32 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="blogDB" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="blogdb"/>
-			<item value="getpoll"/>
-			<item value="populate"/>
-			<item value="&#x09;&#x09;&#x09;&#x09;for (String line : lines) {"/>
-			<item value="usao"/>
-			<item value="name"/>
-			<item value="write()"/>
-			<item value=")"/>
-			<item value="System.out"/>
-			<item value="syso"/>
-			<item value="sys"/>
-			<item value="system.out"/>
-			<item value=" -&gt; "/>
-			<item value="-&gt;"/>
-			<item value="namep"/>
+			<item value="system."/>
+			<item value="save"/>
+			<item value="export"/>
+			<item value="bin"/>
+			<item value="npr"/>
+			<item value="dr"/>
+			<item value="set"/>
+			<item value="crea"/>
+			<item value="blog/"/>
+			<item value="blog"/>
+			<item value="blod"/>
+			<item value="blof"/>
+			<item value="resol"/>
+			<item value="tring t : q.getT) {"/>
+			<item value="character"/>
 		</list>
 		<list key="replacehistory">
+			<item value="vocabulary"/>
+			<item value="entrySet"/>
+			<item value="List"/>
 			<item value="TOP_INDENT"/>
 			<item value="RIGHT_INDENT"/>
 			<item value="MAX_ROWS"/>
@@ -41,7 +44,6 @@
 			<item value="Element"/>
 			<item value="nodesArray"/>
 			<item value="fromImaginary"/>
-			<item value="findImaginary"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

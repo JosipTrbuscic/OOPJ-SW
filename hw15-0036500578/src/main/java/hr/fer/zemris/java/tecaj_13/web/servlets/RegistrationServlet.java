@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import hr.fer.zemris.java.tecaj_13.dao.DAOProvider;
+import hr.fer.zemris.java.tecaj_13.forms.RegisterForm;
 import hr.fer.zemris.java.tecaj_13.model.BlogUser;
-import hr.fer.zemris.java.tecaj_13.model.RegisterForm;
 
 /**
  * Servlet used to register a user

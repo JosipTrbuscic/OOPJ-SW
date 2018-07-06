@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import hr.fer.zemris.java.tecaj_13.dao.DAOProvider;
+import hr.fer.zemris.java.tecaj_13.forms.BlogEntryForm;
 import hr.fer.zemris.java.tecaj_13.model.BlogEntry;
-import hr.fer.zemris.java.tecaj_13.model.BlogEntryForm;
+import hr.fer.zemris.java.tecaj_13.model.BlogUser;
 
 /**
  * Servlet used to edit title and text of existing blog entry
@@ -37,13 +38,20 @@ public class EditBlogEntryServlet extends HttpServlet {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Must provide integer entry ID");
 		}
 		
-		BlogEntry entry = DAOProvider.getDAO().getBlogEntry(eid);
-		if(entry == null) {
+		BlogUser logedInUser = (BlogUser) req.getSession().getAttribute("login");
+		BlogEntry requestedEntry =  DAOProvider.getDAO().getBlogEntry(eid);
+		
+		if(requestedEntry == null) {
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"No entry with provided entry ID");
 		}
 		
+		if(!requestedEntry.getCreator().getNick().equals(logedInUser.getNick())) {
+			resp.sendError(HttpServletResponse.SC_FORBIDDEN,"Login required");
+			return;
+		}
+		
 		if(form.hasErrors()) {
-			req.setAttribute("entry", entry);
+			req.setAttribute("entry", requestedEntry);
 			req.setAttribute("form", form);
 			req.getRequestDispatcher("/WEB-INF/pages/editEntry.jsp").forward(req, resp);
 			return;
@@ -51,10 +59,10 @@ public class EditBlogEntryServlet extends HttpServlet {
 		
 		
 		
-		entry.setLastModifiedAt(new Date());
-		entry.setTitle(form.getTitle());
-		entry.setText(form.getText());
+		requestedEntry.setLastModifiedAt(new Date());
+		requestedEntry.setTitle(form.getTitle());
+		requestedEntry.setText(form.getText());
 		
-		resp.sendRedirect("author/"+entry.getCreator().getNick()+"/"+eid);
+		resp.sendRedirect("author/"+requestedEntry.getCreator().getNick()+"/"+eid);
 	}
 }

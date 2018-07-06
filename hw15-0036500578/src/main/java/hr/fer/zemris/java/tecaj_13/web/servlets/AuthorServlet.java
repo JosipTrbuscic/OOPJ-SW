@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import hr.fer.zemris.java.tecaj_13.dao.DAOProvider;
+import hr.fer.zemris.java.tecaj_13.forms.BlogEntryForm;
 import hr.fer.zemris.java.tecaj_13.model.BlogEntry;
-import hr.fer.zemris.java.tecaj_13.model.BlogEntryForm;
 import hr.fer.zemris.java.tecaj_13.model.BlogUser;
 
 /**
@@ -72,6 +72,12 @@ public class AuthorServlet extends HttpServlet{
 					eid = Long.parseLong(eidString);
 				}catch(NumberFormatException ex) {
 					resp.sendError(HttpServletResponse.SC_BAD_REQUEST,"Must provide integer id");
+				}
+				
+				BlogEntry requestedEntry =  DAOProvider.getDAO().getBlogEntry(eid);
+				if(!requestedEntry.getCreator().getNick().equals(logedInUser.getNick())) {
+					resp.sendError(HttpServletResponse.SC_FORBIDDEN,"Login required");
+					return;
 				}
 				
 				req.setAttribute("entry", DAOProvider.getDAO().getBlogEntry(eid));

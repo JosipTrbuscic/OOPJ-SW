@@ -4,7 +4,8 @@
   <body>
   <c:choose>
     <c:when test="${not empty sessionScope.login}">
-       Loged in as <c:out value="${login.firstName}"/> <c:out value="${login.lastName}"/> <a href="logout">Logout</a>
+       Loged in as <c:out value="${login.firstName}"/> <c:out value="${login.lastName}"/>
+        <a href="<%out.print(request.getContextPath().toString());%>/servleti/logout">Logout</a>
         <br />
     </c:when>    
     <c:otherwise>
@@ -42,7 +43,5 @@
         <li><a href="author/${u.nick}">${u.firstName} ${u.lastName}</a></li>
       </c:forEach>
     </ul>
-    <br><br>
-
   </body>
 </html>

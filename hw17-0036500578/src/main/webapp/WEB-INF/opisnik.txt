@@ -1,0 +1,60 @@
+Aldera.png
+Aldera, Capital City of Planet Alderaan
+capital, city, aldera, alderaan, planet
+Anakin.jpg
+Anakin Skywalker
+character, prequel
+BB8.jpg
+BB8, Droid Character
+character, droid, sequel
+C3PO.jpg
+C3PO, Droid Character
+character, droid, sequel, prequel
+Chewbacca.jpeg
+Chewbacca or "Chewie", Wookie Character
+character, prequel, sequel, wookie
+Coruscant.png
+Planet Courscant
+planet, courscant
+DarthVader.jpg
+Darth Vader
+darth vader, character, sequel
+ForceAwakens.jpg
+Poster of Movie "The Force Awakens"
+poster, sequel
+HanSolo.jpg
+Han Solo
+prequel, character
+Kyloren.jpg
+Kylo Ren
+character, sequel
+Leia.jpeg
+Princess Leia
+character, sequel
+LukeSkywalker.jpg
+Luke Skywalker
+character, sequel
+ObiWan.jpg
+Obi Wan Kenobi
+character, prequel
+PanthomMeancePoster.png
+Poster of Movie "The Phantom Menace"
+poster, prequel
+R2D2.png
+R2D2, Droid Character
+character, droid, prequel, sequel
+ReturnOfTheJediPoster.jpg
+Poster of Movie "Return of The Jedi"
+poster, sequel
+RevengeOfTheSithPoster.jpg
+Poster of Movie "Revenge of The Sith"
+poster, prequel
+Rey.jpg
+Rey Kenobi
+character, sequel
+Senate.jpg
+Senator Palpatine
+character, prequel
+Tatooine.jpeg
+Planet Tatooine
+planet, tatooine
