@@ -1,6 +1,7 @@
 package hr.fer.zemris.java.hw16.jdraw.geometricalObjects;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 /**
  * Implementation of geometric object visitor which will calculates bounds of
@@ -57,6 +58,22 @@ public class GeometricalObjectBBCalculator implements GeometricalObjectVisitor{
 	 */
 	public Rectangle getBoundingBox() {
 		return new Rectangle(left, top, right -left, bottom -top);
+	}
+
+	@Override
+	public void visit(FilledPolygon filledPolygon) {
+		List<Vector3> vectors = filledPolygon.getPoints();
+		
+		for(Vector3 vector: vectors) {
+			left = (int)vector.getX() < left ? (int)vector.getX() : left;
+			
+			right = (int) vector.getX() > right ?  (int)vector.getX() : right;
+			
+			top = (int)vector.getY() < top ? (int)vector.getY() : top;
+
+			bottom = (int)vector.getY() > bottom ? (int)vector.getY() : bottom;
+		}
+		
 	}
 
 }

@@ -1,6 +1,8 @@
 package hr.fer.zemris.java.hw16.jdraw.geometricalObjects;
 
 import java.awt.Graphics2D;
+import java.lang.reflect.Array;
+import java.util.List;
 
 /**
  * Implementation of geometric object visitor which paints all visited 
@@ -43,6 +45,39 @@ public class GeometricalObjectPainter implements GeometricalObjectVisitor{
 		
 		g2d.setColor(filledCircle.getOutlineColor());
 		g2d.drawOval(filledCircle.getX()-r, filledCircle.getY()-r, 2*r, 2*r);
+	}
+
+	@Override
+	public void visit(FilledPolygon filledPolygon) {
+		List<Vector3> vectors = filledPolygon.getPoints();
+		for(int i = 0; i<vectors.size(); i++) {
+			if(i == vectors.size()-1) {
+				int x1 = (int) vectors.get(0).getX();
+				int y1 = (int) vectors.get(0).getY();
+				int x2 =(int) vectors.get(i).getX();
+				int y2 = (int) vectors.get(i).getY();
+				g2d.drawLine(x1, y1, x2, y2);
+
+			}else {
+				int x1 = (int)vectors.get(i).getX();
+				int y1 = (int)vectors.get(i).getY();
+				int x2 = (int)vectors.get(i+1).getX();
+				int y2 = (int)vectors.get(i+1).getY();
+
+				g2d.drawLine(x1, y1, x2, y2);
+			}
+			
+		}
+		
+		g2d.setColor(filledPolygon.getFillColor());
+		int[] xpoints = new int[vectors.size()];
+		int[] ypoints = new int[vectors.size()];
+		
+		for(int i = 0; i<vectors.size(); i++) {
+			xpoints[i] = (int)vectors.get(i).getX();
+			ypoints[i] = (int)vectors.get(i).getY();
+		}
+		g2d.fillPolygon(xpoints, ypoints, vectors.size());
 	}
 
 }

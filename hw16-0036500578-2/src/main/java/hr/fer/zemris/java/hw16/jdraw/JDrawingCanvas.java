@@ -33,7 +33,6 @@ public class JDrawingCanvas extends JComponent implements DrawingModelListener{
 	@Override
 	public void paintComponent(Graphics g) {
 		GeometricalObjectPainter painter = new GeometricalObjectPainter((Graphics2D) g);
-		
 		for(int i=model.getSize()-1; i>=0; i--) {
 			model.getObject(i).accept(painter);
 		}

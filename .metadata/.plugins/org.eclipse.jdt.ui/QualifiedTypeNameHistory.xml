@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="javax.swing.filechooser.FileNameExtensionFilter"/>
-    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.geometricalObjects.GeometricalObject"/>
-    <fullyQualifiedTypeName name="java.util.LinkedList"/>
-    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.geometricalObjects.Line"/>
-    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.geometricalObjects.Circle"/>
-    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.geometricalObjects.FilledCircle"/>
-    <fullyQualifiedTypeName name="java.awt.Color"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
-    <fullyQualifiedTypeName name="java.nio.charset.Charset"/>
-    <fullyQualifiedTypeName name="java.util.Collections"/>
     <fullyQualifiedTypeName name="javax.swing.ButtonGroup"/>
-    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
     <fullyQualifiedTypeName name="java.util.Enumeration"/>
     <fullyQualifiedTypeName name="javax.swing.AbstractButton"/>
     <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.geometricalObjects.GeometricalObjectBBCalculator"/>
@@ -36,7 +25,6 @@
     <fullyQualifiedTypeName name="java.util.TreeSet"/>
     <fullyQualifiedTypeName name="java.util.Set"/>
     <fullyQualifiedTypeName name="java.nio.file.Files"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="javax.ws.rs.core.MediaType"/>
     <fullyQualifiedTypeName name="hr.fer.zemris.java.hw17.servlets.ThumbnailsServlet.Picture"/>
     <fullyQualifiedTypeName name="java.awt.Image"/>
@@ -57,7 +45,19 @@
     <fullyQualifiedTypeName name="hr.fer.zemris.java.tecaj_13.model.EncryptionUtil"/>
     <fullyQualifiedTypeName name="hr.fer.zemris.java.tecaj_13.model.BlogUser"/>
     <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.nio.file.Paths"/>
     <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.JVDraw.ModelChangeListener"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.geometricalObjects.GeometricalObject"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.tools.Tool"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.tools.DrawFilledPolygonTool.VectorPair"/>
+    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.tools.DrawFilledPolygonTool"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.Array"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.geometricalObjects.FilledPolygon"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.editors.GeometricalObjectEditor"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.geometricalObjects.Vector3"/>
+    <fullyQualifiedTypeName name="java.lang.IllegalArgumentException"/>
+    <fullyQualifiedTypeName name="hr.fer.zemris.java.hw16.jdraw.editors.FilledPolygonEditor"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
 </qualifiedTypeNameHistroy>

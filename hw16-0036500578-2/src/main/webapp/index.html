@@ -1,0 +1,18 @@
+<html>
+  <body>
+  <h1>Create new blog entry</h1>
+	<form action="<%out.print(request.getContextPath().toString());%>/crtaj" method="POST">
+		Title:<br>
+		<input type="text" name="title"><br>
+		
+		
+		Text:<br>
+		<input type="text" name="text"><br>
+
+		
+		<input type="submit" value="Generate picture">
+		<br><br>
+	</form><br><br>
+	<a href="<%out.print(request.getContextPath().toString());%>/index.jsp">Return to login page</a>
+  </body>
+</html>

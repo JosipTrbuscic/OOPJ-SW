@@ -26,4 +26,6 @@ public interface GeometricalObjectVisitor {
 	 * @param filledCircle - visited filled circle
 	 */
 	public abstract void visit(FilledCircle filledCircle);
+	
+	public abstract void visit(FilledPolygon filledPolygon);
 }

@@ -51,7 +51,6 @@ public class EditActions {
 	public EditActions(MultipleDocumentModel model, ILocalizationProvider lp) {
 		this.model = model;
 		this.lp = lp;
-		
 		initActions();
 	}
 	

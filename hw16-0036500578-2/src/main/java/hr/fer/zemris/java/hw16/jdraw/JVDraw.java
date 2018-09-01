@@ -51,6 +51,7 @@ import hr.fer.zemris.java.hw16.jdraw.models.DrawingModelListener;
 import hr.fer.zemris.java.hw16.jdraw.models.DrawingObjectListModel;
 import hr.fer.zemris.java.hw16.jdraw.tools.DrawCircleTool;
 import hr.fer.zemris.java.hw16.jdraw.tools.DrawFilledCircleTool;
+import hr.fer.zemris.java.hw16.jdraw.tools.DrawFilledPolygonTool;
 import hr.fer.zemris.java.hw16.jdraw.tools.DrawLineTool;
 import hr.fer.zemris.java.hw16.jdraw.tools.Tool;
 
@@ -153,6 +154,7 @@ public class JVDraw extends JFrame{
 		states.put("line", new DrawLineTool(fgProvider, model, canvas));
 		states.put("circle", new DrawCircleTool(fgProvider, model, canvas));
 		states.put("fcircle", new DrawFilledCircleTool(fgProvider,bgProvider , model, canvas));
+		states.put("fpoly", new DrawFilledPolygonTool(fgProvider,bgProvider , model, canvas));
 	}
 
 	/**
@@ -248,6 +250,11 @@ public class JVDraw extends JFrame{
 			currentState = states.get("fcircle");
 		});
 		
+		JRadioButton filledPolygonButon = new JRadioButton("Filled Polygon");
+		filledPolygonButon.addActionListener(l->{
+			currentState = states.get("fpoly");
+		});
+		
 		lineButton.setSelected(true);
 		currentState = states.get("line");
 		
@@ -255,10 +262,13 @@ public class JVDraw extends JFrame{
 		buttonGroup.add(lineButton);
 		buttonGroup.add(circleButton);
 		buttonGroup.add(filledCircleButton);
+		buttonGroup.add(filledPolygonButon);
+
 
 		toolbar.add(lineButton);
 		toolbar.add(circleButton);
 		toolbar.add(filledCircleButton);
+		toolbar.add(filledPolygonButon);
 	}
 
 	/**
