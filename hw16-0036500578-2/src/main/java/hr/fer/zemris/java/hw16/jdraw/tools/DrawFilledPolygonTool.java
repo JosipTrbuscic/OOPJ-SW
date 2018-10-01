@@ -150,8 +150,10 @@ public class DrawFilledPolygonTool implements Tool{
 	
 	private boolean isConvex(Vector3 current) {
 		List<VectorPair> pairs = new ArrayList<>();
-		for(int i = 0; i<vectors.size(); i++) {
-			if(i == vectors.size()-1) {
+		for(int i = 0; i<=vectors.size(); i++) {
+			if(i == vectors.size()) {
+				pairs.add(new VectorPair(vectors.get(0).sub(current), vectors.get(1).sub(current)));
+			}else if(i == vectors.size()-1) {
 				pairs.add(new VectorPair(current.sub(vectors.get(i)), vectors.get(0).sub(vectors.get(i))));
 			}else if (i == vectors.size()-2){
 				pairs.add(new VectorPair(vectors.get(i+1).sub(vectors.get(i)), current.sub(vectors.get(i))));

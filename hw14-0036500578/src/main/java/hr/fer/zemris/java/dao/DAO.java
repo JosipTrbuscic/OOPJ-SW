@@ -1,6 +1,5 @@
 package hr.fer.zemris.java.dao;
 
-import java.nio.file.Path;
 import java.util.List;
 
 import javax.servlet.ServletContextEvent;

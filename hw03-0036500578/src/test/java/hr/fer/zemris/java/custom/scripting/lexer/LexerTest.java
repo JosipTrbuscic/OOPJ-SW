@@ -9,7 +9,6 @@ import hr.fer.zemris.java.custom.scripting.lexer.LexerState;
 import hr.fer.zemris.java.custom.scripting.lexer.Token;
 import hr.fer.zemris.java.custom.scripting.lexer.TokenType;
 
-@SuppressWarnings("javadoc")
 public class LexerTest {
 	Lexer lex1;
 	Lexer lex2;

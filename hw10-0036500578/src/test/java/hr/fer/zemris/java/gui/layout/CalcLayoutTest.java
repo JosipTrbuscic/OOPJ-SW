@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("javadoc")
 public class CalcLayoutTest {
 
 	private JPanel panel;

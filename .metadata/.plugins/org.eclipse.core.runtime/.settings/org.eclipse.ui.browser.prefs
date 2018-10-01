@@ -1,3 +1,3 @@
-browsers=<?xml version\="1.0" encoding\="UTF-8"?>\n<web-browsers current\="0">\n<system/>\n<external location\="/usr/bin/firefox" name\="Firefox"/>\n</web-browsers>
+browsers=<?xml version\="1.0" encoding\="UTF-8"?>\n<web-browsers current\="0">\n<system/>\n<external location\="/usr/bin/firefox" name\="Firefox"/>\n<external location\="/usr/bin/chromium-browser" name\="Chromium"/>\n</web-browsers>
 eclipse.preferences.version=1
-internalWebBrowserHistory=file\:///home/josip/hw-workspace/hw17-0036500578/src/main/webapp/WEB-INF/thumbnails/Aldera.png|*|file\:/home/josip/hw-workspace/hw17-0036500578/src/main/webapp/WEB-INF/thumbnails/Aldera.png|*|http\://download.java.net/java/jdk9/docs/specs/security/standard-names.html\#messagedigest-algorithms|*|
+internalWebBrowserHistory=file\:///home/josip/eclipse-workspace/hw-workspace/JIR-0036500578/src/main/webapp/WEB-INF/progress.png|*|file\:/home/josip/eclipse-workspace/hw-workspace/JIR-0036500578/src/main/webapp/WEB-INF/progress.png|*|http\://127.0.0.1\:41183/help/nftopic/jar\:file\:/home/josip/.m2/repository/junit/junit/4.12/junit-4.12-javadoc.jar\!/index.html|*|

@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>hr.fer.zemris.java.jmbag0036500578.cmdapps</groupId>
+	<artifactId>jvddrawer</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>HW-16-1</name>
+     
+	<properties>
+		<maven.compiler.source>9</maven.compiler.source>
+		<maven.compiler.target>9</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<!-- za upravljanje ovisnostima a posebno za "scope" vidi:
+	     https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html
+	-->
+	<build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.10.v20180503</version>
+        <configuration>
+          <scanIntervalSeconds>10</scanIntervalSeconds>
+          <webApp>
+            <contextPath>/jvddrawer</contextPath>
+          </webApp>
+        </configuration>
+      </plugin>
+    </plugins>
+    <finalName>jvddrawer</finalName>
+  </build>
+
+  <dependencies>
+
+        <!-- junit testing: -->
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  		<version>4.12</version>
+  		<scope>test</scope>
+  	</dependency>
+
+        <!-- servlet/jsp api support: -->
+  	<dependency>
+  		<groupId>javax.servlet</groupId>
+  		<artifactId>javax.servlet-api</artifactId>
+  		<version>3.1.0</version>
+  		<scope>provided</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>javax.servlet.jsp</groupId>
+  		<artifactId>javax.servlet.jsp-api</artifactId>
+  		<version>2.3.1</version>
+  		<scope>provided</scope>
+  	</dependency>
+
+        <!-- jstl support: -->
+  	<dependency>
+  		<groupId>javax.servlet.jsp.jstl</groupId>
+  		<artifactId>javax.servlet.jsp.jstl-api</artifactId>
+  		<version>1.2.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.glassfish.web</groupId>
+  		<artifactId>javax.servlet.jsp.jstl</artifactId>
+  		<version>1.2.1</version>
+  		<exclusions>
+  			<exclusion>
+  				<artifactId>jstl-api</artifactId>
+  				<groupId>javax.servlet.jsp.jstl</groupId>
+  			</exclusion>
+  		</exclusions>
+  	</dependency>
+  	<dependency>
+	    <groupId>jfree</groupId>
+	    <artifactId>jfreechart</artifactId>
+	    <version>1.0.13</version>
+	</dependency>
+	
+	<dependency>
+    <groupId>org.apache.poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>3.16</version>
+	</dependency>
+
+  </dependencies>
+
+</project>
+

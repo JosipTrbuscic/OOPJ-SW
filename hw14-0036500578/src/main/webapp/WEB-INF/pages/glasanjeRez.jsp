@@ -12,7 +12,7 @@ table.reztd {
 
 	<h1>Rezultati glasanja</h1>
 	<p>Ovo su rezultati glasanja.</p>
-	<table border="1" cellspacing="0" class="rez">
+	<table border="1" class="rez">
 		<thead>
 			<tr>
 				<th>Ime</th>

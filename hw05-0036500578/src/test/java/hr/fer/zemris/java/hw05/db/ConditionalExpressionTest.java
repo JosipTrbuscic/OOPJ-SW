@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("javadoc")
 public class ConditionalExpressionTest {
 	List<StudentRecord> list;
 	ConditionalExpression expr;

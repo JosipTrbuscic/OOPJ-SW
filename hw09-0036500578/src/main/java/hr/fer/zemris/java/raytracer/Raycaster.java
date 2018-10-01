@@ -6,7 +6,6 @@ import hr.fer.zemris.java.raytracer.model.Point3D;
 import hr.fer.zemris.java.raytracer.model.Ray;
 import hr.fer.zemris.java.raytracer.model.Scene;
 import hr.fer.zemris.java.raytracer.viewer.RayTracerViewer;
-import static hr.fer.zemris.java.raytracer.Util.tracer;
 
 /**
  * This class represents ray-caster program which 

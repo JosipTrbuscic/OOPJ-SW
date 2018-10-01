@@ -1,7 +1,5 @@
 package hr.fer.zemris.math;
 
-import static java.lang.Math.abs;
-
 /**
  * This class represents complex polynomial which is 
  * constructed from given roots 

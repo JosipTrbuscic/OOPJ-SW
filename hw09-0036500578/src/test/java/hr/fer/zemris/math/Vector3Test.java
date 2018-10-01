@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-@SuppressWarnings("javadoc")
 public class Vector3Test {
 	private static final double DELTA = 1E-4;
 

@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-@SuppressWarnings("javadoc")
 public class ValueWrapperTest {
 	@Test
 	public void addPositiveIntegers() {

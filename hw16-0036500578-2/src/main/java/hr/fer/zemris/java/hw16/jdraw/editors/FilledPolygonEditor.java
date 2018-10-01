@@ -2,18 +2,22 @@ package hr.fer.zemris.java.hw16.jdraw.editors;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import hr.fer.zemris.java.hw16.jdraw.colors.JColorArea;
-import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.FilledCircle;
 import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.FilledPolygon;
+import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.GeometricalObject;
 import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.Vector3;
 import hr.fer.zemris.java.hw16.jdraw.tools.DrawFilledPolygonTool.VectorPair;
 
 public class FilledPolygonEditor extends GeometricalObjectEditor{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Center x coordinate input field
 	 */
@@ -59,30 +63,29 @@ public class FilledPolygonEditor extends GeometricalObjectEditor{
 			int newY = Integer.parseInt(yField[i].getText());
 			newVectors.add(new Vector3(newX, newY, 0));
 		}
-		
+		List<Vector3> obj = Collections.synchronizedList(vectors);
 		if(!isConvex()) {
-			throw new IllegalArgumentException();
+			newVectors.clear();
+			throw new IllegalArgumentException("Not Convex");
 		}
 		
 	}
 
 	@Override
 	public void acceptEditing() {
-		for(int i = 0; i<vectors.size();i++) {
-			vectors.get(i).setX(newVectors.get(i).getX());
-			vectors.get(i).setY(newVectors.get(i).getY());
-		}
+		poly.setPoints(newVectors);
 	}
 	
 	private boolean isConvex() {
+		System.out.println("Convex check ");
 		List<VectorPair> pairs = new ArrayList<>();
-		for(int i = 0; i<vectors.size(); i++) {
-			if(i == vectors.size()-1) {
-				pairs.add(new VectorPair( vectors.get(0).sub(vectors.get(i)), vectors.get(1).sub(vectors.get(i))));
+		for(int i = 0; i<newVectors.size(); i++) {
+			if(i == newVectors.size()-1) {
+				pairs.add(new VectorPair( newVectors.get(0).sub(newVectors.get(i)), newVectors.get(1).sub(newVectors.get(i))));
 			}else if (i == vectors.size()-2){
-				pairs.add(new VectorPair(vectors.get(i+1).sub(vectors.get(i)),  vectors.get(0).sub(vectors.get(i))));
+				pairs.add(new VectorPair(newVectors.get(i+1).sub(newVectors.get(i)),  newVectors.get(0).sub(newVectors.get(i))));
 			}else {
-				pairs.add(new VectorPair(vectors.get(i+1).sub(vectors.get(i)), vectors.get(i+2).sub(vectors.get(i))));
+				pairs.add(new VectorPair(newVectors.get(i+1).sub(newVectors.get(i)), newVectors.get(i+2).sub(newVectors.get(i))));
 			}
 		}
 		boolean convex = true;

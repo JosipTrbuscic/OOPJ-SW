@@ -7,7 +7,6 @@ import static org.junit.Assert.*;
 
 import java.util.function.DoubleBinaryOperator;
 
-@SuppressWarnings("javadoc")
 public class CalcModelTest {
 	
 	private CalcModel model;

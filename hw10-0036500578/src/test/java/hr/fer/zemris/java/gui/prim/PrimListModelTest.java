@@ -7,7 +7,6 @@ import javax.swing.event.ListDataListener;
 
 import org.junit.Test;
 
-@SuppressWarnings("javadoc")
 public class PrimListModelTest {
 
 	@Test

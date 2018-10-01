@@ -2,11 +2,8 @@ package hr.fer.zemris.math;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.Test;
 
-@SuppressWarnings("javadoc")
 public class ComplexTest {
 	private static final double DELTA = 1E-2;
 	

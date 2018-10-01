@@ -15,7 +15,6 @@ import hr.fer.zemris.java.custom.scripting.nodes.DocumentNode;
 import hr.fer.zemris.java.custom.scripting.parser.SmartScriptParser;
 import hr.fer.zemris.java.hw03.SmartScriptTester;
 
-@SuppressWarnings("javadoc")
 public class SmartScriptParserTest {
 
 	private String loader(String filename) {

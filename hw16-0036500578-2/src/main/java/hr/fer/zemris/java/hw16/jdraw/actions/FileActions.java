@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -34,10 +35,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import hr.fer.zemris.java.hw16.jdraw.JVDraw;
 import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.Circle;
 import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.FilledCircle;
+import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.FilledPolygon;
 import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.GeometricalObject;
 import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.GeometricalObjectBBCalculator;
 import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.GeometricalObjectPainter;
 import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.Line;
+import hr.fer.zemris.java.hw16.jdraw.geometricalObjects.Vector3;
 
 /**
  * Class which contains actions used to open, save and export document.
@@ -353,6 +356,25 @@ public class FileActions {
 							new Color(Integer.parseInt(parts[7]),
 									Integer.parseInt(parts[8]), 
 									Integer.parseInt(parts[9])
+									)
+							));
+					break;
+				case"FPOLY":
+					List<Vector3> points = new ArrayList<>();
+					for(int i = 2; i < parts.length-7;i+=2) {
+						points.add(new Vector3(Double.parseDouble(parts[i]),
+								Double.parseDouble(parts[i+1]),
+								0));
+					}
+					int length = parts.length;
+					objects.add(new FilledPolygon(points,
+							new Color(Integer.parseInt(parts[length-6]),
+									Integer.parseInt(parts[length-5]), 
+									Integer.parseInt(parts[length-4])
+									),
+							new Color(Integer.parseInt(parts[length-3]),
+									Integer.parseInt(parts[length-2]), 
+									Integer.parseInt(parts[length-1])
 									)
 							));
 					break;

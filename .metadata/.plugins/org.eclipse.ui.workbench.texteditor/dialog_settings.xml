@@ -6,27 +6,27 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Editor" key="selection"/>
+		<item value="tablica" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="tablica"/>
+			<item value="Jtable"/>
+			<item value="dataMo"/>
+			<item value="rowcount"/>
+			<item value="row"/>
+			<item value="Jat"/>
+			<item value="slika"/>
+			<item value="arcangle"/>
+			<item value="open"/>
+			<item value="img"/>
 			<item value="editor"/>
 			<item value="current"/>
 			<item value="fille"/>
 			<item value="filter"/>
 			<item value="system."/>
-			<item value="save"/>
-			<item value="export"/>
-			<item value="bin"/>
-			<item value="npr"/>
-			<item value="dr"/>
-			<item value="set"/>
-			<item value="crea"/>
-			<item value="blog/"/>
-			<item value="blog"/>
-			<item value="blod"/>
 		</list>
 		<list key="replacehistory">
 			<item value="vocabulary"/>

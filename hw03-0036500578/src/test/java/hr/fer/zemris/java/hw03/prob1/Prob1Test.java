@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 
-@SuppressWarnings("javadoc")
 public class Prob1Test {
 
 	@Test

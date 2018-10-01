@@ -45,7 +45,6 @@ public class Dropd implements ShellCommand{
 	public ShellStatus executeCommand(Environment env, String arguments) {
 		@SuppressWarnings("unchecked")
 		List<Path> stack = (List<Path>) env.getSharedData("cdstack");
-		
 		if(stack == null) {
 			env.writeln("Stack is empty");
 			return ShellStatus.CONTINUE;

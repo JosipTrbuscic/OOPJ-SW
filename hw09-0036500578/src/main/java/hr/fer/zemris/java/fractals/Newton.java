@@ -288,6 +288,7 @@ public class Newton {
 			
 			pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 					new ThreadFactory() {
+						@Override
 						public Thread newThread(Runnable r) {
 							Thread t = Executors.defaultThreadFactory().newThread(r);
 							t.setDaemon(true);

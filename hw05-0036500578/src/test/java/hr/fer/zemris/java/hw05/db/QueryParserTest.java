@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-@SuppressWarnings("javadoc")
 public class QueryParserTest {
 
+	@SuppressWarnings("unused")
 	@Test(expected=NullPointerException.class)
 	public void nullQuery() {
 		QueryParser parser= new QueryParser(null);
@@ -42,6 +42,7 @@ public class QueryParserTest {
 		assertEquals(2, parser3.getQuery().size());
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=QueryParserException.class)
 	public void invalidOperator() {
 		QueryParser parser= new QueryParser("jmbag==\"0000000001\" anD   firstName>=\"Marković\"");
@@ -49,6 +50,7 @@ public class QueryParserTest {
 		QueryParser parse3= new QueryParser("jmbag=\"0000000001\" anD   firstName=<\"Marković\"");
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=QueryParserException.class)
 	public void invalidLogicalOperator() {
 		QueryParser parser= new QueryParser("jmbag==\"0000000001\"anD   firstName>=\"Marković\"");
@@ -57,6 +59,7 @@ public class QueryParserTest {
 		QueryParser parser4= new QueryParser("jmbag=\"0000000001\"asd");
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=QueryParserException.class)
 	public void invalidAttributeName() {
 		QueryParser parser= new QueryParser("jmag==\"0000000001\"");
@@ -86,6 +89,7 @@ public class QueryParserTest {
 		assertEquals(4, parser.getQuery().size());
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=QueryParserException.class)
 	public void invalidLiteral() {
 		QueryParser parser= new QueryParser("jmbag>=\"0000000001");

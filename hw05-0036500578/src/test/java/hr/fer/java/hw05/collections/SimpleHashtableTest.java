@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import hr.fer.zemris.java.hw05.collections.SimpleHashtable;
 
-@SuppressWarnings("javadoc")
 public class SimpleHashtableTest {
 	public SimpleHashtable<String,Integer> table;
 	@Before

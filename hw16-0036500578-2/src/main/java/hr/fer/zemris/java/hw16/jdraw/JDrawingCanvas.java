@@ -18,6 +18,10 @@ import hr.fer.zemris.java.hw16.jdraw.models.DrawingModelListener;
 public class JDrawingCanvas extends JComponent implements DrawingModelListener{
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Drawing model which contains 
 	 */
 	private DrawingModel model;

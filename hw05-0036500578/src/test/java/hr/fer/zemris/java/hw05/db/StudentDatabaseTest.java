@@ -11,7 +11,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-@SuppressWarnings("javadoc")
 public class StudentDatabaseTest {
 	public List<String> lines;
 	public StudentDatabase db;
